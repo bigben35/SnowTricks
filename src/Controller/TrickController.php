@@ -9,8 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrickController extends AbstractController
 {
     #[Route('/trick', name: 'app_trick')]
+
+
+    // function to display trick page 
     public function index(): Response
     {
         return $this->render('trick/index.html.twig');
+
     }
 }
