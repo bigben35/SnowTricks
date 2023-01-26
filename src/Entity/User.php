@@ -2,15 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['username'], message: "Il y a déjà un compte avec ce nom d'utilisateur, veuillez le modifier !")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,7 +18,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    private ?string $username = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -30,37 +29,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'connected_user', targetEntity: CommentTrick::class)]
-    private Collection $commentTricks;
-
     #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trick::class)]
-    private Collection $tricks;
-
-    #[ORM\Column(length: 255)]
-    private ?string $username = null;
-
-    public function __construct()
-    {
-        $this->commentTricks = new ArrayCollection();
-        $this->tricks = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getUsername(): ?string
     {
-        return $this->email;
+        return $this->username;
     }
 
-    public function setEmail(string $email): self
+    public function setUsername(string $username): self
     {
-        $this->email = $email;
+        $this->username = $username;
 
         return $this;
     }
@@ -72,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
@@ -118,32 +105,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, CommentTrick>
-     */
-    public function getCommentTricks(): Collection
+    public function getEmail(): ?string
     {
-        return $this->commentTricks;
+        return $this->email;
     }
 
-    public function addCommentTrick(CommentTrick $commentTrick): self
+    public function setEmail(string $email): self
     {
-        if (!$this->commentTricks->contains($commentTrick)) {
-            $this->commentTricks->add($commentTrick);
-            $commentTrick->setConnectedUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentTrick(CommentTrick $commentTrick): self
-    {
-        if ($this->commentTricks->removeElement($commentTrick)) {
-            // set the owning side to null (unless already changed)
-            if ($commentTrick->getConnectedUser() === $this) {
-                $commentTrick->setConnectedUser(null);
-            }
-        }
+        $this->email = $email;
 
         return $this;
     }
@@ -153,51 +122,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): self
+    public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Trick>
-     */
-    public function getTricks(): Collection
-    {
-        return $this->tricks;
-    }
-
-    public function addTrick(Trick $trick): self
-    {
-        if (!$this->tricks->contains($trick)) {
-            $this->tricks->add($trick);
-            $trick->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTrick(Trick $trick): self
-    {
-        if ($this->tricks->removeElement($trick)) {
-            // set the owning side to null (unless already changed)
-            if ($trick->getUser() === $this) {
-                $trick->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
 
         return $this;
     }
