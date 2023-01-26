@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['username'], message: "Il y a déjà un compte avec ce nom d'utilisateur, veuillez le modifier !")]
+#[ORM\Table(name: '`user`')]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -34,6 +38,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
+
+    #[ORM\OneToMany(mappedBy: 'connected_user', targetEntity: CommentTrick::class)]
+    private Collection $commentTricks;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trick::class)]
+    private Collection $tricks;
+
+    public function __construct()
+    {
+        $this->commentTricks = new ArrayCollection();
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +121,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return Collection<int, CommentTrick>
+     */
+    public function getCommentTricks(): Collection
+    {
+        return $this->commentTricks;
+    }
+
+    public function addCommentTrick(CommentTrick $commentTrick): self
+    {
+        if (!$this->commentTricks->contains($commentTrick)) {
+            $this->commentTricks->add($commentTrick);
+            $commentTrick->setConnectedUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentTrick(CommentTrick $commentTrick): self
+    {
+        if ($this->commentTricks->removeElement($commentTrick)) {
+            // set the owning side to null (unless already changed)
+            if ($commentTrick->getConnectedUser() === $this) {
+                $commentTrick->setConnectedUser(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -128,4 +174,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
+    {
+        return $this->tricks;
+    }
+
+    public function addTrick(Trick $trick): self
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks->add($trick);
+            $trick->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): self
+    {
+        if ($this->tricks->removeElement($trick)) {
+            // set the owning side to null (unless already changed)
+            if ($trick->getUser() === $this) {
+                $trick->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }
+
