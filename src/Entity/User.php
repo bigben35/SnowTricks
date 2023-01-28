@@ -39,6 +39,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
+    // verification compte grace a envoi d'email 
+    #[ORM\Column(type: 'boolean')]
+    private $is_verified = false;
+
     #[ORM\OneToMany(mappedBy: 'connected_user', targetEntity: CommentTrick::class)]
     private Collection $commentTricks;
 
@@ -171,6 +175,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    // valider compte grace a email 
+    public function getIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function setIsVerified(bool $is_verified): self
+    {
+        $this->is_verified = $is_verified;
 
         return $this;
     }
