@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['username'], message: "Il y a déjà un compte avec ce nom d'utilisateur, veuillez le modifier !")]
+#[UniqueEntity(fields: ['email'], message: "Il y a déjà un compte avec cet email, veuillez le modifier !")]
 #[ORM\Table(name: '`user`')]
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -33,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -42,6 +43,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // verification compte grace a envoi d'email 
     #[ORM\Column(type: 'boolean')]
     private $is_verified = false;
+
+    // stocker le reset token (réinitialisation du password)
+    #[ORM\Column(type: 'string', length: 100)]
+    private $resetToken; //private donc faire ces accesseurs getter et setter
 
     #[ORM\OneToMany(mappedBy: 'connected_user', targetEntity: CommentTrick::class)]
     private Collection $commentTricks;
@@ -189,6 +194,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->is_verified = $is_verified;
 
+        return $this;
+    }
+
+    // réinitialiser mot de passe
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
         return $this;
     }
 
