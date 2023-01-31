@@ -1,3 +1,4 @@
+
 /* Barre de navigation  */
 #mainNav {
   background-color: #464d53;
@@ -20,3 +21,15 @@
   padding-top: 25px;
   margin-bottom: -8rem;
  }
+
+.form-register ul {
+    padding: 0;
+}
+.form-register ul li {
+    list-style-type: none;
+    background-color: red;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
