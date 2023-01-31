@@ -1,0 +1,22 @@
+/* Barre de navigation  */
+#mainNav {
+  background-color: #464d53;
+  /* margin-bottom: 2rem; */
+}
+ /* section{
+  margin-top: 8rem;
+ } */
+
+ body{
+  position: relative;
+  min-height: 100vh;
+ }
+
+ .footer-custom{
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-top: 25px;
+  margin-bottom: -8rem;
+ }
