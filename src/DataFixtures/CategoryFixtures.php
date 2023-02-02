@@ -44,7 +44,7 @@ class CategoryFixtures extends Fixture
         $category->setName($name);
         $manager->persist($category);
 
-        $this->addReference('cat-'.$this->counter, $category);
+        $this->addReference(''.$this->counter, $category);
         $this->counter++;               //stock des ref que je vais rechercher sur TrickFixtures
 
         return $category;
