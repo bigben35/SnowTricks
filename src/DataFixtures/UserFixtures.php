@@ -19,7 +19,7 @@ class UserFixtures extends Fixture
         private UserRepository $userRepository
     ) {
     }
-    private $counter = 1; //créer un compteur pour pouvoir utiliser user_id
+    // private $counter = 1; //créer un compteur pour pouvoir utiliser user_id
     public function load(ObjectManager $manager): void
     {
         // On ne créé l'utilisateur que si n'existe pas déjà
@@ -56,15 +56,15 @@ class UserFixtures extends Fixture
     }
 
     // fonction qui évite redondance pour créer un user 
-    public function createUser(string $username, ObjectManager $manager)
-    {
-        $username = new User();
-        $username->setUsername($username);
-        $manager->persist($username);
+    // public function createUser(string $username, ObjectManager $manager)
+    // {
+    //     $username = new User();
+    //     $username->setUsername($username);
+    //     $manager->persist($username);
 
-        $this->addReference('' . $this->counter, $username);
-        $this->counter++;               //stock des ref que je vais rechercher sur TrickFixtures
+    //     $this->addReference('' . $this->counter, $username);
+    //     $this->counter++;               //stock des ref que je vais rechercher sur TrickFixtures
 
-        return $username;
-    }
+    //     return $username;
+    // }
 }
