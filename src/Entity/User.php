@@ -60,6 +60,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tricks = new ArrayCollection();
     }
 
+    // convertir tableau en chaine de caractères 
+    public function __toString()
+    {
+        return $this->username;
+        // return $this->roles;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -238,5 +245,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+    
 }
 

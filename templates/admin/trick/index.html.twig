@@ -1,49 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Trick index{% endblock %}
+{% block title %}SnowTricks - Figures
+{% endblock %}
 
 {% block body %}
-    <h1>Trick index</h1>
+	<section class="container my-3">
+		<h1>Les Figures</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Author</th>
-                <th>Description</th>
-                <th>Slug</th>
-                <th>Illustration</th>
-                <th>Video</th>
-                <th>Created_at</th>
-                <th>Modified_at</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for trick in tricks %}
-            <tr>
-                <td>{{ trick.id }}</td>
-                <td>{{ trick.name }}</td>
-                <td>{{ trick.author }}</td>
-                <td>{{ trick.description }}</td>
-                <td>{{ trick.slug }}</td>
-                <td>{{ trick.illustration }}</td>
-                <td>{{ trick.video }}</td>
-                <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ trick.modifiedAt ? trick.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_admin_trick_show', {'id': trick.id}) }}">show</a>
-                    <a href="{{ path('app_admin_trick_edit', {'id': trick.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_admin_trick_new') }}">Create new</a>
+		<table class="table">
+			<thead>
+				<tr>
+					{# <th>Id</th> #}
+					<th>Name</th>
+					<th>Description</th>
+					<th>Slug</th>
+					<th>Illustration</th>
+					<th>Video</th>
+					<th>Created_at</th>
+					<th>Modified_at</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for trick in tricks %}
+					<tr>
+						{# <td>{{ trick.id }}</td> #}
+						<td>{{ trick.name }}</td>
+						<td>{{ trick.description }}</td>
+						<td>{{ trick.slug }}</td>
+						<td>{{ trick.illustration }}</td>
+						<td>{{ trick.video }}</td>
+						<td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ trick.modifiedAt ? trick.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+						<td>
+							<a href="{{ path('app_admin_trick_show', {'id': trick.id}) }}">Voir</a>
+							<a href="{{ path('app_admin_trick_edit', {'id': trick.id}) }}">Modifier</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="10">Pas de Figure</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div>
+			<a href="{{ path('app_admin_trick_new') }}">Créer</a>
+		</div>
+		<a href="{{ path('app_admin_admin') }}">Retour au dashboard</a>
+	</section>
 {% endblock %}

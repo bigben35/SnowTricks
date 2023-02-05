@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Trick{% endblock %}
+{% block title %}SnowTricks - Nouvelle Figure
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Trick</h1>
+	<section class="container my-3">
+		<h1>Créer une Figure</h1>
 
-    {{ include('admin/trick/_form.html.twig') }}
+		{{ include('admin/trick/_form.html.twig') }}
+		<a href="{{ path('app_admin_trick_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_admin_trick_index') }}">back to list</a>
+	</section>
 {% endblock %}

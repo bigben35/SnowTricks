@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Trick{% endblock %}
+{% block title %}SnowTricks - Figure{% endblock %}
 
 {% block body %}
     <h1>Trick</h1>
@@ -8,16 +8,8 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ trick.id }}</td>
-            </tr>
-            <tr>
                 <th>Name</th>
                 <td>{{ trick.name }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
-                <td>{{ trick.author }}</td>
             </tr>
             <tr>
                 <th>Description</th>
@@ -46,9 +38,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_trick_index') }}">back to list</a>
+    <a href="{{ path('app_admin_trick_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_admin_trick_edit', {'id': trick.id}) }}">edit</a>
+    <a href="{{ path('app_admin_trick_edit', {'id': trick.id}) }}">Modifier</a>
 
     {{ include('admin/trick/_delete_form.html.twig') }}
 {% endblock %}

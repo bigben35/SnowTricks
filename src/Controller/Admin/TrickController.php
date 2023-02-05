@@ -25,6 +25,8 @@ class TrickController extends AbstractController
     public function new(Request $request, TrickRepository $trickRepository): Response
     {
         $trick = new Trick();
+        // dd($trick);
+        // $slug = $this->setSlug();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
@@ -35,8 +37,9 @@ class TrickController extends AbstractController
         }
 
         return $this->renderForm('admin/trick/new.html.twig', [
-            'trick' => $trick,
             'form' => $form,
+            'trick' => $trick,
+            // 'slug' => $trick->setSlug($trick->getName())
         ]);
     }
 
