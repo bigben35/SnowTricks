@@ -4786,6 +4786,7 @@ textarea.form-control-lg {
   color: #0f5132;
   background-color: #d1e7dd;
   border-color: #badbcc;
+  /* margin-top: 2rem; */
 }
 .alert-success .alert-link {
   color: #0c4128;
@@ -6998,7 +6999,7 @@ textarea.form-control-lg {
 
   margin-top: 3rem !important;
 
-  margin-bottom: 1rem !important;
+  margin-bottom: 3rem !important;
 }
 
 .my-4 {

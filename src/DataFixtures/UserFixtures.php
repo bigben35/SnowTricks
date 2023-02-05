@@ -19,6 +19,7 @@ class UserFixtures extends Fixture
         private UserRepository $userRepository
     ) {
     }
+    private $counter = 1;
     // private $counter = 1; //créer un compteur pour pouvoir utiliser user_id
     public function load(ObjectManager $manager): void
     {
@@ -47,8 +48,8 @@ class UserFixtures extends Fixture
                 $user->setRoles(['ROLE_USER']);
 
                 $manager->persist($user);
-                // $this->addReference('user-'.$this->counter, $user);
-                // $this->counter++; 
+                $this->addReference('user-'.$this->counter, $user);
+                $this->counter++; 
             }
         }
 

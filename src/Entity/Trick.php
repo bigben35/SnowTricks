@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -18,9 +19,6 @@ class Trick
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
@@ -64,6 +62,7 @@ class Trick
         $this->categories = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
         $this->modified_at = new \DateTimeImmutable();
+        $this->user = new User();
     }
 
     public function getId(): ?int
@@ -79,18 +78,6 @@ class Trick
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
 
         return $this;
     }
