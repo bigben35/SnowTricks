@@ -57,15 +57,15 @@ class UserFixtures extends Fixture
     }
 
     // fonction qui évite redondance pour créer un user 
-    // public function createUser(string $username, ObjectManager $manager)
-    // {
-    //     $username = new User();
-    //     $username->setUsername($username);
-    //     $manager->persist($username);
+    public function createUser(string $username, ObjectManager $manager)
+    {
+        $username = new User();
+        $username->setUsername($username);
+        $manager->persist($username);
 
-    //     $this->addReference('' . $this->counter, $username);
-    //     $this->counter++;               //stock des ref que je vais rechercher sur TrickFixtures
+        $this->addReference('' . $this->counter, $username);
+        $this->counter++;               //stock des ref que je vais rechercher sur TrickFixtures
 
-    //     return $username;
-    // }
+        return $username;
+    }
 }

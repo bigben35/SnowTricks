@@ -35,7 +35,8 @@ class TrickFixtures extends Fixture
             $tricks->setIllustration($faker->text(5));
             $tricks->setVideo($faker->text(5));
 
-            $tricks->setUser($this->userRepository->findOneBy(['email' => 'admin@admin.fr']));
+            $user = $this->getReference('' . rand(1, 5));
+            $tricks->setUser($user);
             $manager->persist($tricks);
         }
 

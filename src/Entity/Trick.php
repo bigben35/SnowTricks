@@ -50,7 +50,7 @@ class Trick
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'trick')]
     private Collection $categories;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\ManyToOne(targetEntity:"App\Entity\User", inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
@@ -62,7 +62,7 @@ class Trick
         $this->categories = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
         $this->modified_at = new \DateTimeImmutable();
-        $this->user = new User();
+        // $this->user = new User();
     }
 
     // convertir tableau en chaine de caractères 
@@ -298,4 +298,14 @@ class Trick
 
         return $this;
     }
+
+    // public function addUser(User $username): self
+    // {
+    //     if (!$this->user->contains($username)) {
+    //         $this->user->add($username);
+    //         $username->addTrick($this);
+    //     }
+
+    //     return $this;
+    // }
 }
