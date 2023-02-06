@@ -2,8 +2,11 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Faker;
+use Faker\Factory;
+use App\Entity\Contact;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
@@ -11,6 +14,22 @@ class AppFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
+
+        // Contact
+        $faker = Factory::create('fr_FR');
+
+        for ($c = 1; $c <= 5; $c++) {
+            $contact = new Contact();
+            $contact->setLastname($faker->name())
+                ->setFirstname($faker->firstName())
+                ->setEmail($faker->email())
+                ->setObject('Demande n°' . ($c + 1))
+                ->setMessage($faker->text());
+
+                $manager->persist($contact);
+                // $this->addReference('user-'.$this->counter, $user);
+                // $this->counter++; 
+            }
 
         $manager->flush();
     }

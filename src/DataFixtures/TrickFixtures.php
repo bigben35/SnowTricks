@@ -25,7 +25,7 @@ class TrickFixtures extends Fixture
             $tricks->setName($faker->text(5));
             // $tricks->setAuthor($faker->text(5));
             // $user = $this->getReference(1, 6);
-            $tricks->setAuthor($faker->name());
+            // $tricks->setAuthor($faker->name());
             $tricks->setDescription($faker->text());
             $tricks->setSlug($this->slugger->slug($tricks->getName())->lower());
             // $tricks->setCategory($category);

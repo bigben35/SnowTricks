@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -61,6 +62,7 @@ class Trick
         $this->categories = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
         $this->modified_at = new \DateTimeImmutable();
+        $this->user = new User();
     }
 
     // convertir tableau en chaine de caractères 
