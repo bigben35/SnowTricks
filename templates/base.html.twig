@@ -40,13 +40,21 @@
 							<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_contact') }}">Contact</a>
 						</li>
 						{% if app.user %}
+							{% if is_granted('ROLE_ADMIN') %}
 							<li class="nav-item">
-								<a class="nav-link px-lg-3 py-3 py-lg-4" href="#">Mon Compte
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_admin_admin') }}">Mon Compte
 									<small>(
 										{{ app.user.username }}
 										)</small>
 								</a></li>
-								
+							{% else %}
+							<li class="nav-item">
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_profil') }}">Mon Compte
+									<small>(
+										{{ app.user.username }}
+										)</small>
+								</a></li>
+								{% endif %}
 								<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_logout') }}">Déconnexion</a></li>
 							</li>
 						{% else %}

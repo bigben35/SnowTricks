@@ -27,6 +27,9 @@ class TrickController extends AbstractController
         $trick = new Trick();
         // dd($trick);
         // $slug = $this->setSlug();
+        if($this->getUser()){
+            $trick->setUser($this->getUser());
+        }
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
