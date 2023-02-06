@@ -19,9 +19,6 @@ class Trick
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -66,6 +63,16 @@ class Trick
         $this->modified_at = new \DateTimeImmutable();
     }
 
+    // convertir tableau en chaine de caractères 
+    public function __toString()
+    {
+        return $this->name;
+        // return $this->author;
+        // return $this->description;
+        // return $this->slug;
+    }
+  
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,18 +86,6 @@ class Trick
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
 
         return $this;
     }

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Admin!
+{% endblock %}
+
+{% block body %}
+
+	<section class="container my-3">
+		<div>
+			<h1>Bonjour
+				{{ app.user.username }}
+				!</h1>
+		</div>
+		<div>
+			<a href="{{ path('app_admin_user_index') }}">Liste des Utilisateurs</a>
+		</div>
+        <div>
+			<a href="{{ path('app_admin_trick_index') }}">Liste des Figures</a>
+		</div>
+        <div>
+			<a href="{{ path('app_admin_category_index') }}">Liste des Categories</a>
+		</div>
+	</section>
+{% endblock %}

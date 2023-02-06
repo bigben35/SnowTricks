@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Nouvel Utilisateur{% endblock %}
+
+{% block body %}
+<section class="container my-3">
+    <h1>Créer un utilisateur</h1>
+
+    {{ include('admin/user/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_user_index') }}">Retour à la liste</a>
+    </section>
+{% endblock %}

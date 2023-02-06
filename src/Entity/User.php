@@ -48,6 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $resetToken; //private donc faire ces accesseurs getter et setter
 
+
     #[ORM\OneToMany(mappedBy: 'connected_user', targetEntity: CommentTrick::class)]
     private Collection $commentTricks;
 
@@ -58,6 +59,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->commentTricks = new ArrayCollection();
         $this->tricks = new ArrayCollection();
+    }
+
+    // convertir tableau en chaine de caractères 
+    public function __toString()
+    {
+        return $this->username;
+        // return $this->roles;
     }
 
     public function getId(): ?int
@@ -238,4 +246,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+    
 }
