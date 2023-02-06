@@ -46,7 +46,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // stocker le reset token (réinitialisation du password)
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    private ?string $resetToken = null; //private donc faire ces accesseurs getter et setter
+    private $resetToken; //private donc faire ces accesseurs getter et setter
+
 
     #[ORM\OneToMany(mappedBy: 'connected_user', targetEntity: CommentTrick::class)]
     private Collection $commentTricks;
@@ -249,4 +250,3 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     
 }
-

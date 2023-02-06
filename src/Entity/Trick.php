@@ -59,6 +59,8 @@ class Trick
         $this->illustrations = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+        $this->modified_at = new \DateTimeImmutable();
     }
 
     // convertir tableau en chaine de caractères 
@@ -257,6 +259,12 @@ class Trick
     {
         return $this->categories;
     }
+
+    // public function setCategories(Collection $categories): Collection
+    // {
+    //     $this->categories = $categories;
+    //     return $this;
+    // }
 
     public function addCategory(Category $category): self
     {
