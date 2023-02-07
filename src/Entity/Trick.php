@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use App\Entity\Category;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Trick
 {
     #[ORM\Id]
@@ -17,13 +20,18 @@ class Trick
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank()]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
+
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank()]
+
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
@@ -33,9 +41,11 @@ class Trick
     private ?string $video = null;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
     private ?\DateTimeImmutable $modified_at = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: CommentTrick::class)]
@@ -47,13 +57,14 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
     private Collection $videos;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'trick')]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'trick')]
     private Collection $categories;
 
-    #[ORM\ManyToOne(targetEntity:"App\Entity\User", inversedBy: 'tricks')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    
     public function __construct()
     {
         $this->commentTricks = new ArrayCollection();
@@ -63,6 +74,13 @@ class Trick
         $this->created_at = new \DateTimeImmutable();
         $this->modified_at = new \DateTimeImmutable();
         // $this->user = new User();
+    }
+
+    // méthode pour update date d'un trick lors d'une modification 
+    #[ORM\PreUpdate]
+    public function preUpdate()
+    {
+        $this->modified_at = new \DateTimeImmutable();
     }
 
     // convertir tableau en chaine de caractères 
@@ -257,7 +275,7 @@ class Trick
     /**
      * @return Collection<int, Category>
      */
-    public function getCategories(): Collection
+    public function getCategory(): Collection
     {
         return $this->categories;
     }
