@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
+// use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class TrickFixtures extends Fixture
 {
@@ -32,7 +33,7 @@ class TrickFixtures extends Fixture
             //on va chercher une réf de catégorie
             $category = $this->getReference('' . rand(1, 5));
             $tricks->addCategory($category);
-            $tricks->setIllustration($faker->text(5));
+            $tricks->setIllustration($faker->imageUrl());
             $tricks->setVideo($faker->text(5));
 
             $user = $this->getReference('' . rand(1, 5));

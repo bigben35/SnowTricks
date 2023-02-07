@@ -18,7 +18,7 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Trick::class, inversedBy: 'categories')]
+    #[ORM\ManyToMany(mappedBy: 'categories', targetEntity: Trick::class)]
     private Collection $trick;
 
     public function __construct()
