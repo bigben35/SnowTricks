@@ -34,7 +34,8 @@ class TrickType extends AbstractType
             ->add('slug', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => "Slug"
+                    'placeholder' => "Slug",
+                    // 'readonly' => 'readonly'
                 ],
                 'label' => "Slug"
             ])
@@ -44,6 +45,8 @@ class TrickType extends AbstractType
                     'placeholder' => "Illustration"
                 ],
                 'label' => "Illustration",
+                'multiple' => true,
+                'mapped' => false,
                 'data_class' => null
             ])
             ->add('video', FileType::class, [
@@ -52,6 +55,8 @@ class TrickType extends AbstractType
                     'placeholder' => "Vidéo"
                 ],
                 'label' => "Video",
+                // 'multiple' => true,
+                // 'mapped' => false,
                 'data_class' => null
             ])
             // ->add('created_at')

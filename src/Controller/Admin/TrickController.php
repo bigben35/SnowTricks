@@ -6,6 +6,7 @@ use App\Entity\Trick;
 use App\Entity\User;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use App\Service\IllustrationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,7 @@ class TrickController extends AbstractController
 
     #[Route('/new', name: 'app_admin_trick_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function new(Request $request, TrickRepository $trickRepository, SluggerInterface $slugger): Response
+    public function new(Request $request, TrickRepository $trickRepository, SluggerInterface $slugger, IllustrationService $illustrationService): Response
     {
         $trick = new Trick();
         // dd($trick);
@@ -46,6 +47,18 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
+            //on récupère les images
+            $illustrations = $form->get('illustration')->getData();
+            // dd($illustration);
+            foreach($illustrations as $illustration){
+                //on définit le dossier de destination
+                $folder = 'illustrationsTrick';
+
+                //on appelle le service d'ajout
+                $fichier = $illustrationService->add($illustration, $folder, 300, 300);
+
+                die;
+            }
 
             /** @var User $user */
             $user = $this->getUser();
