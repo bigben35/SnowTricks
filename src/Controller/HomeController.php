@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,10 +13,13 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
 
     
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, TrickRepository $tricks): Response
     {
         // $userRepository->findOneByEmail('admin@admin.fr');
         // dd($userRepository->findOneByEmail('admin@admin.fr'));
-        return $this->render('home/index.html.twig');
+        // $tricksRepository->findAll($tricks);
+        return $this->render('home/index.html.twig', [
+            'tricks' => $tricks->findAll()
+        ]);
     }
 }

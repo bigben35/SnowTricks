@@ -9,9 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Twig\Extra\TwigExtraBundle\Extensions;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[UniqueEntity(fields: ['name'], message: "Il y a déjà une Figure avec ce nom, veuillez le modifier !")]
 #[ORM\HasLifecycleCallbacks]
 class Trick
 {
@@ -30,8 +34,7 @@ class Trick
     private ?string $description = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\NotBlank()]
-
+    // #[Assert\NotBlank()]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
@@ -87,6 +90,7 @@ class Trick
     public function __toString()
     {
         return $this->name;
+        // return $this->illustration;
         // return $this->author;
         // return $this->description;
         // return $this->slug;

@@ -7,6 +7,7 @@ use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -31,20 +32,37 @@ class TrickType extends AbstractType
                 ],
                 'label' => "Description"
             ])
-            ->add('slug', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => "Slug"
-                ],
-                'label' => "Slug"
-            ])
+            // ->add('slug', TextType::class, [
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => "Slug",
+            //         // 'readonly' => 'readonly'
+            //     ],
+            //     'required' => false,
+            //     'label' => "Slug"
+            // ])
             ->add('illustration', FileType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => "Illustration"
                 ],
-                'label' => "Illustration",
-                'data_class' => null
+                'label' => "Illustration (.png, .jpeg, .webp)",
+                'multiple' => true,
+                'mapped' => false,
+                'data_class' => null,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5000k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                            
+                        ],
+                        'mimeTypesMessage' => 'Ajouter un fichier au format valide (.jpeg, .png, .webp) !',
+                    ])
+                ],
             ])
             ->add('video', FileType::class, [
                 'attr' => [
@@ -52,7 +70,10 @@ class TrickType extends AbstractType
                     'placeholder' => "Vidéo"
                 ],
                 'label' => "Video",
-                'data_class' => null
+                // 'multiple' => true,
+                // 'mapped' => false,
+                'data_class' => null,
+                
             ])
             // ->add('created_at')
             // ->add('modified_at')
