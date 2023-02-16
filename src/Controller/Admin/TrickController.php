@@ -2,16 +2,17 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Trick;
 use App\Entity\User;
+use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/admin/trick')]
 class TrickController extends AbstractController
@@ -47,6 +48,30 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) { 
 
+            $illustrationFile = $form->get('filename')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($illustrationFile) {
+                $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$illustrationFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $illustrationFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $trick->setIllustration($newFilename);
+            }
             /** @var User $user */
             $user = $this->getUser();
             $trick->setSlug($slugger->slug($trick->getName())->lower());

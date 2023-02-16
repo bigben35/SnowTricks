@@ -30,15 +30,15 @@ class Trick
     private ?string $description = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\NotBlank()]
+    // #[Assert\NotBlank()]
 
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $illustration = null;
+    private ?string $illustration = '';
 
     #[ORM\Column(length: 255)]
-    private ?string $video = null;
+    private ?string $video = '';
 
     #[ORM\Column]
     #[Assert\NotNull()]
@@ -87,6 +87,7 @@ class Trick
     public function __toString()
     {
         return $this->name;
+        // return $this->illustration;
         // return $this->author;
         // return $this->description;
         // return $this->slug;
