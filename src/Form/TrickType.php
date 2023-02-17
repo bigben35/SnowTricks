@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\All;
 
 class TrickType extends AbstractType
 {
@@ -40,10 +41,10 @@ class TrickType extends AbstractType
             //     'label' => "Slug",
             //     'required' => false
             // ])
-            ->add('filename', FileType::class, [
+            ->add('files', FileType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => "Illustration"
+                    'placeholder' => "Illustrations"
                 ],
                 'label' => "Illustration (formats images uniquements)",
                 // 'data_class' => null,
@@ -52,41 +53,44 @@ class TrickType extends AbstractType
                 // make it optional so you don't have to re-upload the PDF file
                 // every time you edit the Product details
                 'required' => false,
-                // 'multiple' => true,
+                'multiple' => true,
 
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
+                // Contrainte sur le type des images de type multiple
+                // Voir la résolution ici : https://stackoverflow.com/questions/61589890/multiple-file-validation-this-value-should-be-of-type-string
                 'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                            'image/webp',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid image type',
+                    new All([
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '1024k',
+                                'mimeTypes' => [
+                                    'image/jpeg',
+                                    'image/png',
+                                    'image/webp',
+                                ],
+                                'mimeTypesMessage' => 'Please upload a valid image type',
+                            ])
+                        ]
                     ])
                 ],
             ])
-            ->add('video', FileType::class, [
+            ->add('video', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => "Vidéo"
+                    'placeholder' => "Vidéo 1"
                 ],
-                'label' => "Video",
-                'data_class' => null
+                'label' => "Video 1",
+                'required' => false
             ])
-            // ->add('created_at')
-            // ->add('modified_at')
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
-                'mapped' => false,
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => "Catégorie"
                 ],
-                'label' => "Catégorie"
+                'label' => "Catégorie",
+                'mapped' => false,
+                'required' => false,
             ])
             // ->add('user', TextType::class, [
             //     'attr' => [

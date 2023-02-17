@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername, 
+            'last_username' => $lastUsername,
             'error' => $error
         ]);
     }
@@ -52,13 +52,13 @@ class SecurityController extends AbstractController
         $form = $this->createForm(ResetPasswordRequestFormType::class);
 
         $form->handleRequest($request);     //gere la requete, passer $request en param de finction forgottenPassword (injection de dépendances)
-        
-        if($form->isSubmitted() && $form->isValid()){
+
+        if ($form->isSubmitted() && $form->isValid()) {
             // on va chercher l'user par son username 
             $user = $userRepository->findOneByUsername($form->get('username')->getData()); //je vais chercher données de mon champ username dans formulaire
             // dd($user);
             //on vérifie si on a un user
-            if($user){
+            if ($user) {
                 //on génère un token de réinitialisation
                 $token = $tokenGeneratorInterface->generateToken();  //genère un token, passer $otenGeneratorInterface en param de fonction forgottenPassword (injection de dépendances)
                 // dd($token);
@@ -84,8 +84,6 @@ class SecurityController extends AbstractController
 
                 $this->addFlash('success', 'Email envoyé avec succès !');
                 return $this->redirectToRoute('app_login');
-
-
             }
             //si $user est null
             $this->addFlash('danger', 'Un problème est survenu');
@@ -98,19 +96,19 @@ class SecurityController extends AbstractController
     }
 
 
-    #[Route(path:'/oubli-pass/{token}', name: 'reset_pass')]  //route pour new password
-    public function resetPass(string $token, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response 
+    #[Route(path: '/oubli-pass/{token}', name: 'reset_pass')]  //route pour new password
+    public function resetPass(string $token, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         //on vérifie si on a ce token dans la bdd
         $user = $userRepository->findOneByResetToken($token);
         // dd($user);
 
-        if($user){
+        if ($user) {
             $form = $this->createForm(ResetPasswordFormType::class);
 
             $form->handleRequest($request);
 
-            if($form->isSubmitted() && $form->isValid()){
+            if ($form->isSubmitted() && $form->isValid()) {
                 //on efface le token
                 $user->setResetToken('');
                 $user->setPassword(

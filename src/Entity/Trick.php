@@ -51,7 +51,7 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: CommentTrick::class)]
     private Collection $commentTricks;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Illustration::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Illustration::class)]
     private Collection $illustrations;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
@@ -64,7 +64,7 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    
+
     public function __construct()
     {
         $this->commentTricks = new ArrayCollection();
@@ -92,7 +92,7 @@ class Trick
         // return $this->description;
         // return $this->slug;
     }
-  
+
 
     public function getId(): ?int
     {

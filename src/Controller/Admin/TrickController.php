@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Illustration;
 use App\Entity\User;
 use App\Entity\Trick;
 use App\Form\TrickType;
@@ -17,19 +18,16 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 #[Route('/admin/trick')]
 class TrickController extends AbstractController
 {
+    public function __construct(private SluggerInterface $slugger)
+    {
+    }
+
     #[Route('/', name: 'app_admin_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response
     {
         return $this->render('admin/trick/index.html.twig', [
             'tricks' => $trickRepository->findAll(),
         ]);
-    }
-
-    protected $slugger;
-
-    public function __construct(SluggerInterface $slugger)
-    {
-        $this->slugger = $slugger;
     }
 
     #[Route('/new', name: 'app_admin_trick_new', methods: ['GET', 'POST'])]
@@ -39,39 +37,51 @@ class TrickController extends AbstractController
         $trick = new Trick();
         // dd($trick);
         // $slug = $this->setSlug();
-            // $trick->setSlug($this->slugger->slug($trick->getName())->lower());
-        if($this->getUser()){
+        // $trick->setSlug($this->slugger->slug($trick->getName())->lower());
+        if ($this->getUser()) {
             $trick->setUser($this->getUser());
         }
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) { 
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $illustrationFile = $form->get('filename')->getData();
+            // On récupère toutes les images (multiple à true ==> Tableau d'images)
+            $illustrationFiles = $form->get('files')->getData();
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($illustrationFile) {
-                $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$illustrationFile->guessExtension();
+            // Pour chaque image, on créé une illustration que l'on associe à l'entité Trick
+            foreach ($illustrationFiles as $illustrationFile) {
+                if ($illustrationFile) {
+                    // TODO : déplacer cette logique métier dans un Service
 
-                // Move the file to the directory where brochures are stored
-                try {
-                    $illustrationFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
+
+                    // Move the file to the directory where brochures are stored
+                    try {
+                        $illustrationFile->move(
+                            $this->getParameter('images_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+
+                    // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
+                    $illustration = new Illustration();
+
+                    // On associe l'illustration à la figure
+                    $illustration->setFile($newFilename);
+
+                    // Pour la persistence automatique de la nouvelle illustration, 
+                    // j'ai mis à jours l'entité Trick (src/Entity/Trick.php à la ligne 54 : cascade: ['persist'])
+                    // ce "cascade: ['persist']" permet de ne pas devoir faire de $entityManager->persist($illustration)
+                    $trick->addIllustration($illustration);
                 }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $trick->setIllustration($newFilename);
             }
+
             /** @var User $user */
             $user = $this->getUser();
             $trick->setSlug($slugger->slug($trick->getName())->lower());
@@ -99,12 +109,48 @@ class TrickController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_admin_trick_edit', methods: ['GET', 'POST'])]
     // #[IsGranted('ROLE_USER')]
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // On récupère toutes les images (multiple à true ==> Tableau d'images)
+            $illustrationFiles = $form->get('files')->getData();
+
+            // Pour chaque image, on créé une illustration que l'on associe à l'entité Trick
+            foreach ($illustrationFiles as $illustrationFile) {
+                if ($illustrationFile) {
+                    // TODO : déplacer cette logique métier dans un Service
+
+                    $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
+
+                    // Move the file to the directory where brochures are stored
+                    try {
+                        $illustrationFile->move(
+                            $this->getParameter('images_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+
+                    // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
+                    $illustration = new Illustration();
+
+                    // On associe l'illustration à la figure
+                    $illustration->setFile($newFilename);
+
+                    // Pour la persistence automatique de la nouvelle illustration, 
+                    // j'ai mis à jours l'entité Trick (src/Entity/Trick.php à la ligne 54 : cascade: ['persist'])
+                    // ce "cascade: ['persist']" permet de ne pas devoir faire de $entityManager->persist($illustration)
+                    $trick->addIllustration($illustration);
+                }
+            }
+
             $trickRepository->save($trick, true);
 
             return $this->redirectToRoute('app_admin_trick_index', [], Response::HTTP_SEE_OTHER);
@@ -119,7 +165,7 @@ class TrickController extends AbstractController
     #[Route('/{id}', name: 'app_admin_trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
             $trickRepository->remove($trick, true);
         }
 
