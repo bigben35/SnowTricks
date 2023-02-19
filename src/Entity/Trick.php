@@ -30,15 +30,15 @@ class Trick
     private ?string $description = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\NotBlank()]
+    // #[Assert\NotBlank()]
 
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $illustration = null;
+    private ?string $illustration = '';
 
     #[ORM\Column(length: 255)]
-    private ?string $video = null;
+    private ?string $video = '';
 
     #[ORM\Column]
     #[Assert\NotNull()]
@@ -51,7 +51,7 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: CommentTrick::class)]
     private Collection $commentTricks;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Illustration::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Illustration::class)]
     private Collection $illustrations;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
@@ -64,7 +64,7 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    
+
     public function __construct()
     {
         $this->commentTricks = new ArrayCollection();
@@ -87,11 +87,12 @@ class Trick
     public function __toString()
     {
         return $this->name;
+        // return $this->illustration;
         // return $this->author;
         // return $this->description;
         // return $this->slug;
     }
-  
+
 
     public function getId(): ?int
     {

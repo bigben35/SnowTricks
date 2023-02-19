@@ -48,8 +48,8 @@ class UserFixtures extends Fixture
                 $user->setRoles(['ROLE_USER']);
 
                 $manager->persist($user);
-                $this->addReference('user-'.$this->counter, $user);
-                $this->counter++; 
+                $this->addReference('user-' . $this->counter, $user);
+                $this->counter++;
             }
         }
 
