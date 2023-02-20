@@ -151,6 +151,7 @@ class TrickController extends AbstractController
                 }
             }
 
+            $trick->setSlug($slugger->slug($trick->getName())->lower());
             $trickRepository->save($trick, true);
 
             return $this->redirectToRoute('app_admin_trick_index', [], Response::HTTP_SEE_OTHER);
