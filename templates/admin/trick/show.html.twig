@@ -19,16 +19,29 @@
                 <th>Slug</th>
                 <td>{{ trick.slug }}</td>
             </tr>
-            {# {% for illustrationFile in illustrationFiles %} #}
+            {% for illustration in trick.illustrations %}
             <tr>
                 <th>Illustration</th>
-                <td>{{ trick.illustration }}</td>
+                <td>{{ illustration.file }}</td>
             </tr>
-            {# {% endfor %} #}
+            {% endfor %}
+            {% if trick.video %}
             <tr>
                 <th>Video</th>
-                <td>{{ trick.video }}</td>
+                {# <td class="d-flex"> #}
+                    {# <td>{{ trick.video|replace({'watch?v=': 'embed/'})|raw }}</td> #}
+                    <td class="video-container">
+                        <iframe width="300" height="200" src="https://www.youtube.com/embed/{{ trick.video|raw }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </td>
+                {# </td> #}
             </tr>
+            {% endif %}
+            {# {% for category in trick.categories %}
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ category.name }}</td>
+            </tr>
+            {% endfor %} #}
             <tr>
                 <th>Created_at</th>
                 <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>

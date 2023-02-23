@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\IllustrationRepository;
+use App\Entity\Trick;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\IllustrationRepository;
 
 #[ORM\Entity(repositoryClass: IllustrationRepository::class)]
 class Illustration
@@ -16,7 +17,7 @@ class Illustration
     #[ORM\Column(length: 255)]
     private ?string $file = null;
 
-    #[ORM\ManyToOne(inversedBy: 'illustrations')]
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'illustrations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $trick = null;
 

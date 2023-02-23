@@ -14,6 +14,7 @@ class TrickFixtures extends Fixture
 {
     public function __construct(private SluggerInterface $slugger, private UserRepository $userRepository)
     {
+        $this->userRepository = $userRepository;
     }
 
     public function load(ObjectManager $manager): void
@@ -36,7 +37,7 @@ class TrickFixtures extends Fixture
             $tricks->setIllustration($faker->imageUrl());
             $tricks->setVideo($faker->text(5));
 
-            $user = $this->getReference('' . rand(1, 5));
+            $user = $userRepository->findOneByEmail('admin@admin.fr');
             $tricks->setUser($user);
             $manager->persist($tricks);
         }
