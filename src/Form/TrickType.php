@@ -73,14 +73,33 @@ class TrickType extends AbstractType
                     ])
                 ],
             ])
-            ->add('video', TextareaType::class, [
+            ->add('video_1', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => "Vidéo 1"
+                    'placeholder' => "Lien Vidéo 1"
                 ],
-                'label' => "Video 1",
+                'label' => "Lien Video 1 (3 Max.)",
+                'mapped' => false,
                 'required' => false
             ])
+            // ->add('video_2', TextareaType::class, [
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => "Lien Vidéo 2"
+            //     ],
+            //     'label' => "Lien Video 2",
+            //     'mapped' => false,
+            //     'required' => false
+            // ])
+            // ->add('video_3', TextareaType::class, [
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => "Lien Vidéo 3"
+            //     ],
+            //     'label' => "Lien Video 3",
+            //     'mapped' => false,
+            //     'required' => false
+            // ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',

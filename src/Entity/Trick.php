@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\InverseJoinColumn;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -34,8 +36,8 @@ class Trick
 
     private ?string $slug = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $illustration = '';
+    // #[ORM\Column(length: 255)]  a supprimer
+    // private ?string $illustration = '';
 
     #[ORM\Column(length: 255)]
     private ?string $video = '';
@@ -54,10 +56,11 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Illustration::class)]
     private Collection $illustrations;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Video::class)]
     private Collection $videos;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'trick')]
+    #[ORM\ManyToMany(cascade: ['persist'], targetEntity: Category::class, inversedBy: 'trick')]
+    #[ORM\JoinTable(name: "trick_category")]
     private Collection $categories;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tricks')]
@@ -87,6 +90,7 @@ class Trick
     public function __toString()
     {
         return $this->name;
+        
         // return $this->illustration;
         // return $this->author;
         // return $this->description;
@@ -135,17 +139,17 @@ class Trick
         return $this;
     }
 
-    public function getIllustration(): ?string
-    {
-        return $this->illustration;
-    }
+    // public function getIllustration(): ?string
+    // {
+    //     return $this->illustration;
+    // }
 
-    public function setIllustration(string $illustration): self
-    {
-        $this->illustration = $illustration;
+    // public function setIllustration(string $illustration): self
+    // {
+    //     $this->illustration = $illustration;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getVideo(): ?string
     {
@@ -225,6 +229,7 @@ class Trick
     {
         if (!$this->illustrations->contains($illustration)) {
             $this->illustrations->add($illustration);
+            // $this->illustrations[] = $illustration;
             $illustration->setTrick($this);
         }
 

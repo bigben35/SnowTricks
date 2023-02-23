@@ -18,10 +18,10 @@ class Video
     private ?Trick $trick = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $media_link = null;
+    private ?string $media_link = '';
 
     #[ORM\Column(length: 255)]
-    private ?string $embed = null;
+    private ?string $embed = '';
 
     public function getId(): ?int
     {
