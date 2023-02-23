@@ -185,12 +185,16 @@ class TrickController extends AbstractController
                 $trick->addCategory($categoryName);
             }
 
+            /** @var User $user */
+            $user = $this->getUser();
+            $trick->setSlug($slugger->slug($trick->getName())->lower());
+            $trick->setUser($user);
+
+            $trickRepository->save($trick, true);
+            $this->addFlash('success', "Votre Figure a bien été modifiée !");
             return $this->redirectToRoute('app_admin_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $trickRepository->save($trick, true);
-        
-        // $this->addFlash('success', "Votre Figure a bien été modifiée !");
         return $this->renderForm('admin/trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
