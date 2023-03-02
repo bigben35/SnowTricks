@@ -18,7 +18,7 @@ class Video
     private ?Trick $trick = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $media_link = '';
+    private ?string $mediaLink = '';
 
     #[ORM\Column(length: 255)]
     private ?string $embed = '';
@@ -42,12 +42,12 @@ class Video
 
     public function getMediaLink(): ?string
     {
-        return $this->media_link;
+        return $this->mediaLink;
     }
 
-    public function setMediaLink(string $media_link): self
+    public function setMediaLink(string $mediaLink): self
     {
-        $this->media_link = $media_link;
+        $this->mediaLink = $mediaLink;
 
         return $this;
     }

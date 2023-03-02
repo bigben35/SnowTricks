@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Trick;
 use DateTimeImmutable;
+use App\Entity\Illustration;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
@@ -39,6 +41,17 @@ class TrickRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+
+    // function to remove illustration when update a trick 
+    public function removeImage(Trick $trick, Illustration $illustration)
+    {
+        $trick->removeIllustration($illustration); // Supprimer l'image de l'article
+        $this->getEntityManager()->remove($illustration); // Supprimer l'image de la base de données
+        $this->getEntityManager()->flush(); // Enregistrer les suppressions dans la base de données
+        $filesystem = new Filesystem();
+        $filesystem->remove($illustration->getFile()); // Supprimer l'image du répertoire
     }
 
 //    /**

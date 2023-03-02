@@ -281,7 +281,7 @@ class Trick
     /**
      * @return Collection<int, Category>
      */
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
         return $this->categories;
     }

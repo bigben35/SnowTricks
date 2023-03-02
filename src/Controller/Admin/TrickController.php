@@ -16,6 +16,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Filesystem\Filesystem;
 
 #[Route('/admin/trick')]
 class TrickController extends AbstractController
@@ -70,7 +71,7 @@ class TrickController extends AbstractController
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                         $this->addFlash('error', $e);
-                    return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
+                    return $this->redirectToRoute('app_admin_trick_new', [], Response::HTTP_SEE_OTHER);
                     }
 
                     // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
@@ -125,12 +126,13 @@ class TrickController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_admin_trick_edit', methods: ['GET', 'POST'])]
     
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger, Filesystem $filesystem): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-
+        // dd($trick->getVideos());
         if ($form->isSubmitted() && $form->isValid()) {
+
             // On récupère toutes les images (multiple à true ==> Tableau d'images)
             $illustrationFiles = $form->get('files')->getData();
 
@@ -153,7 +155,7 @@ class TrickController extends AbstractController
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                         $this->addFlash('error', $e);
-                        return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
+                        return $this->redirectToRoute('app_admin_trick_edit', [], Response::HTTP_SEE_OTHER);
                     }
 
                     // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
@@ -170,6 +172,7 @@ class TrickController extends AbstractController
                 }
             }
 
+            if ()
             // On récupère toutes les videos
             $video1 = new Video();
             $videoUrl1 = $form->get('video_1')->getData();
