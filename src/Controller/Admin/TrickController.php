@@ -172,7 +172,7 @@ class TrickController extends AbstractController
                 }
             }
 
-            if ()
+            // if ()
             // On récupère toutes les videos
             $video1 = new Video();
             $videoUrl1 = $form->get('video_1')->getData();
