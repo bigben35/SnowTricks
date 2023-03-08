@@ -39,8 +39,8 @@ class Trick
     // #[ORM\Column(length: 255)]  a supprimer
     // private ?string $illustration = '';
 
-    #[ORM\Column(length: 255)]
-    private ?string $video = '';
+    // #[ORM\Column(length: 255)]
+    // private ?string $video = '';
 
     #[ORM\Column]
     #[Assert\NotNull()]
@@ -151,17 +151,17 @@ class Trick
     //     return $this;
     // }
 
-    public function getVideo(): ?string
-    {
-        return $this->video;
-    }
+    // public function getVideo(): ?string
+    // {
+    //     return $this->video;
+    // }
 
-    public function setVideo(string $video): self
-    {
-        $this->video = $video;
+    // public function setVideo(string $video): self
+    // {
+    //     $this->video = $video;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

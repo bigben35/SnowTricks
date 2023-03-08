@@ -16,7 +16,15 @@ class HomeController extends AbstractController
         // $userRepository->findOneByEmail('admin@admin.fr');
         // dd($userRepository->findOneByEmail('admin@admin.fr'));
         // On récupère les 3 derniers tricks créé
-        $tricks = $trickRepository->findBy([], null, 3);
+        $tricks = $trickRepository->findBy([], array('created_at' => 'DESC'), 8);
+        // $trick = $trickRepository->findBy($id);    
+        // $illustrations = $trick->getIllustrations();
+
+        // $illustration = null;
+        // if($illustrations && count($illustrations) > 0){
+        //     $illustration = $illustrations[0];
+        // }
+        // $illustrations = $tricks->getIllustrations();
 
         return $this->render('home/index.html.twig', ['tricks' => $tricks]);
     }
