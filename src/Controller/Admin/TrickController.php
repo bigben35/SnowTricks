@@ -90,7 +90,13 @@ class TrickController extends AbstractController
 
             // On récupère toutes les videos
             $videoUrl1 = $form->get('video_1')->getData();
-            $trick->setVideo($videoUrl1);
+
+            $video = new Video();
+
+            // On associe la vidéo à la figure
+            $video->setMediaLink($videoUrl1);
+            
+            $trick->addVideo($video);
 
             //catégorie 
             $categoryName = $form->get('category')->getData();
@@ -172,7 +178,7 @@ class TrickController extends AbstractController
                 }
             }
 
-            if ()
+            // if ()
             // On récupère toutes les videos
             $video1 = new Video();
             $videoUrl1 = $form->get('video_1')->getData();

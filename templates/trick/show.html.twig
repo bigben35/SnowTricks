@@ -5,18 +5,28 @@
 	- SnowTricks
 {% endblock %}
 
+{# {% block header %}
+	<!-- Page Header-->
+	<header>
+	{% for illustration in trick.illustrations %}
+						<img src="{{asset('assets/uploads/images/' ~ illustration.file)}}" class="card-img-top border" style="height: 190px; object-fit: cover;"></img>
+		<div class="container position-relative px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="site-heading">
+						<h1>{{ trick.name }}</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+					{% endfor %}
+	</header>
+{% endblock %}
+
 {% block body %}
 
 	<div class="row gx-4 gx-lg-5 justify-content-center">
 		<div class="p-5">
-			<a href="post.html">
-				<h2 class="post-title">{{trick.name}}</h2>
-			</a>
-			<p class="post-meta">
-				Posted by
-				<a href="#!">Start Bootstrap</a>
-				on September 24, 2022
-			</p>
 			<div class="fs-5 col-md-8">
 				{{trick.description}}
 			</div>
@@ -30,5 +40,71 @@
 				{% endfor %}
 			</div>
 		</div>
+	</div>
+{% endblock %} #}
+
+{% block body %}
+
+    <div class="container">
+        <header id="header-image" class="container bg-dark"
+                style="background-image: url({{ asset('assets/uploads/home-bg.jpg') }}); background-position: center; background-size: cover;">
+
+            <div class="row h-100">
+                <div class="col-sm-12 col-lg-3 order-3 order-lg-1 "></div>
+                <div class="col-sm-12 col-lg-6 align-self-center text-center text-white order-2">
+                    <h1 class="display-4 fw-bolder"
+                        style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ trick.name }}</h1>
+                </div>
+                <div id="btn-edition"
+                     class="col-sm-12 col-lg-3 my-2 align-self-start text-end order-1 order-lg-3">
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                        <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem;"
+                           href="{{ path('trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil"></i></a>
+						   <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem;"
+                           href="{{ path('trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-trash-can"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </header>
+        <!-- media -->
+
+        <section id="box-media" class="d-none d-lg-flex flex-wrap justify-content-around align-items-center m-1">
+            {% for illustration in trick.illustrations %}
+
+                <div class="card m-1 p-2 rounded-lg" style="width: 250px;">
+                    <!-- Illustrations-->
+                    <img class="card-img-top" style="height: 161px; object-fit: cover;"
+                    		src="{{ asset('assets/uploads/images/' ~ illustration.file) }}"
+                    		alt="description image snow"/>
+                </div>
+
+            {% endfor %}
+
+			{# VIDEOS  #}
+            {% for video in trick.videos %}
+
+                <div class="card m-1" style="width: 250px;">
+                    <iframe width="250"
+                            height="161"
+                            src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}"
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+
+            {% endfor %}
+
+		</section>
+
+		{# DESCRIPTION  #}
+		<div>{{ trick.description }}</div>
+
+			{# CATEGORIE  #}
+			{% for category in trick.categories %}
+				<div class="mx-4 px-3 py-1 border">{{ category.name }}</div>
+
+			{% endfor %}
+
 	</div>
 {% endblock %}

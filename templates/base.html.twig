@@ -20,57 +20,7 @@
 		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
 	</head>
 	<body>
-		<!-- Navigation-->
-		<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-			<div class="container px-4 px-lg-5">
-				<a class="navbar-brand" href="/">SnowTricks</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-					Menu
-					<i class="fas fa-bars"></i>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav ms-auto py-4 py-lg-0">
-						<li class="nav-item">
-							<a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Accueil</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link px-lg-3 py-3 py-lg-4" href="#">A propos</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_contact') }}">Contact</a>
-						</li>
-						{% if app.user %}
-							{% if is_granted('ROLE_ADMIN') %}
-							<li class="nav-item">
-								<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_admin_admin') }}">Mon Compte
-									<small>(
-										{{ app.user.username }}
-										)</small>
-								</a></li>
-							{% else %}
-							<li class="nav-item">
-								<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_profil') }}">Mon Compte
-									<small>(
-										{{ app.user.username }}
-										)</small>
-								</a></li>
-								{% endif %}
-								<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_logout') }}">Déconnexion</a></li>
-							</li>
-						{% else %}
-							<li class="nav-item">
-								<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_login') }}">Connexion</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_register') }}">Inscription</a>
-							</li>
-						{% endif %}
-					</ul>
-
-
-				</div>
-			</div>
-		</nav>
+		{% include('navbar.html.twig') %}
 		{% block header %}{% endblock %}
 		
 		<!-- Main Content-->
@@ -92,9 +42,9 @@
 		{% endblock %}
 			{# </div> #}
 			<!-- Footer-->
-			<footer class="footer-custom border-top">
+			<footer class="footer-custom">
 				<div class="container px-4 px-lg-5">
-					<div class="row gx-4 gx-lg-5 justify-content-center">
+					<div class="row gx-4 gx-lg-5 justify-content-center m-5">
 						<div class="col-md-10 col-lg-8 col-xl-7">
 							<ul class="list-inline text-center">
 								<li class="list-inline-item">
