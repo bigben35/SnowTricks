@@ -3,16 +3,19 @@
 namespace App\Form;
 
 use App\Entity\Trick;
+use App\Entity\Video;
+use App\Form\VideoType;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
 {
@@ -73,15 +76,30 @@ class TrickType extends AbstractType
                     ])
                 ],
             ])
-            ->add('video_1', TextareaType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => "Lien Vidéo 1"
-                ],
-                'label' => "Lien Video 1 (3 Max.)",
-                'mapped' => false,
-                'required' => false
+            ->add('videos', CollectionType::class, [
+                'entry_type' => VideoType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                
+                // 'attr' => [
+                //     'class' => 'form-control',
+                //     'placeholder' => "Lien Vidéo 1"
+                // ],
+                // 'label' => "Lien Video 1 (3 Max.)",
+                // 'mapped' => false,
+                // 'required' => false
             ])
+
+                // ->add('videos', TextareaType::class, [
+                //     'mapped' => false,
+                //     'attr' => [
+                //         'class' => 'form-control',
+                //         'placeholder' => "Lien Vidéo"
+                //     ],
+                //     'label' => "Lien Vidéo",
+                //     'required' => false,
+                // ])
             // ->add('video_2', TextareaType::class, [
             //     'attr' => [
             //         'class' => 'form-control',
@@ -111,6 +129,7 @@ class TrickType extends AbstractType
                 'mapped' => false,
                 'required' => false,
             ])
+            ->add('categories')
             // ->add('user', TextType::class, [
             //     'attr' => [
             //         'class' => 'form-control',

@@ -89,14 +89,35 @@ class TrickController extends AbstractController
             }
 
             // On récupère toutes les videos
-            $videoUrl1 = $form->get('video_1')->getData();
+            $videoFields = $form->get('videos');
 
-            $video = new Video();
+            foreach($videoFields as $videoField) {
+                $video = new Video();
+                $video = $videoField->getData();
+                $videoLink = $video->getMediaLink();
 
-            // On associe la vidéo à la figure
-            $video->setMediaLink($videoUrl1);
-            
+            }
+
+            $video->setMediaLink();
             $trick->addVideo($video);
+
+            //  // On récupère toutes les videos
+            //  $videoUrl2 = $form->get('video_2')->getData();
+
+            //  $video = new Video();
+ 
+            //  // On associe la vidéo à la figure
+            //  $video->setMediaLink($videoUrl2);
+            //  $trick->addVideo($video);
+
+            //   // On récupère toutes les videos
+            // $videoUrl3 = $form->get('video_3')->getData();
+
+            // $video = new Video();
+
+            // // On associe la vidéo à la figure
+            // $video->setMediaLink($videoUrl3);
+            // $trick->addVideo($video);
 
             //catégorie 
             $categoryName = $form->get('category')->getData();
@@ -178,7 +199,7 @@ class TrickController extends AbstractController
                 }
             }
 
-            // if ()
+            // if ($trick->getVideos() < 3)
             // On récupère toutes les videos
             $video1 = new Video();
             $videoUrl1 = $form->get('video_1')->getData();
@@ -214,7 +235,7 @@ class TrickController extends AbstractController
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
-            $trickRepository->remove($trick, true);
+            $trickRepository->remove($trick, true, $this->getParameter('images_directory'));
         }
 
         return $this->redirectToRoute('app_admin_trick_index', [], Response::HTTP_SEE_OTHER);

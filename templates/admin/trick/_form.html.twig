@@ -1,4 +1,22 @@
 {{ form_start(form) }}
+    {{ form_widget(form._token) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+{% for illustration in trick.illustrations %}
+    <img src="{{ asset('assets/uploads/images'~illustration.file) }}" alt="">
+{% endfor %}
+
+<button type="button" class="btn btn-primary btn-new" data-collection="#videos">Nouvelle Vidéo</button>
+
+<div id="videos"
+    class="row" 
+    data-prototype="{{ include('admin/trick/_video.html.twig', {form: form.videos.vars.prototype})|e('html_attr') }}"
+    data-index="{{ form.videos|length > 0 ? form.videos|last.vars.video + 1 : 0 }}">
+    {% for video in form.videos %}
+        {{ include('admin/trick/_video.html.twig', {form: video}) }}
+    {% endfor %}
+</div>
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Créer') }}</button>
-{{ form_end(form) }}
+{{ form_end(form, {render_rest: false}) }}

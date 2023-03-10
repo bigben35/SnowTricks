@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Illustration;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Filesystem\Filesystem;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Illustration>
@@ -30,11 +31,14 @@ class IllustrationRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Illustration $entity, bool $flush = false): void
+    public function remove(Illustration $entity, bool $flush = false, $imageDirectory = null): void
     {
         $this->getEntityManager()->remove($entity);
+        $filesystem = new Filesystem();
+        $filesystem->remove($imageDirectory . "/" . $entity->getFile()); // Supprimer l'image du répertoire
 
         if ($flush) {
+            
             $this->getEntityManager()->flush();
         }
     }
