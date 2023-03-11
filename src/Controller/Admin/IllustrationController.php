@@ -76,11 +76,11 @@ class IllustrationController extends AbstractController
             $illustrationRepository->remove($illustration, true, $this->getParameter('images_directory'));
         }
 
+        $this->addFlash('success', 'L\'illustration a bien été supprimée');
 
-        // Si requete effectuée en GET, on redirige vers la page précédente (referer)
-        if ($request->getMethod() === 'GET') {
-            $referer = $request->headers->get('referer');
-            return $this->redirect($referer);
+        // Si requete effectuée en GET, Redirection vers la page précédente
+        if ($request->getMethod() == 'GET') {
+            return $this->redirect($request->headers->get('referer'));
         }
 
         // Sinon, on redirige vers la page listant les illustration

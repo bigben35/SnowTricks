@@ -12,6 +12,9 @@
 <div class="mb-3">
 	<label>Illustrations</label>
 	<hr>
+	<div class="form-error text-danger">
+		{{ form_errors(form.files) }}
+	</div>
 	<div class="row">
 		{% for illustration in trick.illustrations %}
 			<div class="col-4 my-2">
@@ -33,10 +36,16 @@
 	<hr>
 	{% for video in form.videos %}
 		<div class="form-group mb-3">
-			<label for="{{ video.mediaLink.vars.id }}">Vidéo
+			<label for="{{ video.mediaLink.vars.id }}">
+				Vidéo
 				{{ loop.index }}
-				:</label>
+				-
+				{{ video.vars.value |json_encode }}
+			</label>
 			{{ form_widget(video.mediaLink, {'attr': {'class': 'form-control'}}) }}
+			{% if video.vars.value is not null %}
+				<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+			{% endif %}
 		</div>
 	{% endfor %}
 </div>

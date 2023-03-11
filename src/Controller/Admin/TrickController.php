@@ -156,6 +156,15 @@ class TrickController extends AbstractController
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
+
+        // $errors = $form->getErrors(true);
+        // if (!empty($errors)) {
+        //     // afficher les erreurs globales
+        //     dd((string)$errors);
+        // }
+
+        // dd($form->isValid(), (string)$form->getErrors(), $form->getErrors());
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             // On récupère toutes les images (multiple à true ==> Tableau d'images)

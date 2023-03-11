@@ -66,12 +66,13 @@ class TrickType extends AbstractType
                         'constraints' => [
                             new File([
                                 'maxSize' => '1024k',
+                                'maxSizeMessage' => 'Le fichier image ne doit pas dépasser 1 Mo',
                                 'mimeTypes' => [
                                     'image/jpeg',
                                     'image/png',
                                     'image/webp',
                                 ],
-                                'mimeTypesMessage' => 'Please upload a valid image type',
+                                'mimeTypesMessage' => 'Veuillez télécharger une image valide',
                             ])
                         ]
                     ])
