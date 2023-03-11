@@ -1,4 +1,6 @@
-{{ form_row(form.mediaLink) }}
-<div class="form-group">
-    <button type="button" class="btn btn-danger btn-remove">Supprimer</button>
-</div>
+{% block _video_widget %}
+	<div class="form-group">
+		{{ form_row(form.mediaLink) }}
+		<button type="button" class="btn btn-danger btn-remove">Supprimer</button>
+	</div>
+{% endblock %}

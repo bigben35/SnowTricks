@@ -71,13 +71,13 @@ class TrickController extends AbstractController
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                         $this->addFlash('error', $e);
-                    return $this->redirectToRoute('app_admin_trick_new', [], Response::HTTP_SEE_OTHER);
+                        return $this->redirectToRoute('app_admin_trick_new', [], Response::HTTP_SEE_OTHER);
                     }
 
                     // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
                     $illustration = new Illustration();
 
-                
+
                     // On associe l'illustration à la figure
                     $illustration->setFile($newFilename);
 
@@ -91,11 +91,10 @@ class TrickController extends AbstractController
             // On récupère toutes les videos
             $videoFields = $form->get('videos');
 
-            foreach($videoFields as $videoField) {
+            foreach ($videoFields as $videoField) {
                 $video = new Video();
                 $video = $videoField->getData();
                 $videoLink = $video->getMediaLink();
-
             }
 
             $video->setMediaLink();
@@ -105,7 +104,7 @@ class TrickController extends AbstractController
             //  $videoUrl2 = $form->get('video_2')->getData();
 
             //  $video = new Video();
- 
+
             //  // On associe la vidéo à la figure
             //  $video->setMediaLink($videoUrl2);
             //  $trick->addVideo($video);
@@ -124,7 +123,7 @@ class TrickController extends AbstractController
             if (!empty($categoryName)) {
                 $trick->addCategory($categoryName);
             }
-        
+
 
             /** @var User $user */
             $user = $this->getUser();
@@ -143,7 +142,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_trick_show', methods: ['GET'])]
-    
+
     public function show(Trick $trick): Response
     {
         return $this->render('admin/trick/show.html.twig', [
@@ -152,12 +151,11 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_trick_edit', methods: ['GET', 'POST'])]
-    
+
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger, Filesystem $filesystem): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-        // dd($trick->getVideos());
         if ($form->isSubmitted() && $form->isValid()) {
 
             // On récupère toutes les images (multiple à true ==> Tableau d'images)
@@ -201,24 +199,27 @@ class TrickController extends AbstractController
 
             // if ($trick->getVideos() < 3)
             // On récupère toutes les videos
-            $video1 = new Video();
-            $videoUrl1 = $form->get('video_1')->getData();
-            $video1->setMediaLink($videoUrl1);
-            $trick->addVideo($video1);
 
-            $trick->setSlug($slugger->slug($trick->getName())->lower());
-            $trickRepository->save($trick, true);
+            // dd(count($trick->getVideos()));
+
+            // $video1 = new Video();
+            // $videoUrl1 = $form->get('video_1')->getData();
+            // $video1->setMediaLink($videoUrl1);
+            // $trick->addVideo($video1);
+
+            // $trick->setSlug($slugger->slug($trick->getName())->lower());
+            // $trickRepository->save($trick, true);
 
             //catégorie 
-            $categoryName = $form->get('category')->getData();
-            if (!empty($categoryName)) {
-                $trick->addCategory($categoryName);
-            }
+            // $categoryName = $form->get('category')->getData();
+            // if (!empty($categoryName)) {
+            //     $trick->addCategory($categoryName);
+            // }
 
             /** @var User $user */
-            $user = $this->getUser();
-            $trick->setSlug($slugger->slug($trick->getName())->lower());
-            $trick->setUser($user);
+            // $user = $this->getUser();
+            // $trick->setSlug($slugger->slug($trick->getName())->lower());
+            // $trick->setUser($user);
 
             $trickRepository->save($trick, true);
             $this->addFlash('success', "Votre Figure a bien été modifiée !");

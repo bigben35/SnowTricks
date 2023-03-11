@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Count;
 
 class TrickType extends AbstractType
 {
@@ -81,25 +82,19 @@ class TrickType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                
-                // 'attr' => [
-                //     'class' => 'form-control',
-                //     'placeholder' => "Lien Vidéo 1"
-                // ],
-                // 'label' => "Lien Video 1 (3 Max.)",
-                // 'mapped' => false,
-                // 'required' => false
+                'error_bubbling' => false,
+                'required' => false
             ])
 
-                // ->add('videos', TextareaType::class, [
-                //     'mapped' => false,
-                //     'attr' => [
-                //         'class' => 'form-control',
-                //         'placeholder' => "Lien Vidéo"
-                //     ],
-                //     'label' => "Lien Vidéo",
-                //     'required' => false,
-                // ])
+            // ->add('videos', TextareaType::class, [
+            //     'mapped' => false,
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => "Lien Vidéo"
+            //     ],
+            //     'label' => "Lien Vidéo",
+            //     'required' => false,
+            // ])
             // ->add('video_2', TextareaType::class, [
             //     'attr' => [
             //         'class' => 'form-control',
@@ -118,17 +113,17 @@ class TrickType extends AbstractType
             //     'mapped' => false,
             //     'required' => false
             // ])
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => "Catégorie"
-                ],
-                'label' => "Catégorie",
-                'mapped' => false,
-                'required' => false,
-            ])
+            // ->add('category', EntityType::class, [
+            //     'class' => Category::class,
+            //     'choice_label' => 'name',
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => "Catégorie"
+            //     ],
+            //     'label' => "Catégorie",
+            //     'mapped' => false,
+            //     'required' => false,
+            // ])
             ->add('categories')
             // ->add('user', TextType::class, [
             //     'attr' => [
