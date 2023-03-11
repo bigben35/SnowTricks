@@ -19,6 +19,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class TrickRepository extends ServiceEntityRepository
 {
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Trick::class);
@@ -34,10 +36,14 @@ class TrickRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Trick $entity, bool $flush = false): void
+    public function remove(Trick $entity, bool $flush = false, string $imageDirectory = null): void
     {
         $this->getEntityManager()->remove($entity);
+        $illustrations = $entity->getIllustrations();
+        foreach ($illustrations as $illustration) {
 
+            $this->removeImage($entity, $illustration, $imageDirectory);
+        }
         if ($flush) {
             $this->getEntityManager()->flush();
         }
@@ -45,13 +51,13 @@ class TrickRepository extends ServiceEntityRepository
 
 
     // function to remove illustration when update a trick 
-    public function removeImage(Trick $trick, Illustration $illustration)
+    public function removeImage(Trick $trick, Illustration $illustration, $imageDirectory)
     {
         $trick->removeIllustration($illustration); // Supprimer l'image de l'article
         $this->getEntityManager()->remove($illustration); // Supprimer l'image de la base de données
         $this->getEntityManager()->flush(); // Enregistrer les suppressions dans la base de données
         $filesystem = new Filesystem();
-        $filesystem->remove($illustration->getFile()); // Supprimer l'image du répertoire
+        $filesystem->remove($imageDirectory . "/" . $illustration->getFile()); // Supprimer l'image du répertoire
     }
 
 //    /**

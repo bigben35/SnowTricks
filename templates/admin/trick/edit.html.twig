@@ -3,10 +3,10 @@
 {% block title %}SnowTricks - Modifier une Figure{% endblock %}
 
 {% block body %}
-<section class="container my-3">
+<section class="container section-dashboard-admin">
     <h1>Modifier Figure</h1>
 
-    {{ include('admin/trick/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/trick/_form.html.twig', {'button_label': 'Modifier'}) }}
 
     <a href="{{ path('app_admin_trick_index') }}">Retour à la liste</a>
 

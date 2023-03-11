@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Video index
+{% endblock %}
+
+{% block body %}
+	<section class="container section-dashboard-admin">
+		<h1>Video index</h1>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>MediaLink</th>
+					<th>Embed</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for video in videos %}
+					<tr>
+						<td>{{ video.id }}</td>
+						<td>{{ video.mediaLink }}</td>
+						<td>{{ video.embed }}</td>
+						<td>
+							<a href="{{ path('app_admin_video_show', {'id': video.id}) }}">show</a>
+							<a href="{{ path('app_admin_video_edit', {'id': video.id}) }}">edit</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('app_admin_video_new') }}">Create new</a>
+	</section>
+{% endblock %}

@@ -4,9 +4,10 @@
   background-color: #464d53;
   /* margin-bottom: 2rem; */
 }
- /* section{
-  margin-top: 8rem;
- } */
+.section-dashboard-admin {
+  margin-top: 2rem;
+  min-height: 80vh;
+}
 
  body{
   position: relative;
@@ -19,7 +20,7 @@
  .footer-custom{
   text-align: center;
   position: absolute;
-  bottom: 0;
+  /* bottom: 0; */
   width: 100%;
   padding-top: 25px;
   margin-bottom: -11rem;
@@ -67,14 +68,21 @@
     bottom: auto;
 }
 
+.navbar {
+  padding: 0;
+}
 header.masthead{
   min-height: 85vh;
-  margin-top: 5rem;
+  margin-top: 4rem;
   padding-top: 21rem;
 }
 
 #header-image{
   margin-top: 9rem;
+}
+
+.section-dashboard-admin {
+  margin-top: 8rem;
 }
 
 footer{
