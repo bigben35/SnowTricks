@@ -86,46 +86,9 @@ class TrickType extends AbstractType
                 'error_bubbling' => false,
                 'required' => false
             ])
-
-            // ->add('videos', TextareaType::class, [
-            //     'mapped' => false,
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => "Lien Vidéo"
-            //     ],
-            //     'label' => "Lien Vidéo",
-            //     'required' => false,
-            // ])
-            // ->add('video_2', TextareaType::class, [
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => "Lien Vidéo 2"
-            //     ],
-            //     'label' => "Lien Video 2",
-            //     'mapped' => false,
-            //     'required' => false
-            // ])
-            // ->add('video_3', TextareaType::class, [
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => "Lien Vidéo 3"
-            //     ],
-            //     'label' => "Lien Video 3",
-            //     'mapped' => false,
-            //     'required' => false
-            // ])
-            // ->add('category', EntityType::class, [
-            //     'class' => Category::class,
-            //     'choice_label' => 'name',
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => "Catégorie"
-            //     ],
-            //     'label' => "Catégorie",
-            //     'mapped' => false,
-            //     'required' => false,
-            // ])
-            ->add('categories')
+            ->add('categories', null, [
+                'attr' => ['class' => 'form-select'],
+            ])
             // ->add('user', TextType::class, [
             //     'attr' => [
             //         'class' => 'form-control',

@@ -43,6 +43,7 @@
 				{{ video.vars.value |json_encode }}
 			</label>
 			{{ form_widget(video.mediaLink, {'attr': {'class': 'form-control'}}) }}
+
 			{% if video.vars.value is not null %}
 				<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm">Supprimer</a>
 			{% endif %}
@@ -52,6 +53,11 @@
 <div class="mb-3">
 	<button type="button" class="btn btn-primary btn-new" data-collection="#videos">Nouvelle Vidéo</button>
 </div>
-{{ form_widget(form) }}
+<div class="mb-3">
+	<label>Catégories</label>
+	<hr>
+	{{ form_widget(form.categories) }}
+</div>
+{# {{ form_widget(form) }} #}
 <button class="btn">{{ button_label|default('Valider') }}</button>
 {{ form_end(form, {render_rest: false}) }}
