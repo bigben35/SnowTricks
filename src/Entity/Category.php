@@ -56,7 +56,7 @@ class Category
         return $this->trick;
     }
 
-    public function addTrick(Trick $trick): self
+    public function setTrick(Trick $trick): self
     {
         if (!$this->trick->contains($trick)) {
             $this->trick->add($trick);

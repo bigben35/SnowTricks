@@ -39,14 +39,14 @@
 			<label for="{{ video.mediaLink.vars.id }}">
 				Vidéo
 				{{ loop.index }}
-				-
-				{{ video.vars.value |json_encode }}
+				{# -
+				{{ video.vars.value |json_encode }} #}
 			</label>
 			{{ form_widget(video.mediaLink, {'attr': {'class': 'form-control'}}) }}
 
-			{% if video.vars.value is not null %}
+			{# {% if video.vars.value is not null %}
 				<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm">Supprimer</a>
-			{% endif %}
+			{% endif %} #}
 		</div>
 	{% endfor %}
 </div>
