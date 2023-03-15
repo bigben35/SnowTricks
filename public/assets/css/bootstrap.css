@@ -11134,7 +11134,7 @@ header.masthead {
   margin-bottom: 3rem;
 
   padding-top: calc(13rem + 57px);
-
+  height: 90vh;
   padding-bottom: 8rem;
   background: no-repeat center center;
   background-color: #6c757d;
@@ -11163,7 +11163,7 @@ header.masthead .site-heading {
 header.masthead .page-heading h1, header.masthead .page-heading .h1,
 header.masthead .site-heading h1,
 header.masthead .site-heading .h1 {
-  font-size: 4rem;
+  font-size: 3.5rem;
 }
 header.masthead .page-heading .subheading,
 header.masthead .site-heading .subheading {
