@@ -14,6 +14,9 @@
 						<span class="subheading">Site pour passionnés de Snow !</span>
 					</div>
 				</div>
+				<a href="#parent-container" class="btn-arrow-down">
+					<i class="fas fa-arrow-down"></i>
+				</a>
 			</div>
 		</div>
 	</header>
@@ -22,27 +25,37 @@
 {% block body %}
 	{# <h1>Page d'accueil</h1> #}
 <section class="d-flex flex-column m-4">
+<div id="parent-container">
 <div class="d-flex flex-wrap justify-content-center">
 	{% for trick in tricks %}
-		<div class="m-3">
+		<div class="trick-container m-3">
 			<div class="card" style="width: 18rem;">
-				
-					<a href="{{path('trick_show', {slug:trick.slug})}}">
+				<a href="{{path('trick_show', {slug:trick.slug})}}">
 					{% for illustration in trick.illustrations %}
 						<img src="{{asset('assets/uploads/images/' ~ illustration.file)}}" class="card-img-top border" style="height: 190px; object-fit: cover;"></img>
 					{% endfor %}
-					<div class="card-body">
-						<h2 class="post-title">{{trick.name}}</h2>
-					</div>
-					</a>
-				
+						<div class="card-body">
+							<h2 class="post-title">{{trick.name}}</h2>
+						</div>
+				</a>
 			</div>
 		</div>
 	{% endfor %}
-	</div>
+</div>
+</div>
 		<!-- Trick preview-->
 	<div class="d-flex justify-content-center mb-4 p-5">
-		<a class="btn btn-primary text-uppercase" href="#!">Toutes les figures →</a>
+		<button class="load-more btn btn-primary justify-content-center d-flex">Load more
+		<span class="loading hide-loader"><span></span></span>
+		</button>
+	</div>
+	{# <a class="load-more btn btn-primary justify-content-center d-flex">Load more
+	</a> #}
+	<div class="btn-arrow">
+		<i class="fas fa-arrow-up"></i>
 	</div>
 </section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('assets/js/load-more-trick.js') }}"></script>
 {% endblock %}
+
