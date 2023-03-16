@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentTrickRepository;
+use App\Entity\User;
+use App\Entity\Trick;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommentTrickRepository;
 
 #[ORM\Entity(repositoryClass: CommentTrickRepository::class)]
 class CommentTrick
@@ -20,13 +22,18 @@ class CommentTrick
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentTricks')]
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'commentTricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $trick = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentTricks')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'commentTricks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $connected_user = null;
+    private ?User $connectedUser = null;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -71,12 +78,12 @@ class CommentTrick
 
     public function getConnectedUser(): ?User
     {
-        return $this->connected_user;
+        return $this->connectedUser;
     }
 
-    public function setConnectedUser(?User $connected_user): self
+    public function setConnectedUser(?User $connectedUser): self
     {
-        $this->connected_user = $connected_user;
+        $this->connectedUser = $connectedUser;
 
         return $this;
     }

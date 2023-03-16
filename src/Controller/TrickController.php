@@ -7,7 +7,10 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\TrickType;
 use App\Entity\Category;
+use App\Entity\CommentTrick;
 use App\Entity\Illustration;
+use App\Form\CommentType;
+use App\Repository\CommentTrickRepository;
 use App\Repository\TrickRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,19 +24,53 @@ use Symfony\Component\Filesystem\Filesystem;
 #[Route('/trick', name: 'trick_')]
 class TrickController extends AbstractController
 {
-    #[Route('', name: 'index')]
-
-    // function to display trick page 
-    public function index(): Response
+    public function __construct(private SluggerInterface $slugger)
     {
-        return $this->render('trick/index.html.twig');
     }
+
+    // #[Route('', name: 'index')]
+
+    // // function to display trick page 
+    // public function index(): Response
+    // {
+    //     return $this->render('trick/index.html.twig');
+    // }
 
     #[Route('/{slug}', name: 'show')]
     // function to display trick page 
-    public function show(Trick $trick): Response
+    public function show(Trick $trick, Request $request, CommentTrickRepository $commentTrickRepository): Response
     {
-        return $this->render('trick/show.html.twig', ['trick' => $trick]);
+
+        if(!$trick) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        // commentaires 
+        $commentTrick = new CommentTrick();
+        $form = $this->createForm(CommentType::class, $commentTrick);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            // dd($commentTrick);
+            $connectedUser = $this->getUser();
+            $commentTrick->setConnectedUser($connectedUser);
+            $commentTrick->setTrick($trick);
+            $commentTrickRepository->save($commentTrick, true);
+            $this->addFlash('success', "Votre Commentaire a bien été créé !");
+            
+            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
+
+        }
+
+        $commentTricks = $commentTrickRepository->findAll();
+
+
+
+        return $this->render('trick/show.html.twig', [
+            'trick' => $trick,
+            'form' => $form->createView(),
+            'commentTricks' => $commentTricks
+        ]);
     }
 
 
