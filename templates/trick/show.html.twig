@@ -46,21 +46,25 @@
 {% block body %}
 
     <div class="container">
-        <header id="header-image" class="container bg-dark"
-                style="background-image: url({{ asset('assets/uploads/home-bg.jpg') }}); background-position: center; background-size: cover;">
+	{% for illustration in trick.illustrations %}
+	{% if loop.first %}
+        <header id="header-image" class="container bg-dark mb-5"
 
+                style="background-image: url({{ asset('assets/uploads/images/' ~ illustration.file) }}); background-position: center; background-size: cover; border: 2px solid black;">
+	{% endif %}
+	{% endfor %}
             <div class="row h-100">
                 <div class="col-sm-12 col-lg-3 order-3 order-lg-1 "></div>
-                <div class="col-sm-12 col-lg-6 align-self-center text-center text-white order-2">
+                <div class="col-sm-12 col-lg-6 align-self-center text-center text-black order-2">
                     <h1 class="display-4 fw-bolder"
-                        style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ trick.name }}</h1>
+                        style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; background: white; padding: 10px">{{ trick.name }}</h1>
                 </div>
                 <div id="btn-edition"
                      class="col-sm-12 col-lg-3 my-2 align-self-start text-end order-1 order-lg-3">
                     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-                        <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem;"
+                        <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;"
                            href="{{ path('trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil"></i></a>
-						   <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem;"
+						   <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;"
                            href="{{ path('trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-trash-can"></i></a>
                     {% endif %}
                 </div>
@@ -109,12 +113,13 @@
 	
 
 <div class="my-3">
-	<h3>Commentaires({{ trick.commentTricks|length }}) :</h3>
+	<h3>Commentaire(s) ({{ trick.commentTricks|length }}) :</h3>
 	<ul id="post-container" class="list-group">
         {{ include('trick/_commentTricks.html.twig') }}
     </ul>
 
 </div>
+{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
 	<div class="my-5">
 		<h3>Ajouter un Commentaire :</h3>
 		{{ form_start(form) }}
@@ -124,5 +129,6 @@
         </button>
         {{ form_end(form) }}
 	</div>
+{% endif %}
 </div>
 {% endblock %}
