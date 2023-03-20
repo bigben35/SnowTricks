@@ -48,6 +48,10 @@
 }
 
 
+.alert.alert-success.alert-dismissible.mt-4{
+  margin-top: 5rem !important;
+}
+
 
 
 /* MEDIA QUERRIES  */
@@ -83,6 +87,15 @@ header.masthead{
 
 .section-dashboard-admin {
   margin-top: 8rem;
+}
+
+/* .d-none {
+  display: flex !important;
+} */
+
+.alert.alert-success.alert-dismissible.mt-4{
+  margin-top: 5rem !important;
+  margin-bottom: -2rem !important;
 }
 
 footer{

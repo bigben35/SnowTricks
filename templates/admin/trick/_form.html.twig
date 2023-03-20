@@ -20,7 +20,8 @@
 			<div class="col-4 my-2">
 				<p>
 					{% set csrfToken = csrf_token('delete'~ illustration.id) %}
-					<a href="{{path('app_admin_illustration_delete', {id:illustration.id, _token:csrfToken})}}">Suppr. l'image</a>
+					{# <a href="{{path('app_admin_illustration_delete', {id:illustration.id, _token:csrfToken})}}">Suppr. l'image</a> #}
+					{# {{ include('admin/video/_delete_form.html.twig') }} #}
 				</p>
 				<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration {{loop.index}}">
 			</div>
@@ -44,9 +45,9 @@
 			</label>
 			{{ form_widget(video.mediaLink, {'attr': {'class': 'form-control'}}) }}
 
-			{# {% if video.vars.value is not null %}
-				<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm">Supprimer</a>
-			{% endif %} #}
+			{% if video.vars.value is not null %}
+				<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm mt-2" onclick="confirm('Êtes-vous sûr de vouloir supprimer cette image ?');">Supprimer</a>
+			{% endif %}
 		</div>
 	{% endfor %}
 </div>

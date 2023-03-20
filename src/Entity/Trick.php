@@ -54,16 +54,16 @@ class Trick
     private Collection $commentTricks;
 
     #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Illustration::class)]
-    #[Assert\Count(min: 1)]
+    // #[Assert\Count(min: 1)]
     private Collection $illustrations;
 
     #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Video::class)]
-    #[Assert\Count(min: 1)]
+    // #[Assert\Count(min: 1)]
     private Collection $videos;
 
     #[ORM\ManyToMany(cascade: ['persist'], targetEntity: Category::class, inversedBy: 'trick')]
     #[ORM\JoinTable(name: "trick_category")]
-    #[Assert\Count(min: 1)]
+    // #[Assert\Count(min: 1)]
     private Collection $categories;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tricks')]

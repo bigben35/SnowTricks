@@ -88,42 +88,6 @@ class TrickController extends AbstractController
                 }
             }
 
-            // On récupère toutes les videos
-            $videoFields = $form->get('videos');
-
-            foreach ($videoFields as $videoField) {
-                $video = new Video();
-                $video = $videoField->getData();
-                $videoLink = $video->getMediaLink();
-            }
-
-            $video->setMediaLink($videoLink);
-            $trick->addVideo($video);
-
-            //  // On récupère toutes les videos
-            //  $videoUrl2 = $form->get('video_2')->getData();
-
-            //  $video = new Video();
-
-            //  // On associe la vidéo à la figure
-            //  $video->setMediaLink($videoUrl2);
-            //  $trick->addVideo($video);
-
-            //   // On récupère toutes les videos
-            // $videoUrl3 = $form->get('video_3')->getData();
-
-            // $video = new Video();
-
-            // // On associe la vidéo à la figure
-            // $video->setMediaLink($videoUrl3);
-            // $trick->addVideo($video);
-
-            //catégorie 
-            $categoryName = $form->get('categories')->getData();
-            if (!empty($categoryName)) {
-                $trick->addCategory($categoryName);
-            }
-
 
             /** @var User $user */
             $user = $this->getUser();
