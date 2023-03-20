@@ -1,7 +1,7 @@
 {% for label, messages in app.flashes %}
 	{#app.flashes va contenir les messages que l'on va passer depuis un controller #}
 	{% for message in messages %}
-		<div class="alert alert-{{ label }} alert-dismissible mt-4" role="alert">
+		<div class="alert alert-{{ label }} alert-dismissible mt-6" role="alert">
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			<div class="alert-message">
 				{{ message|raw }}
