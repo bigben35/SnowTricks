@@ -39,6 +39,21 @@ class CommentTrickRepository extends ServiceEntityRepository
         }
     }
 
+
+    // pagination 
+    // public function findCommentsPaginated(int $page, string $slug, int $limit = 4): array 
+    // {
+    //     $limit = abs($limit);
+
+    //     $result = [];
+
+    //     $query = $this->getEntityManager()->createQueryBuilder()->select('c')->from('App\Entity\CommentTrick', 'c')->where("");
+
+    //     dd($query->getQuery()->getResult());
+
+    //     return $result;
+    // }
+
 //    /**
 //     * @return CommentTrick[] Returns an array of CommentTrick objects
 //     */
