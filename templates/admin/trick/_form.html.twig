@@ -20,7 +20,7 @@
 			<div class="col-4 my-2">
 				<p>
 					{% set csrfToken = csrf_token('delete'~ illustration.id) %}
-					{# <a href="{{path('app_admin_illustration_delete', {id:illustration.id, _token:csrfToken})}}">Suppr. l'image</a> #}
+					<a href="{{path('app_admin_illustration_delete', {id:illustration.id, _token:csrfToken})}}">Suppr. l'image</a>
 					{# {{ include('admin/video/_delete_form.html.twig') }} #}
 				</p>
 				<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration {{loop.index}}">
@@ -29,22 +29,20 @@
 	</div>
 	{{ form_widget(form.files) }}
 </div>
-    
+
 <div
 	class="mb-3" id="videos" class="row" data-prototype="{{ include('admin/trick/_video.html.twig', {form: form.videos.vars.prototype})|e('html_attr') }}" data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
 	{# {{ form_row(form.videos) }} #}
 	<label>Vidéos</label>
 	<hr>
-    <div class="form-group mb-3">
-        {{ form_widget(form.videos, {'attr': {'class': 'form-control'}}) }}
-    </div>
+	{# <div class="form-group mb-3">
+				{{ form_widget(form.videos, {'attr': {'class': 'form-control'}}) }}
+			</div> #}
 	{% for video in form.videos %}
 		<div class="form-group mb-3">
 			<label for="{{ video.mediaLink.vars.id }}">
 				Vidéo
 				{{ loop.index }}
-				{# -
-				{{ video.vars.value |json_encode }} #}
 			</label>
 			{{ form_widget(video.mediaLink, {'attr': {'class': 'form-control'}}) }}
 
