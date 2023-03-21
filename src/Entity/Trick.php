@@ -50,14 +50,14 @@ class Trick
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $modified_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: CommentTrick::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], orphanRemoval: true, targetEntity: CommentTrick::class)]
     private Collection $commentTricks;
 
-    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Illustration::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], orphanRemoval: true, targetEntity: Illustration::class)]
     // #[Assert\Count(min: 1)]
     private Collection $illustrations;
 
-    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Video::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], orphanRemoval: true, targetEntity: Video::class)]
     // #[Assert\Count(min: 1)]
     private Collection $videos;
 

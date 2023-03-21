@@ -21,7 +21,7 @@ class CommentTrick
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentTricks')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete:"CASCADE")]
     private ?Trick $trick = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentTricks')]
