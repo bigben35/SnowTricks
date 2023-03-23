@@ -45,7 +45,7 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="container mb-5">
 	{% for illustration in trick.illustrations %}
 	{% if loop.first %}
         <header id="header-image" class="container bg-dark mb-5"
@@ -110,15 +110,6 @@
 
 			{% endfor %}
 
-	
-
-<div class="my-3">
-	<h3>Commentaire(s) ({{ trick.commentTricks|length }}) :</h3>
-	<ul id="post-container" class="list-group">
-        {{ include('trick/_commentTricks.html.twig') }}
-    </ul>
-
-</div>
 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
 	<div class="my-5">
 		<h3>Ajouter un Commentaire :</h3>
@@ -130,17 +121,34 @@
         {{ form_end(form) }}
 	</div>
 {% endif %}
-	</div>
+	
+
+<div class="my-3">
+	<h3>Commentaire(s) ({{ trick.commentTricks|length }}) :</h3>
+	<ul id="post-container" class="list-group">
+        {{ include('trick/_commentTricks.html.twig') }}
+    </ul>
+
+</div>
 
 	{# pagination  #}
-	<div class="pagination">
+	{% set path = 'trick_show' %}
+	{% set slug = trick.slug %}
+	{% set pages = commentTricks.pages %}
+	{% set currentPage = commentTricks.page %}
+	{% include "partials/_pagination.html.twig" %}
+	</div>
+	{# <div class="pagination">
         {% if page > 1 %}
             <a href="{{ path('trick_show', {'id': trick.id, 'page': page - 1}) }}">Page précédente</a>
         {% endif %}
 
         {% if page < nb_pages %}
             <a href="{{ path('trick_show', {'id': trick.id, 'page': page + 1}) }}">Page suivante</a>
-		{% endif %}
+		{% endif %} #}
+
+
+
 	{# {% if currentPage > 1 %}
     <li class="page-item">
         <a class="page-link" href="?page={{ currentPage - 1 }}">Précédent</a>

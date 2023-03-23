@@ -66,24 +66,32 @@ class TrickController extends AbstractController
 
         
         // Pagination
+        //on va chercher n° page dans url
         $page = $request->query->getInt('page', 1);
-        $limit = 3;
-        $offset = ($page - 1) * $limit;
 
-        $query = $entityManager->createQueryBuilder()
-            ->select('c')
-            ->from(CommentTrick::class, 'c')
-            ->where('c.trick = :trick')
-            ->setParameter('trick', $trick)
-            ->orderBy('c.createdAt', 'DESC')
-            ->getQuery();
 
-        $paginator = new Paginator($query);
-        $paginator->getQuery()
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
+        // on va chercher les commentaires 
+        $commentTricks = $commentTrickRepository->findCommentsPaginated($page, $trick->getSlug(), 2);
 
-        $commentTricks = $paginator->getIterator();
+
+        // $page = $request->query->getInt('page', 1);
+        // $limit = 3;
+        // $offset = ($page - 1) * $limit;
+
+        // $query = $entityManager->createQueryBuilder()
+        //     ->select('c')
+        //     ->from(CommentTrick::class, 'c')
+        //     ->where('c.trick = :trick')
+        //     ->setParameter('trick', $trick)
+        //     ->orderBy('c.createdAt', 'DESC')
+        //     ->getQuery();
+
+        // $paginator = new Paginator($query);
+        // $paginator->getQuery()
+        //     ->setFirstResult($offset)
+        //     ->setMaxResults($limit);
+
+        // $commentTricks = $paginator->getIterator();
         
         //on va chercher commentaires d'un trick
         // $commentTricks = $commentTrickRepository->findBy(['trick' => $trick],
@@ -123,8 +131,8 @@ class TrickController extends AbstractController
             'trick' => $trick,
             'form' => $form->createView(),
             'commentTricks' => $commentTricks,
-            'page' => $page,
-            'nb_pages' => ceil(count($paginator) / $limit),
+            // 'page' => $page,
+            // 'nb_pages' => ceil(count($paginator) / $limit),
             // 'currentPage' => $page,
             // 'totalPages' => $totalPages
         ]);
