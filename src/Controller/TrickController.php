@@ -7,11 +7,14 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\TrickType;
 use App\Entity\Category;
+use App\Form\CommentType;
 use App\Entity\CommentTrick;
 use App\Entity\Illustration;
-use App\Form\CommentType;
-use App\Repository\CommentTrickRepository;
 use App\Repository\TrickRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CommentTrickRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +22,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\Filesystem\Filesystem;
 
 #[Route('/trick', name: 'trick_')]
 class TrickController extends AbstractController
@@ -38,7 +40,7 @@ class TrickController extends AbstractController
 
     #[Route('/{slug}', name: 'show')]
     // function to display trick page 
-    public function show(Trick $trick, Request $request, CommentTrickRepository $commentTrickRepository): Response
+    public function show(Trick $trick, Request $request, CommentTrickRepository $commentTrickRepository, EntityManagerInterface $entityManager): Response
     {
 
         if(!$trick) {
@@ -62,14 +64,77 @@ class TrickController extends AbstractController
 
         }
 
-        $commentTricks = $commentTrickRepository->findAll();
+        
+        // Pagination
+        //on va chercher n° page dans url
+        $page = $request->query->getInt('page', 1);
 
+
+        // on va chercher les commentaires 
+        $commentTricks = $commentTrickRepository->findCommentsPaginated($page, $trick->getSlug(), 2);
+
+
+        // $page = $request->query->getInt('page', 1);
+        // $limit = 3;
+        // $offset = ($page - 1) * $limit;
+
+        // $query = $entityManager->createQueryBuilder()
+        //     ->select('c')
+        //     ->from(CommentTrick::class, 'c')
+        //     ->where('c.trick = :trick')
+        //     ->setParameter('trick', $trick)
+        //     ->orderBy('c.createdAt', 'DESC')
+        //     ->getQuery();
+
+        // $paginator = new Paginator($query);
+        // $paginator->getQuery()
+        //     ->setFirstResult($offset)
+        //     ->setMaxResults($limit);
+
+        // $commentTricks = $paginator->getIterator();
+        
+        //on va chercher commentaires d'un trick
+        // $commentTricks = $commentTrickRepository->findBy(['trick' => $trick],
+        // ['createdAt' => 'DESC'],
+        // $limit,
+        // $offset);
+
+        // $totalCommentaires = count($commentTricks);
+        // $totalPages = ceil($totalCommentaires / $limit);
+        
+        // $paginatedComments = array_slice($commentTricks, $offset, $limit);
+        // $totalComments = count($commentTricks);
+        // $page = $request->query->getInt('page', 1); // Si le paramètre page n'est pas présent, on utilise la valeur 1 par défaut
+        // $limit = 3; // nombre de commentaires par page
+        // $offset = ($page - 1) * $limit;
+
+        // $pagedComments = array_slice($commentTricks, $offset, $limit);
+        // $totalItems = count($commentTricks); // Nombre total d'éléments
+
+        // // dd($offset);
+        // $commentTricks = $commentTrickRepository->findBy([], ['createdAt' => 'DESC'], $limit, $offset);
+        
+        // // dd($commentTricks);
+        // // $queryBuilder = $commentTrickRepository->createQueryBuilder('c');
+        // // $queryBuilder->setFirstResult($offset);
+        // // $queryBuilder->setMaxResults($limit);
+        // // $queryBuilder->orderBy('c.createdAt', 'DESC');
+
+        // // $commentTricks = $queryBuilder->getQuery()->getResult();
+
+
+        // // calculer le nombre total de pages
+        // $totalPages = ceil(count($commentTricks) / $limit);
 
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
-            'commentTricks' => $commentTricks
+            'commentTricks' => $commentTricks,
+            // 'page' => $page,
+            // 'nb_pages' => ceil(count($paginator) / $limit),
+            // 'currentPage' => $page,
+            // 'totalPages' => $totalPages
         ]);
     }
 

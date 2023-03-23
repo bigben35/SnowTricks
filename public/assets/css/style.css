@@ -254,8 +254,8 @@ header.masthead{
 }
 
 .alert {
-  margin-top: 6rem;
-  margin-bottom: -7rem;
+  margin-top: 6rem !important;
+  margin-bottom: -7rem !important;
 }
 footer{
   padding-bottom: 0;
