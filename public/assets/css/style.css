@@ -253,9 +253,20 @@ header.masthead{
   margin-top: 8rem;
 }
 
+.section-desktop{
+  margin-top: 10rem !important;
+}
+
 .alert {
   margin-top: 6rem !important;
   margin-bottom: -7rem !important;
+}
+
+
+/* page trick comment  */
+.message-comment-user {
+  margin-top: 3rem;
+  margin-bottom: 0 !important;
 }
 footer{
   padding-bottom: 0;
