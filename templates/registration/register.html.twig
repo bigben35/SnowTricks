@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<section class="container my-3">
+	<section class="container my-3 section-desktop">
 		<div class="row">
 			<div class="col form-register">
 				<h1>S'inscrire</h1>
@@ -15,7 +15,7 @@
 				{{ form_row(registrationForm.plainPassword, {
             label: 'Votre mot de passe'
         }) }}
-        		{# {{ form_row(registrationForm.avatar) }} #}
+        		{{ form_row(registrationForm.avatar) }}
                 {{ form_row(registrationForm.Rgpd) }}
 
 				<button type="submit" class="btn btn-primary btn-lg">M'inscrire</button>

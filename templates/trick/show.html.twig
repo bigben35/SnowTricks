@@ -111,6 +111,7 @@
 			{% endfor %}
 
 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+    {% if app.user.isVerified %}
 	<div class="my-5">
 		<h3>Ajouter un Commentaire :</h3>
 		{{ form_start(form) }}
@@ -120,6 +121,9 @@
         </button>
         {{ form_end(form) }}
 	</div>
+    {% else %}
+    <p class="alert alert-primary message-comment-user" role="alert">Vous devez valider votre compte pour pouvoir commenter !</p>
+    {% endif %}
 {% endif %}
 	
 
