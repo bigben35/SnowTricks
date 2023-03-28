@@ -1,3 +1,4 @@
+{% if commentTricks.data is defined and not null %}
 {% for commentTrick in commentTricks.data %}
 
     <li class="list-group-item">
@@ -16,3 +17,5 @@
         <br>{{ commentTrick.comment }}</li>
 
 {% endfor %}
+
+{% endif %}
