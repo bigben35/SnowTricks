@@ -61,11 +61,12 @@
                 </div>
                 <div id="btn-edition"
                      class="col-sm-12 col-lg-3 my-2 align-self-start text-end order-1 order-lg-3">
-                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                    {% if is_granted('ROLE_ADMIN') or trick.user.id == app.user.id %}
                         <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;"
-                           href="{{ path('trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil"></i></a>
-						   <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;"
-                           href="{{ path('trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-trash-can"></i></a>
+                           href="{{ path('trick_edit', {'slug': trick.slug}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette figure?')"><i class="fa-solid fa-pencil"></i></a>
+						<a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;"
+                           href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cette figure?')"><i class="fa-solid fa-trash-can"></i></a>
+                           
                     {% endif %}
                 </div>
             </div>
@@ -73,12 +74,12 @@
         </header>
         <!-- media -->
 
-        <section id="box-media" class="d-none d-lg-flex flex-wrap justify-content-around align-items-center m-1">
+        <section id="box-medias" class="d-none d-lg-flex flex-wrap justify-content-around align-items-center m-1">
             {% for illustration in trick.illustrations %}
 
                 <div class="card m-1 p-2 rounded-lg" style="width: 250px;">
                     <!-- Illustrations-->
-                    <img class="card-img-top" style="height: 161px; object-fit: cover;"
+                    <img class="card-img-top" style="height: 160px; object-fit: cover;"
                     		src="{{ asset('assets/uploads/images/' ~ illustration.file) }}"
                     		alt="description image snow"/>
                 </div>
@@ -90,7 +91,7 @@
 
                 <div class="card m-1" style="width: 250px;">
                     <iframe width="250"
-                            height="161"
+                            height="160"
                             src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}"
                             title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -100,6 +101,13 @@
             {% endfor %}
 
 		</section>
+
+        {# BTN MEDIAS  #}
+        <div  class="row text-center m-3 m-lg-0">
+            <div>
+                <button id="btn-medias" class="d-lg-none btn btn-primary">Voir Médias</button>
+            </div>
+        </div>
 
 		{# DESCRIPTION  #}
 		<div>{{ trick.description }}</div>
@@ -136,11 +144,14 @@
 </div>
 
 	{# pagination  #}
+    {% if commentTricks.pages is defined and commentTricks.pages is not null %}
+    {# <div> #}
 	{% set path = 'trick_show' %}
 	{% set slug = trick.slug %}
 	{% set pages = commentTricks.pages %}
 	{% set currentPage = commentTricks.page %}
 	{% include "partials/_pagination.html.twig" %}
+    {% endif %}
 	</div>
 	{# <div class="pagination">
         {% if page > 1 %}
@@ -199,4 +210,5 @@
     {% endif %}
 </div>
 {% endif %} #}
+<script src="{{ asset('assets/js/load-medias.js') }}"></script>
 {% endblock %}

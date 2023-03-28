@@ -22,6 +22,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 #[Route('/trick', name: 'trick_')]
 class TrickController extends AbstractController
@@ -74,67 +75,11 @@ class TrickController extends AbstractController
         $commentTricks = $commentTrickRepository->findCommentsPaginated($page, $trick->getSlug(), 2);
 
 
-        // $page = $request->query->getInt('page', 1);
-        // $limit = 3;
-        // $offset = ($page - 1) * $limit;
-
-        // $query = $entityManager->createQueryBuilder()
-        //     ->select('c')
-        //     ->from(CommentTrick::class, 'c')
-        //     ->where('c.trick = :trick')
-        //     ->setParameter('trick', $trick)
-        //     ->orderBy('c.createdAt', 'DESC')
-        //     ->getQuery();
-
-        // $paginator = new Paginator($query);
-        // $paginator->getQuery()
-        //     ->setFirstResult($offset)
-        //     ->setMaxResults($limit);
-
-        // $commentTricks = $paginator->getIterator();
-        
-        //on va chercher commentaires d'un trick
-        // $commentTricks = $commentTrickRepository->findBy(['trick' => $trick],
-        // ['createdAt' => 'DESC'],
-        // $limit,
-        // $offset);
-
-        // $totalCommentaires = count($commentTricks);
-        // $totalPages = ceil($totalCommentaires / $limit);
-        
-        // $paginatedComments = array_slice($commentTricks, $offset, $limit);
-        // $totalComments = count($commentTricks);
-        // $page = $request->query->getInt('page', 1); // Si le paramètre page n'est pas présent, on utilise la valeur 1 par défaut
-        // $limit = 3; // nombre de commentaires par page
-        // $offset = ($page - 1) * $limit;
-
-        // $pagedComments = array_slice($commentTricks, $offset, $limit);
-        // $totalItems = count($commentTricks); // Nombre total d'éléments
-
-        // // dd($offset);
-        // $commentTricks = $commentTrickRepository->findBy([], ['createdAt' => 'DESC'], $limit, $offset);
-        
-        // // dd($commentTricks);
-        // // $queryBuilder = $commentTrickRepository->createQueryBuilder('c');
-        // // $queryBuilder->setFirstResult($offset);
-        // // $queryBuilder->setMaxResults($limit);
-        // // $queryBuilder->orderBy('c.createdAt', 'DESC');
-
-        // // $commentTricks = $queryBuilder->getQuery()->getResult();
-
-
-        // // calculer le nombre total de pages
-        // $totalPages = ceil(count($commentTricks) / $limit);
-
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
             'commentTricks' => $commentTricks,
-            // 'page' => $page,
-            // 'nb_pages' => ceil(count($paginator) / $limit),
-            // 'currentPage' => $page,
-            // 'totalPages' => $totalPages
         ]);
     }
 
@@ -147,6 +92,10 @@ class TrickController extends AbstractController
         
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger, Filesystem $filesystem): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN') && $trick->getUser() != $this->getUser()) {
+            throw new AccessDeniedException("Vous n'avez pas l'autorisation d'éditer cette figure !");
+        }
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
         // dd($trick->getVideos());
@@ -174,7 +123,7 @@ class TrickController extends AbstractController
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                         $this->addFlash('error', $e);
-                        return $this->redirectToRoute('app_trick_edit', [], Response::HTTP_SEE_OTHER);
+                        return $this->redirectToRoute('trick_edit', [], Response::HTTP_SEE_OTHER);
                     }
     
                     // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
@@ -214,14 +163,32 @@ class TrickController extends AbstractController
     
             $trickRepository->save($trick, true);
             $this->addFlash('success', "Votre Figure a bien été modifiée !");
-            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
+
+    
     
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
         ]);
     }
+
+
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+{
+    if (!$this->isGranted('ROLE_ADMIN') && $trick->getUser() != $this->getUser()) {
+        throw new AccessDeniedException("Vous n'avez pas l'autorisation pour supprimer ce Trick !");
+    }
+
+    if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
+        $trickRepository->remove($trick, true);
+    }
+
+    return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+
+}
 }
 
 
