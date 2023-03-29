@@ -52,15 +52,11 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             $category = $this->getReference('category-' . rand(1, 5));
             $trick->addCategory($category);
 
-
-            // Ajout d'une illustration
-            $illustration = new Illustration();
-            $illustration->setFile('trick-pix.jpg');
-            $trick->addIllustration($illustration);
-
             // Ajout de vidéos
-            (new Video())->setMediaLink('https://www.youtube.com/watch?v=mBB7CznvSPQ');
-            (new Video())->setMediaLink('https://www.youtube.com/watch?v=AMH992l_nRg');
+            $video1 = (new Video())->setMediaLink('https://www.youtube.com/watch?v=mBB7CznvSPQ');
+            $video2 = (new Video())->setMediaLink('https://www.youtube.com/watch?v=AMH992l_nRg');
+            $trick->addVideo($video1);
+            $trick->addVideo($video2);
 
             // Ajout d'un commentaire
             $comment = new CommentTrick();
