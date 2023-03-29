@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // verification compte grace a envoi d'email 
     #[ORM\Column(type: 'boolean')]
-    private $is_verified = false;
+    private $isVerified = false;
 
     // stocker le reset token (réinitialisation du password)
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
@@ -198,12 +198,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // valider compte grace a email 
     public function getIsVerified(): ?bool
     {
-        return $this->is_verified;
+        return $this->isVerified;
     }
 
-    public function setIsVerified(bool $is_verified): self
+    public function setIsVerified(bool $isVerified): self
     {
-        $this->is_verified = $is_verified;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

@@ -20,11 +20,11 @@ class Trick
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
-    private ?string $name = null;
+    private ?string $name;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
@@ -93,7 +93,7 @@ class Trick
     public function __toString()
     {
         return $this->name;
-        
+
         // return $this->illustration;
         // return $this->author;
         // return $this->description;

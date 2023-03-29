@@ -3,31 +3,67 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Service\JWTService;
+use Doctrine\ORM\EntityManager;
+use App\Service\SendMailService;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
-use App\Service\JWTService;
-use App\Service\SendMailService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, SendMailService $mail, JWTService $jwt): Response
+    public function register(Request $request, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, SendMailService $mail, JWTService $jwt): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //username
+            // $user->setUsername();
+            //avatar
+            $avatarFile = $form->get('avatar')->getData();
+            // dd($avatarFile);
+            if ($avatarFile instanceof UploadedFile) {
+                if ($avatarFile->isValid()) {
+                    $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $avatarFileName = uniqid().'.'.$avatarFile->guessExtension();
+
+                    try {
+                        $avatarFile->move(
+                            $this->getParameter('avatars_directory'),
+                            $avatarFileName
+                        );
+                    } catch (FileException $e) {
+                        // Handle the exception
+                        $this->addFlash('error', $e);
+                    }
+
+                    $user->setAvatar($avatarFileName);
+                }
+            } 
+            // else {
+            //     // Si aucun fichier d'avatar n'a été envoyé, utilisez une image par défaut
+            //     $user->setAvatar('uploads/default-avatar.png');
+            // }
+            
+            
+
+            
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -35,9 +71,9 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setRoles(["ROLE_USER"]);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userRepository->save($user, true);
             // do anything else you need here, like send an email
 
             // on génère le JWT de l'utilisateur 
@@ -74,7 +110,10 @@ class RegistrationController extends AbstractController
                 $authenticator,
                 $request
             );
+            $this->addFlash('success', "Votre Compte a bien été créé ! Vérifiez votre boîte mail pour valider votre compte");
+            return $this->redirectToRoute('app_login');
         }
+        
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),

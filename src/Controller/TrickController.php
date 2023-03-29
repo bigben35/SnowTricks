@@ -7,8 +7,14 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\TrickType;
 use App\Entity\Category;
+use App\Form\CommentType;
+use App\Entity\CommentTrick;
 use App\Entity\Illustration;
 use App\Repository\TrickRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CommentTrickRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,14 +22,13 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 #[Route('/trick', name: 'trick_')]
 class TrickController extends AbstractController
 {
-    #[Route('', name: 'index')]
-
     // function to display trick page 
+    #[Route('', name: 'index')]
     public function index(TrickRepository $trickRepository): Response
     {
         return $this->render('trick/index.html.twig', [
@@ -31,11 +36,55 @@ class TrickController extends AbstractController
         ]);
     }
 
+    // #[Route('', name: 'index')]
+
+    // // function to display trick page 
+    // public function index(): Response
+    // {
+    //     return $this->render('trick/index.html.twig');
+    // }
+
     #[Route('/{slug}', name: 'show')]
     // function to display trick page 
-    public function show(Trick $trick): Response
+    public function show(Trick $trick, Request $request, CommentTrickRepository $commentTrickRepository, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('trick/show.html.twig', ['trick' => $trick]);
+
+        if (!$trick) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        // commentaires 
+        $commentTrick = new CommentTrick();
+        $form = $this->createForm(CommentType::class, $commentTrick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // dd($commentTrick);
+            $connectedUser = $this->getUser();
+            $commentTrick->setConnectedUser($connectedUser);
+            $commentTrick->setTrick($trick);
+            $commentTrickRepository->save($commentTrick, true);
+            $this->addFlash('success', "Votre Commentaire a bien été créé !");
+
+            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
+        }
+
+
+        // Pagination
+        //on va chercher n° page dans url
+        $page = $request->query->getInt('page', 1);
+
+
+        // on va chercher les commentaires 
+        $commentTricks = $commentTrickRepository->findCommentsPaginated($page, $trick->getSlug(), 2);
+
+
+
+        return $this->render('trick/show.html.twig', [
+            'trick' => $trick,
+            'form' => $form->createView(),
+            'commentTricks' => $commentTricks,
+        ]);
     }
 
 
@@ -47,6 +96,10 @@ class TrickController extends AbstractController
 
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger, Filesystem $filesystem): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN') && $trick->getUser() != $this->getUser()) {
+            throw new AccessDeniedException("Vous n'avez pas l'autorisation d'éditer cette figure !");
+        }
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
         // dd($trick->getVideos());
@@ -74,7 +127,7 @@ class TrickController extends AbstractController
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                         $this->addFlash('error', $e);
-                        return $this->redirectToRoute('app_trick_edit', [], Response::HTTP_SEE_OTHER);
+                        return $this->redirectToRoute('trick_edit', [], Response::HTTP_SEE_OTHER);
                     }
 
                     // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
@@ -114,12 +167,27 @@ class TrickController extends AbstractController
 
             $trickRepository->save($trick, true);
             $this->addFlash('success', "Votre Figure a bien été modifiée !");
-            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
         ]);
+    }
+
+
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN') && $trick->getUser() != $this->getUser()) {
+            throw new AccessDeniedException("Vous n'avez pas l'autorisation pour supprimer ce Trick !");
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
+            $trickRepository->remove($trick, true);
+        }
+
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
 }

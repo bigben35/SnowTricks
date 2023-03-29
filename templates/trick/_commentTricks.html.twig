@@ -1,0 +1,21 @@
+{% if commentTricks.data is defined and not null %}
+{% for commentTrick in commentTricks.data %}
+
+    <li class="list-group-item">
+    {% if commentTrick.connectedUser.avatar %}
+    <small><img class=""
+                                            style="height: 50px; width: 50px; border-radius: 100%; text-align: center; object-fit: cover;"
+                                            src="{{ asset('assets/uploads/avatars/'~ commentTrick.connectedUser.avatar) }}"
+                                            alt="..."/></small>
+    {% else %}
+    <small><img class=""
+                                            style="height: 50px; width: 50px; border-radius: 100%; text-align: center; object-fit: cover;"
+                                            src="{{ asset('assets/uploads/default-avatar.png') }}"
+                                            alt="..."/></small>
+    {% endif %}
+        <p style="display: inline-block">{{ commentTrick.connectedUser }} - Créé le {{ commentTrick.createdAt|date("d/m/Y") }}</p>
+        <br>{{ commentTrick.comment }}</li>
+
+{% endfor %}
+
+{% endif %}

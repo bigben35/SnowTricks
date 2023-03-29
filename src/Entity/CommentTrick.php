@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentTrickRepository;
+use App\Entity\User;
+use App\Entity\Trick;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommentTrickRepository;
 
 #[ORM\Entity(repositoryClass: CommentTrickRepository::class)]
 class CommentTrick
@@ -18,15 +20,20 @@ class CommentTrick
     private ?string $comment = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentTricks')]
-    #[ORM\JoinColumn(nullable: false, onDelete:"CASCADE")]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Trick $trick = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentTricks')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'commentTricks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $connected_user = null;
+    private ?User $connectedUser = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -47,12 +54,12 @@ class CommentTrick
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -71,12 +78,12 @@ class CommentTrick
 
     public function getConnectedUser(): ?User
     {
-        return $this->connected_user;
+        return $this->connectedUser;
     }
 
-    public function setConnectedUser(?User $connected_user): self
+    public function setConnectedUser(?User $connectedUser): self
     {
-        $this->connected_user = $connected_user;
+        $this->connectedUser = $connectedUser;
 
         return $this;
     }
