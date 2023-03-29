@@ -5,6 +5,10 @@
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/assets/uploads
+!/public/assets/uploads/images/.gitkeep 
+!/public/assets/uploads/avatars/trick-pix.jpg 
+!/public/assets/uploads/avatars/.gitkeep 
+
 /public/bundles/
 /var/
 /vendor/

@@ -11,28 +11,11 @@ class CategoryFixtures extends Fixture
     private $counter = 1; //créer un compteur pour pouvoir utiliser category_id
     public function load(ObjectManager $manager): void
     {
-        $category = $this->createCategory('180', $manager);
-        $category = $this->createCategory('360', $manager);
-        $category = $this->createCategory('540', $manager);
-        $category = $this->createCategory('720', $manager);
-        $category = $this->createCategory('1080', $manager);
-
-
-        // $category = new Category();
-        // $category->setName('360');
-        // $manager->persist($category);
-
-        // $category = new Category();
-        // $category->setName('540');
-        // $manager->persist($category);
-
-        // $category = new Category();
-        // $category->setName('720');
-        // $manager->persist($category);
-
-        // $category = new Category();
-        // $category->setName('1080');
-        // $manager->persist($category);
+        $this->createCategory('180', $manager);
+        $this->createCategory('360', $manager);
+        $this->createCategory('540', $manager);
+        $this->createCategory('720', $manager);
+        $this->createCategory('1080', $manager);
 
         $manager->flush();
     }
@@ -44,7 +27,7 @@ class CategoryFixtures extends Fixture
         $category->setName($name);
         $manager->persist($category);
 
-        $this->addReference(''.$this->counter, $category);
+        $this->addReference('category-' . $this->counter, $category);
         $this->counter++;               //stock des ref que je vais rechercher sur TrickFixtures
 
         return $category;
