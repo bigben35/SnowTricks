@@ -33,6 +33,7 @@ class TrickType extends AbstractType
             ->add('description', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'style' => 'height: 150px;',
                     'placeholder' => "Description"
                 ],
                 'label' => "Description"

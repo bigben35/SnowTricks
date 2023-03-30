@@ -79,6 +79,7 @@ class ContactType extends AbstractType
             ->add('message', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'style' => 'height: 150px; margin-bottom: 2rem;',
                     'min' => 1,
                     'max' => 5
                 ],

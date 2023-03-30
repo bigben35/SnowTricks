@@ -170,29 +170,8 @@ class TrickController extends AbstractController
                 }
             }
 
-            // if ($trick->getVideos() < 3)
-            // On récupère toutes les videos
-
-            // dd(count($trick->getVideos()));
-
-            // $video1 = new Video();
-            // $videoUrl1 = $form->get('video_1')->getData();
-            // $video1->setMediaLink($videoUrl1);
-            // $trick->addVideo($video1);
-
-            // $trick->setSlug($slugger->slug($trick->getName())->lower());
-            // $trickRepository->save($trick, true);
-
-            //catégorie 
-            // $categoryName = $form->get('category')->getData();
-            // if (!empty($categoryName)) {
-            //     $trick->addCategory($categoryName);
-            // }
 
             /** @var User $user */
-            // $user = $this->getUser();
-            // $trick->setSlug($slugger->slug($trick->getName())->lower());
-            // $trick->setUser($user);
 
             $trickRepository->save($trick, true);
             $this->addFlash('success', "Votre Figure a bien été modifiée !");

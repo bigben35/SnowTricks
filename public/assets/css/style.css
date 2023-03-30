@@ -291,9 +291,12 @@ body {
     margin-top: 5rem !important;
     margin-bottom: -2rem !important;
   }
+  .alert.alert-success.alert-dismissible.mt-6 {
+    margin-top: 5rem !important;
+  }
 
   .section-desktop {
-    margin-top: 10rem !important;
+    margin-top: 8rem !important;
   }
 
   /* .alert {

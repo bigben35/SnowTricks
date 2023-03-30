@@ -3,8 +3,8 @@
 {% block title %}SnowTricks - Modifier une Figure{% endblock %}
 
 {% block body %}
-<section class="container my-3">
-    <h1>Modifier Figure</h1>
+<section class="container section-desktop mt-5">
+    <h1 class="mb-3">Modifier "{{ trick.name }}"</h1>
 
     {{ include('admin/trick/_form.html.twig', {'button_label': 'Update'}) }}
 

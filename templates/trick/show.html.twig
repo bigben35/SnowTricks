@@ -45,7 +45,7 @@
 
 {% block body %}
 
-	<div class="container mb-5">
+	<div class="container mb-5 section-desktop">
 		{% for illustration in trick.illustrations %}
 			{% if loop.first %}
 				<header id="header-image" class="container bg-dark mb-5" style="background-image: url({{ asset('assets/uploads/images/' ~ illustration.file) }}); background-position: center; background-size: cover; border: 2px solid black;">
@@ -61,9 +61,10 @@
 						<a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;" href="{{ path('trick_edit', {'slug': trick.slug}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette figure?')">
 							<i class="fa-solid fa-pencil"></i>
 						</a>
-						<a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cette figure?')">
+                        {{ include('trick/_delete.html.twig') }}
+						{# <a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cette figure?')">
 							<i class="fa-solid fa-trash-can"></i>
-						</a>
+						</a> #}
 
 					{% endif %}
 				</div>
@@ -76,7 +77,6 @@
         <section id="box-medias" class="d-none d-lg-flex flex-wrap justify-content-around align-items-center m-1">
 			{% for illustration in trick.illustrations %}
 
-
                 <div class="card m-1 p-2 rounded-lg" style="width: 250px;">
                     <!-- Illustrations-->
                     <img class="card-img-top" style="height: 160px; object-fit: cover;"
@@ -86,16 +86,9 @@
                     <!-- Boutons pour éditer et supprimer l'illustration -->
                     <div class="mt-2">
                         <a href="#" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-trash-can"></i></a>
+                        <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
                     </div>
                 </div>
-
-				<div
-					class="card m-1 p-2 rounded-lg" style="width: 250px;">
-					<!-- Illustrations-->
-					<img class="card-img-top" style="height: 160px; object-fit: cover;" src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" alt="description image snow"/>
-				</div>
-
 
 			{% endfor %}
 
@@ -103,7 +96,7 @@
 			{% for video in trick.videos %}
 
 
-                <div class="card m-1" style="width: 250px;">
+                <div class="card m-1 p-2 rounded-lg">
                     <iframe width="250"
                             height="160"
                             src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}"
@@ -112,19 +105,11 @@
                             allowfullscreen></iframe>
 
                     <!-- Boutons pour éditer et supprimer une vidéo -->
-                    <div class="mt-2">
-                        <a href="#" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-trash-can"></i></a>
-                    </div>
+                <div class="media-buttons" style="margin-top: 0.5rem;">
+                    <a href="#" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding: 0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
+                    <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding: 0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
                 </div>
-
-				<div class="card m-1" style="width: 250px;">
-					<iframe width="250" height="160" src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                     <div class="media-buttons" style="margin-top: 0.5rem;">
-                <a href="#" class="btn btn-primary" style="font-size: 1.5rem; padding: 0.5rem 1rem;"><i class="fa-solid fa-pencil"></i></a>
-                <a href="#" class="btn btn-danger" style="font-size: 1.5rem; padding: 0.5rem 1rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
-            </div>
-				</div>
+			</div>
 
 
 			{% endfor %}
@@ -193,102 +178,6 @@ L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit
 	{% include "partials/_pagination.html.twig" %}
     {% endif %}
 
-		{# CATEGORIE  #}
-		{% for category in trick.categories %}
-			<div class="mx-4 px-3 py-1 border">{{ category.name }}</div>
-
-		{% endfor %}
-
-		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-			{% if app.user.isVerified %}
-				<div class="my-5">
-					<h3>Ajouter un Commentaire :</h3>
-					{{ form_start(form) }}
-					{{ form_widget(form) }}
-					<button type="submit" class="btn btn-primary">
-						Commenter
-					</button>
-					{{ form_end(form) }}
-				</div>
-			{% else %}
-				<p class="alert alert-primary message-comment-user" role="alert">Vous devez valider votre compte pour pouvoir commenter !</p>
-			{% endif %}
-		{% endif %}
-
-
-		<div class="my-3">
-			<h3>Commentaire(s) ({{ trick.commentTricks|length }}) :</h3>
-			<ul id="post-container" class="list-group">
-				{{ include('trick/_commentTricks.html.twig') }}
-			</ul>
-
-		</div>
-
-		{# pagination  #}
-		{% if commentTricks.pages is defined and commentTricks.pages is not null %}
-			{# <div> #}
-			{% set path = 'trick_show' %}
-			{% set slug = trick.slug %}
-			{% set pages = commentTricks.pages %}
-			{% set currentPage = commentTricks.page %}
-			{% include "partials/_pagination.html.twig" %}
-		{% endif %}
-
 	</div>
-	{# <div class="pagination">
-	        {% if page > 1 %}
-	            <a href="{{ path('trick_show', {'id': trick.id, 'page': page - 1}) }}">Page précédente</a>
-	        {% endif %}
-	
-	        {% if page < nb_pages %}
-	            <a href="{{ path('trick_show', {'id': trick.id, 'page': page + 1}) }}">Page suivante</a>
-			{% endif %} #}
-
-
-	{# {% if currentPage > 1 %}
-	    <li class="page-item">
-	        <a class="page-link" href="?page={{ currentPage - 1 }}">Précédent</a>
-	    </li>
-	{% else %}
-	    <li class="page-item disabled">
-	        <span class="page-link">Précédent</span>
-	    </li>
-	{% endif %}
-	
-	{% for page in range(1, pageCount) %}
-	    <li class="page-item{% if page == currentPage %} active{% endif %}">
-	        <a class="page-link" href="?page={{ page }}">{{ page }}</a>
-	    </li>
-	{% endfor %}
-	
-	{% if currentPage < pageCount %}
-	    <li class="page-item">
-	        <a class="page-link" href="?page={{ currentPage + 1 }}">Suivant</a>
-	    </li>
-	{% else %}
-	    <li class="page-item disabled">
-	        <span class="page-link">Suivant</span>
-	    </li>
-	{% endif %} #}
-
-
-	{# {% if totalPages > 1 %}
-	    <div class="pagination">
-	    {% if currentPage != 1 %}
-	        <a href="{{ path('trick_show', { 'id': trick.id, 'page': currentPage - 1 }) }}">Précédent</a>
-	    {% endif %}
-	
-	    {% for i in 1..totalPages %}
-	        {% if i == currentPage %}
-	            <span class="current-page">{{ currentPage }}</span>
-	        {% else %}
-	            <a href="{{ path('trick_show', { 'id': trick.id, 'page': i }) }}">{{ i }}</a>
-	        {% endif %}
-	    {% endfor %}
-	
-	    {% if currentPage != totalPages %}
-	        <a href="{{ path('trick_show', { 'id': trick.id, 'page': currentPage + 1 }) }}">Suivant</a>
-	    {% endif %}
-	</div>
-	{% endif %} #}<script src="{{ asset('assets/js/load-medias.js') }}"> </script>
+<script src="{{ asset('assets/js/load-medias.js') }}"> </script>
 {% endblock %}
