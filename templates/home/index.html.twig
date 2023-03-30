@@ -24,10 +24,10 @@
 
 {% block body %}
 	{# <h1>Page d'accueil</h1> #}
-	<section class="d-flex flex-column m-4">
+	<section id="parent-container" class="d-flex flex-column m-4">
 		<div class="d-flex flex-wrap justify-content-center">
 			{% for trick in tricks %}
-				<div class="m-3">
+				<div class="trick-container m-3">
 					<div class="card" style="width: 18rem;">
 
 						<a href="{{path('trick_show', {slug:trick.slug})}}">
@@ -43,9 +43,19 @@
 				</div>
 			{% endfor %}
 		</div>
+		</div>
 		<!-- Trick preview-->
-		<div class="d-flex justify-content-center pt-5">
-			<a class="btn btn-primary text-uppercase" href="#!">Toutes les figures →</a>
+		<div class="d-flex justify-content-center mb-4 p-5">
+			<button class="load-more btn btn-primary justify-content-center d-flex">Load more
+		<span class="loading hide-loader"><span></span></span>
+		</button>
+	</div>
+	{# <a class="load-more btn btn-primary justify-content-center d-flex">Load more
+	</a> #}
+	<div class="btn-arrow">
+		<i class="fas fa-arrow-up"></i>
 		</div>
 	</section>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('assets/js/load-more-trick.js') }}"></script>
 {% endblock %}

@@ -42,7 +42,7 @@ $(document).ready(function() {
 const btnArrow = document.querySelector('.btn-arrow');
 window.onscroll = function() {
   // let scrollToTopBtn = document.getElementsByClassName("btn-arrow");
-  if (countVisibleTricks() >= 15) {
+  if (countVisibleTricks() >= 10) {
     btnArrow.classList.add('visible');
   } else {
     btnArrow.classList.remove('visible');

@@ -198,7 +198,7 @@ body {
 }
 
 .btn-arrow.visible {
-  bottom: 5rem;
+  bottom: 0.5rem;
   opacity: 1;
 }
 
@@ -219,7 +219,7 @@ body {
   justify-content: center;
   align-items: center;
   position: absolute;
-  right: 20px;
+  right: 2rem;
   top: 25rem;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.8);
@@ -266,8 +266,7 @@ body {
   }
 
   .btn-arrow-down {
-    right: 2rem;
-    top: 14rem;
+    top: 15rem;
   }
 
   .navbar {
@@ -293,7 +292,7 @@ body {
     margin-bottom: -2rem !important;
   }
 
-  =======.section-desktop {
+  .section-desktop {
     margin-top: 10rem !important;
   }
 
@@ -309,7 +308,7 @@ body {
     margin-bottom: 0 !important;
   }
 
-  >>>>>>>main footer {
+  footer {
     padding-bottom: 0;
   }
 }
@@ -317,5 +316,6 @@ body {
 @media screen and (min-width: 578px) and (max-width: 767px) {
   .btn-arrow-down {
     right: -1rem;
+    top: 25rem;
   }
 }
