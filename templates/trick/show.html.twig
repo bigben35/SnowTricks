@@ -88,6 +88,10 @@
 
 				<div class="card m-1" style="width: 250px;">
 					<iframe width="250" height="160" src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <div class="media-buttons" style="margin-top: 0.5rem;">
+                <a href="#" class="btn btn-primary" style="font-size: 1.5rem; padding: 0.5rem 1rem;"><i class="fa-solid fa-pencil"></i></a>
+                <a href="#" class="btn btn-danger" style="font-size: 1.5rem; padding: 0.5rem 1rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
+            </div>
 				</div>
 
 			{% endfor %}
