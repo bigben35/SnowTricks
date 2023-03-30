@@ -72,8 +72,23 @@
 		</header>
 
 		<!-- MEDIAS -->
+
         <section id="box-medias" class="d-none d-lg-flex flex-wrap justify-content-around align-items-center m-1">
 			{% for illustration in trick.illustrations %}
+
+
+                <div class="card m-1 p-2 rounded-lg" style="width: 250px;">
+                    <!-- Illustrations-->
+                    <img class="card-img-top" style="height: 160px; object-fit: cover;"
+                    		src="{{ asset('assets/uploads/images/' ~ illustration.file) }}"
+                    		alt="description image snow"/>
+
+                    <!-- Boutons pour éditer et supprimer l'illustration -->
+                    <div class="mt-2">
+                        <a href="#" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
+                        <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-trash-can"></i></a>
+                    </div>
+                </div>
 
 				<div
 					class="card m-1 p-2 rounded-lg" style="width: 250px;">
@@ -81,10 +96,27 @@
 					<img class="card-img-top" style="height: 160px; object-fit: cover;" src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" alt="description image snow"/>
 				</div>
 
+
 			{% endfor %}
 
 			{# VIDEOS  #}
 			{% for video in trick.videos %}
+
+
+                <div class="card m-1" style="width: 250px;">
+                    <iframe width="250"
+                            height="160"
+                            src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}"
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+
+                    <!-- Boutons pour éditer et supprimer une vidéo -->
+                    <div class="mt-2">
+                        <a href="#" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
+                        <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-trash-can"></i></a>
+                    </div>
+                </div>
 
 				<div class="card m-1" style="width: 250px;">
 					<iframe width="250" height="160" src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -94,19 +126,72 @@
             </div>
 				</div>
 
+
 			{% endfor %}
 
 		</section>
 
-		{# BTN MEDIAS  #}
-		<div class="row text-center m-3 m-lg-0">
-			<div>
-				<button id="btn-medias" class="d-lg-none btn btn-primary">Voir Médias</button>
-			</div>
-		</div>
 
-		{# DESCRIPTION  #}
-		<div>{{ trick.description }}</div>
+        {# BTN MEDIAS  #}
+        <div class="row text-center m-3 m-lg-0">
+            <div>
+                <button id="btn-medias" class="d-lg-none btn btn-primary mb-3">Voir Médias</button>
+            </div>
+        </div>
+
+        <div class="container mt-4" style="max-width: 600px;">
+            <div class="row"><p>Trick créé le: <strong>{{ trick.createdAt|date('d-m-Y') }}</strong></p></div>
+            {# DESCRIPTION  #}
+                <h4 class="mb-3">Description :</h4>
+            <div class="row p-2 mb-4"  style="height: 200px; max-height: 200px; overflow-y: auto; border: solid 1px black;">{{ trick.description }}. D'où vient-il?
+Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les usages de ce mot dans la littérature classique, découvrit la source incontestable du Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet...", proviennent de la section 1.10.32.
+
+
+L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914).</div>
+
+            {# CATEGORIE  #}
+            <div class="d-flex flex-wrap bd-highlight mb-3">
+            <h4 class="mb-3" style="width: 100%;">Categorie :</h4>
+                {% for category in trick.categories %}
+                    <div class="mx-4 px-3 py-1 border-info shadow bg-light">{{ category.name }}</div>
+
+                {% endfor %}
+            </div>
+        </div>
+{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+    {% if app.user.isVerified %}
+	<div class="my-5">
+		<h3>Ajouter un Commentaire :</h3>
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<button type="submit" class="btn btn-primary">
+                Commenter
+        </button>
+        {{ form_end(form) }}
+	</div>
+    {% else %}
+    <p class="alert alert-primary message-comment-user" role="alert">Vous devez valider votre compte pour pouvoir commenter !</p>
+    {% endif %}
+{% endif %}
+	
+
+<div class="my-2 pb-5">
+	<h3>Commentaire(s) ({{ trick.commentTricks|length }}) :</h3>
+	<ul id="post-container" class="list-group">
+        {{ include('trick/_commentTricks.html.twig') }}
+    </ul>
+
+</div>
+
+	{# pagination  #}
+    {% if commentTricks.pages is defined and commentTricks.pages is not null %}
+    {# <div> #}
+	{% set path = 'trick_show' %}
+	{% set slug = trick.slug %}
+	{% set pages = commentTricks.pages %}
+	{% set currentPage = commentTricks.page %}
+	{% include "partials/_pagination.html.twig" %}
+    {% endif %}
 
 		{# CATEGORIE  #}
 		{% for category in trick.categories %}
@@ -148,6 +233,7 @@
 			{% set currentPage = commentTricks.page %}
 			{% include "partials/_pagination.html.twig" %}
 		{% endif %}
+
 	</div>
 	{# <div class="pagination">
 	        {% if page > 1 %}
