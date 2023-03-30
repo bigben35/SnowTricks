@@ -20,11 +20,11 @@ class Trick
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank()]
-    private ?string $name = null;
+    private ?string $name;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
@@ -50,17 +50,20 @@ class Trick
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $modified_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: CommentTrick::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], orphanRemoval: true, targetEntity: CommentTrick::class)]
     private Collection $commentTricks;
 
-    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Illustration::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], orphanRemoval: true, targetEntity: Illustration::class)]
+    // #[Assert\Count(min: 1)]
     private Collection $illustrations;
 
-    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], targetEntity: Video::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', cascade: ['persist'], orphanRemoval: true, targetEntity: Video::class)]
+    // #[Assert\Count(min: 1)]
     private Collection $videos;
 
     #[ORM\ManyToMany(cascade: ['persist'], targetEntity: Category::class, inversedBy: 'trick')]
     #[ORM\JoinTable(name: "trick_category")]
+    // #[Assert\Count(min: 1)]
     private Collection $categories;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tricks')]
@@ -90,7 +93,7 @@ class Trick
     public function __toString()
     {
         return $this->name;
-        
+
         // return $this->illustration;
         // return $this->author;
         // return $this->description;
@@ -296,7 +299,7 @@ class Trick
     {
         if (!$this->categories->contains($category)) {
             $this->categories->add($category);
-            $category->addTrick($this);
+            $category->setTrick($this);
         }
 
         return $this;

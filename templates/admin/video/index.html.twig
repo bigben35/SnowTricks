@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Video index
+{% endblock %}
+
+{% block body %}
+	<section class="container section-dashboard-admin">
+		<h1>Video index</h1>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					{# <th>MediaLink</th> #}
+					{# <th>Embed</th> #}
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for video in videos %}
+					<tr>
+						<td>{{ video.id }}</td>
+						{# <td>{{ video.mediaLink }}</td> #}
+						{# <td class="video-container">
+                        <iframe width="300" height="200" src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    	</td> #}
+						{# <td>{{ video.embed }}</td> #}
+						<td>
+							<a href="{{ path('app_admin_video_show', {'id': video.id}) }}">Voir</a>
+							<a href="{{ path('app_admin_video_edit', {'id': video.id}) }}">Modifier</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">Pas de vidéos</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('app_admin_video_new') }}">Créer</a>
+		<div>
+		<a href="{{ path('app_admin_admin') }}">Retour au dashboard</a>
+	</div>
+	</section>
+{% endblock %}

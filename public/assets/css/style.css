@@ -1,40 +1,43 @@
-
 /* Barre de navigation  */
 #mainNav {
   background-color: #464d53;
   /* margin-bottom: 2rem; */
 }
- /* section{
-  margin-top: 8rem;
- } */
 
- body{
+.section-dashboard-admin {
+  margin-top: 2rem;
+  min-height: 80vh;
+}
+
+body {
   position: relative;
   min-height: 100vh;
- }
+}
 
- .masthead{
+.masthead {
   min-height: 70vh;
- }
- .footer-custom{
+}
+
+.footer-custom {
   text-align: center;
   position: absolute;
-  bottom: 0;
+  /* bottom: 0; */
   width: 100%;
   padding-top: 10px;
   margin-bottom: -11rem;
- }
+}
 
 .form-register ul {
-    padding: 0;
-   
+  padding: 0;
+
 }
+
 .form-register ul li {
-    list-style-type: none;
-    background-color: red;
-    color: white;
-    width: 100%;
-    text-align: center;
+  list-style-type: none;
+  background-color: red;
+  color: white;
+  width: 100%;
+  text-align: center;
 }
 
 
@@ -54,10 +57,12 @@
   align-items: center;
   font-size: 16px;
 }
+
 .load-more:hover {
   background-color: rgb(44, 144, 226);
 }
-.hide-btn{
+
+.hide-btn {
   display: none !important;
 }
 
@@ -69,13 +74,16 @@
   margin: 0 auto;
   animation: loader1 3s linear;
 }
+
 .hide-loader {
   display: none;
 }
+
 @keyframes loader1 {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -93,14 +101,17 @@
   clip: rect(16px, 32px, 32px, 0);
   animation: loader2 3s cubic-bezier(0.77, 0, 0.175, 1);
 }
+
 @keyframes loader2 {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 .loading span::before {
   content: '';
   display: block;
@@ -116,14 +127,17 @@
   border-radius: 50%;
   animation: loader3 3s cubic-bezier(0.77, 0, 0.175, 1);
 }
+
 @keyframes loader3 {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 .loading span::after {
   content: '';
   display: block;
@@ -143,6 +157,7 @@
   background-color: #f1f2f6;
   text-indent: -9999px;
 }
+
 .load-more.show-loader .loading {
   display: block;
 }
@@ -165,28 +180,34 @@
   color: #333;
   opacity: 0;
 }
+
 .btn-arrow i {
   font-size: 1.4rem;
 }
-.btn-arrow:hover{
+
+.btn-arrow:hover {
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
-  transition:all ease-in 0.2s;
+  transition: all ease-in 0.2s;
 }
-.btn-arrow.invisible{
+
+.btn-arrow.invisible {
   bottom: -35px;
   opacity: 0;
-  transition:all ease-in 0.5s;
+  transition: all ease-in 0.5s;
 }
-.btn-arrow.visible{
+
+.btn-arrow.visible {
   bottom: 5rem;
   opacity: 1;
 }
-.icons{
+
+.icons {
   display: flex;
   justify-content: center;
 }
-.icons li{
+
+.icons li {
   padding: 20px;
 }
 
@@ -220,61 +241,81 @@
   margin-top: 1.5rem !important;
 }
 
+.alert.alert-success.alert-dismissible.mt-4 {
+  margin-top: 5rem !important;
+}
+
 
 
 /* MEDIA QUERRIES  */
 
-@media screen and (max-width: 991px){
-  
+@media screen and (max-width: 991px) {
+
   /* #header-image {
     height: 70vh;
     margin-top: 7rem;
   } */
 
- 
+
 }
 
-@media screen and (min-width: 991px){
+@media screen and (min-width: 991px) {
   .fixed-bottom {
     top: 0;
     bottom: auto;
-}
-.btn-arrow-down{
-  right: 2rem;
-  top: 14rem;
-}
+  }
 
-header.masthead{
-  margin-top: 5rem;
-  padding-top: 21rem;
-}
+  .btn-arrow-down {
+    right: 2rem;
+    top: 14rem;
+  }
 
-#header-image{
-  margin-top: 8rem;
-}
+  .navbar {
+    padding: 0;
+  }
 
-.section-desktop{
-  margin-top: 10rem !important;
-}
+  header.masthead {
+    margin-top: 5rem;
+    padding-top: 21rem;
+  }
 
-/* .alert {
+  #header-image,
+  .section-dashboard-admin {
+    margin-top: 8rem;
+  }
+
+  /* .d-none {
+  display: flex !important;
+} */
+
+  .alert.alert-success.alert-dismissible.mt-4 {
+    margin-top: 5rem !important;
+    margin-bottom: -2rem !important;
+  }
+
+  =======.section-desktop {
+    margin-top: 10rem !important;
+  }
+
+  /* .alert {
   margin-top: 6rem !important;
   margin-bottom: -7rem !important;
 } */
 
 
-/* page trick comment  */
-.message-comment-user {
-  margin-top: 3rem;
-  margin-bottom: 0 !important;
-}
-footer{
-  padding-bottom: 0;
-}
+  /* page trick comment  */
+  .message-comment-user {
+    margin-top: 3rem;
+    margin-bottom: 0 !important;
+  }
+
+  >>>>>>>main footer {
+    padding-bottom: 0;
+  }
 }
 
 @media screen and (min-width: 578px) and (max-width: 767px) {
-  .btn-arrow-down{
+  .btn-arrow-down {
     right: -1rem;
   }
 }

@@ -1,4 +1,65 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Créer') }}</button>
-{{ form_end(form) }}
+{{ form_widget(form._token) }}
+{{ form_errors(form) }}
+
+<div class="mb-3">
+	{{ form_row(form.name) }}
+</div>
+
+<div class="mb-3">
+	{{ form_row(form.description) }}
+</div>
+<div class="mb-3">
+	<label>Illustrations</label>
+	<hr>
+	<div class="form-error text-danger">
+		{{ form_errors(form.files) }}
+	</div>
+	<div class="row">
+		{% for illustration in trick.illustrations %}
+			<div class="col-4 my-2">
+				<p>
+					{% set csrfToken = csrf_token('delete'~ illustration.id) %}
+					<a href="{{path('app_admin_illustration_delete', {id:illustration.id, _token:csrfToken})}}">Suppr. l'image</a>
+					{# {{ include('admin/video/_delete_form.html.twig') }} #}
+				</p>
+				<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration {{loop.index}}">
+			</div>
+		{% endfor %}
+	</div>
+	{{ form_widget(form.files) }}
+</div>
+
+<div
+	class="mb-3" id="videos" class="row" data-prototype="{{ include('admin/trick/_video.html.twig', {form: form.videos.vars.prototype})|e('html_attr') }}" data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
+	{# {{ form_row(form.videos) }} #}
+	<label>Vidéos</label>
+	<hr>
+	{# <div class="form-group mb-3">
+				{{ form_widget(form.videos, {'attr': {'class': 'form-control'}}) }}
+			</div> #}
+	{% for video in form.videos %}
+		<div class="form-group mb-3">
+			<label for="{{ video.mediaLink.vars.id }}">
+				Vidéo
+				{{ loop.index }}
+			</label>
+			{{ form_widget(video.mediaLink, {'attr': {'class': 'form-control'}}) }}
+
+			{% if video.vars.value is not null %}
+				<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm mt-2" onclick="confirm('Êtes-vous sûr de vouloir supprimer cette image ?');">Supprimer</a>
+			{% endif %}
+		</div>
+	{% endfor %}
+</div>
+<div class="mb-3">
+	<button type="button" class="btn btn-primary btn-new" data-collection="#videos">Nouvelle Vidéo</button>
+</div>
+<div class="mb-3">
+	<label>Catégories</label>
+	<hr>
+	{{ form_widget(form.categories) }}
+</div>
+{# {{ form_widget(form) }} #}
+<button class="btn">{{ button_label|default('Valider') }}</button>
+{{ form_end(form, {render_rest: false}) }}

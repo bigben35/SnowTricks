@@ -3,16 +3,20 @@
 namespace App\Form;
 
 use App\Entity\Trick;
+use App\Entity\Video;
+use App\Form\VideoType;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Count;
 
 class TrickType extends AbstractType
 {
@@ -62,54 +66,33 @@ class TrickType extends AbstractType
                         'constraints' => [
                             new File([
                                 'maxSize' => '1024k',
+                                'maxSizeMessage' => 'Le fichier image ne doit pas dépasser 1 Mo',
                                 'mimeTypes' => [
                                     'image/jpeg',
                                     'image/png',
                                     'image/webp',
                                 ],
-                                'mimeTypesMessage' => 'Please upload a valid image type',
+                                'mimeTypesMessage' => 'Veuillez télécharger une image valide',
                             ])
                         ]
                     ])
                 ],
             ])
-            ->add('video_1', TextareaType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => "Lien Vidéo 1"
+            ->add('videos', CollectionType::class, [
+                'entry_type' => VideoType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'error_bubbling' => false,
+                'prototype' => true,
+                'entry_options' => [
+                    'attr' => ['class' => 'form-group'],
+                    'label' => false,
                 ],
-                'label' => "Lien Video 1 (3 Max.)",
-                'mapped' => false,
                 'required' => false
             ])
-            // ->add('video_2', TextareaType::class, [
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => "Lien Vidéo 2"
-            //     ],
-            //     'label' => "Lien Video 2",
-            //     'mapped' => false,
-            //     'required' => false
-            // ])
-            // ->add('video_3', TextareaType::class, [
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => "Lien Vidéo 3"
-            //     ],
-            //     'label' => "Lien Video 3",
-            //     'mapped' => false,
-            //     'required' => false
-            // ])
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => "Catégorie"
-                ],
-                'label' => "Catégorie",
-                'mapped' => false,
-                'required' => false,
+            ->add('categories', null, [
+                'attr' => ['class' => 'form-select'],
             ])
             // ->add('user', TextType::class, [
             //     'attr' => [

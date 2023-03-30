@@ -22,8 +22,8 @@ class CommentTrick
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'commentTricks')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'commentTricks')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Trick $trick = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'commentTricks')]
