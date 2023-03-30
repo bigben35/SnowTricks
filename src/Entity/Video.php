@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\VideoRepository;
+use App\Entity\Trick;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VideoRepository;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video
@@ -13,8 +14,8 @@ class Video
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'videos')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'videos')]
+    #[ORM\JoinColumn(nullable: false, onDelete:"CASCADE")]
     private ?Trick $trick = null;
 
     #[ORM\Column(length: 255)]
@@ -22,6 +23,10 @@ class Video
 
     #[ORM\Column(length: 255)]
     private ?string $embed = '';
+
+    public function __toString() :string {
+        return $this->mediaLink;
+    }
 
     public function getId(): ?int
     {

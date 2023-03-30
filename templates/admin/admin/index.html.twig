@@ -5,7 +5,7 @@
 
 {% block body %}
 
-	<section class="container my-3 section-desktop">
+	<section class="container section-dashboard-admin">
 		<div>
 			<h1>Bonjour
 				{{ app.user.username }}
@@ -14,11 +14,17 @@
 		<div>
 			<a href="{{ path('app_admin_user_index') }}">Liste des Utilisateurs</a>
 		</div>
-        <div>
+		<div>
 			<a href="{{ path('app_admin_trick_index') }}">Liste des Figures</a>
 		</div>
-        <div>
+		<div>
 			<a href="{{ path('app_admin_category_index') }}">Liste des Categories</a>
+		</div>
+		<div>
+			<a href="{{ path('app_admin_illustration_index') }}">Liste des illustrations</a>
+		</div>
+		<div>
+			<a href="{{ path('app_admin_video_index') }}">Liste des vidéos</a>
 		</div>
 	</section>
 {% endblock %}

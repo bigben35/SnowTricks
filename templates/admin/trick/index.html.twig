@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<section class="container my-3">
+	<section class="container section-dashboard-admin">
 		<h1>Les Figures</h1>
 
 		<table class="table">
@@ -12,11 +12,11 @@
 				<tr>
 					{# <th>Id</th> #}
 					<th>Name</th>
-					<th>Description</th>
-					<th>Slug</th>
+					<th class="d-none">Description</th>
+					<th class="d-none">Slug</th>
 					{# <th>Illustration</th>
 					<th>Video</th> #}
-					<th>Created_at</th>
+					<th class="d-none">Created_at</th>
 					{# <th>Modified_at</th> #}
 					<th>actions</th>
 				</tr>
@@ -26,11 +26,11 @@
 					<tr>
 						{# <td>{{ trick.id }}</td> #}
 						<td>{{ trick.name }}</td>
-						<td>{{ trick.description }}</td>
-						<td>{{ trick.slug }}</td>
+						<td class="d-none">{{ trick.description }}</td>
+						<td class="d-none">{{ trick.slug }}</td>
 						{# <td>{{ trick.illustration }}</td>
 						<td>{{ trick.video }}</td> #}
-						<td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d') : '' }}</td>
+						<td class="d-none">{{ trick.createdAt ? trick.createdAt|date('Y-m-d') : '' }}</td>
 						{# <td>{{ trick.modifiedAt ? trick.modifiedAt|date('Y-m-d') : '' }}</td> #}
 						<td>
 							<a href="{{ path('app_admin_trick_show', {'id': trick.id}) }}">Voir</a>
@@ -47,6 +47,8 @@
 		<div>
 			<a href="{{ path('app_admin_trick_new') }}">Créer</a>
 		</div>
+		<div>
 		<a href="{{ path('app_admin_admin') }}">Retour au dashboard</a>
+		</div>
 	</section>
 {% endblock %}

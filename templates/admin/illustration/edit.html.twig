@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Illustration{% endblock %}
+
+{% block body %}
+    <h1>Edit Illustration</h1>
+
+    {{ include('admin/illustration/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('app_admin_illustration_index') }}">Retour</a>
+
+    {{ include('admin/illustration/_delete_form.html.twig') }}
+{% endblock %}

@@ -27,8 +27,13 @@ use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 #[Route('/trick', name: 'trick_')]
 class TrickController extends AbstractController
 {
-    public function __construct(private SluggerInterface $slugger)
+    // function to display trick page 
+    #[Route('', name: 'index')]
+    public function index(TrickRepository $trickRepository): Response
     {
+        return $this->render('trick/index.html.twig', [
+            'tricks' => $trickRepository->findAll()
+        ]);
     }
 
     // #[Route('', name: 'index')]
@@ -44,7 +49,7 @@ class TrickController extends AbstractController
     public function show(Trick $trick, Request $request, CommentTrickRepository $commentTrickRepository, EntityManagerInterface $entityManager): Response
     {
 
-        if(!$trick) {
+        if (!$trick) {
             return $this->redirectToRoute('app_home');
         }
 
@@ -53,19 +58,18 @@ class TrickController extends AbstractController
         $form = $this->createForm(CommentType::class, $commentTrick);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             // dd($commentTrick);
             $connectedUser = $this->getUser();
             $commentTrick->setConnectedUser($connectedUser);
             $commentTrick->setTrick($trick);
             $commentTrickRepository->save($commentTrick, true);
             $this->addFlash('success', "Votre Commentaire a bien été créé !");
-            
-            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
 
+            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
         }
 
-        
+
         // Pagination
         //on va chercher n° page dans url
         $page = $request->query->getInt('page', 1);
@@ -85,11 +89,11 @@ class TrickController extends AbstractController
 
 
 
-    
+
     // edit 
-    
+
     #[Route('/{slug}/edit', name: 'edit', methods: ['GET', 'POST'])]
-        
+
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger, Filesystem $filesystem): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && $trick->getUser() != $this->getUser()) {
@@ -100,20 +104,20 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
         // dd($trick->getVideos());
         if ($form->isSubmitted() && $form->isValid()) {
-    
+
             // On récupère toutes les images (multiple à true ==> Tableau d'images)
             $illustrationFiles = $form->get('files')->getData();
-    
+
             // Pour chaque image, on créé une illustration que l'on associe à l'entité Trick
             foreach ($illustrationFiles as $illustrationFile) {
                 if ($illustrationFile) {
                     // TODO : déplacer cette logique métier dans un Service
-    
+
                     $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
                     // this is needed to safely include the file name as part of the URL
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
-    
+
                     // Move the file to the directory where brochures are stored
                     try {
                         $illustrationFile->move(
@@ -125,49 +129,47 @@ class TrickController extends AbstractController
                         $this->addFlash('error', $e);
                         return $this->redirectToRoute('trick_edit', [], Response::HTTP_SEE_OTHER);
                     }
-    
+
                     // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
                     $illustration = new Illustration();
-    
+
                     // On associe l'illustration à la figure
                     $illustration->setFile($newFilename);
                     $illustration->setTrick($trick);
-    
+
                     // Pour la persistence automatique de la nouvelle illustration, 
                     // j'ai mis à jour l'entité Trick (src/Entity/Trick.php à la ligne 54 : cascade: ['persist'])
                     // ce "cascade: ['persist']" permet de ne pas devoir faire de $entityManager->persist($illustration)
                     $trick->addIllustration($illustration);
                 }
             }
-    
+
             // if ()
             // On récupère toutes les videos
             $video1 = new Video();
             $videoUrl1 = $form->get('video_1')->getData();
             $video1->setMediaLink($videoUrl1);
             $trick->addVideo($video1);
-    
+
             $trick->setSlug($slugger->slug($trick->getName())->lower());
             $trickRepository->save($trick, true);
-    
+
             //catégorie 
             $categoryName = $form->get('category')->getData();
             if (!empty($categoryName)) {
                 $trick->addCategory($categoryName);
             }
-    
+
             /** @var User $user */
             $user = $this->getUser();
             $trick->setSlug($slugger->slug($trick->getName())->lower());
             $trick->setUser($user);
-    
+
             $trickRepository->save($trick, true);
             $this->addFlash('success', "Votre Figure a bien été modifiée !");
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-    
-    
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
@@ -177,19 +179,15 @@ class TrickController extends AbstractController
 
     #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
-{
-    if (!$this->isGranted('ROLE_ADMIN') && $trick->getUser() != $this->getUser()) {
-        throw new AccessDeniedException("Vous n'avez pas l'autorisation pour supprimer ce Trick !");
+    {
+        if (!$this->isGranted('ROLE_ADMIN') && $trick->getUser() != $this->getUser()) {
+            throw new AccessDeniedException("Vous n'avez pas l'autorisation pour supprimer ce Trick !");
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
+            $trickRepository->remove($trick, true);
+        }
+
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
-
-    if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
-        $trickRepository->remove($trick, true);
-    }
-
-    return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-
 }
-}
-
-
-
