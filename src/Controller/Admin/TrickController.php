@@ -177,6 +177,9 @@ class TrickController extends AbstractController
 
             /** @var User $user */
 
+            // update slug when title change (not good for SEO !!)
+            $trick->setSlug($slugger->slug($trick->getName())->lower());
+
             $trickRepository->save($trick, true);
             $this->addFlash('success', "Votre Figure a bien été modifiée !");
             return $this->redirectToRoute('app_admin_trick_index', [], Response::HTTP_SEE_OTHER);
