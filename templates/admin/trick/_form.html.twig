@@ -38,6 +38,7 @@
 	{# <div class="form-group mb-3">
 				{{ form_widget(form.videos, {'attr': {'class': 'form-control'}}) }}
 			</div> #}
+			
 	{% for video in form.videos %}
 		<div class="form-group mb-3">
 			<label for="{{ video.mediaLink.vars.id }}">
@@ -47,7 +48,9 @@
 			{{ form_widget(video.mediaLink, {'attr': {'class': 'form-control'}}) }}
 
 			{% if video.vars.value is not null %}
-				<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm mt-2" onclick="confirm('Êtes-vous sûr de vouloir supprimer cette image ?');">Supprimer</a>
+				{% if video.vars.value.id is not null %}
+					<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm mt-2" onclick="confirm('Êtes-vous sûr de vouloir supprimer cette image ?');">Supprimer</a>
+				{% endif %}
 			{% endif %}
 		</div>
 	{% endfor %}

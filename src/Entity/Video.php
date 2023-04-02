@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Trick;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VideoRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video
@@ -19,6 +20,7 @@ class Video
     private ?Trick $trick = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $mediaLink = '';
 
     #[ORM\Column(length: 255)]

@@ -111,7 +111,7 @@ class RegistrationController extends AbstractController
                 $request
             );
             $this->addFlash('success', "Votre Compte a bien été créé ! Vérifiez votre boîte mail pour valider votre compte");
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_profil');
         }
         
 

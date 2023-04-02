@@ -27,6 +27,7 @@ class SecurityController extends AbstractController
         // else {
         //     return $this->redirectToRoute('app_profil');
         // }
+        // if ($form->isSubmitted() && $form->isValid()) {
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -37,7 +38,9 @@ class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error
         ]);
-    }
+    // }
+}
+
 
     #[Route(path: '/deconnexion', name: 'app_logout')]
     public function logout(): void

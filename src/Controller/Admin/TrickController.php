@@ -9,14 +9,15 @@ use App\Form\TrickType;
 use App\Entity\Category;
 use App\Entity\Illustration;
 use App\Repository\TrickRepository;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\Filesystem\Filesystem;
 
 #[Route('/admin/trick')]
 class TrickController extends AbstractController
@@ -44,6 +45,10 @@ class TrickController extends AbstractController
         if ($this->getUser()) {
             $trick->setUser($this->getUser());
         }
+
+        //avoir un champ vidéo vide au départ
+        $trick->addEmptyVideo();
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
@@ -87,7 +92,6 @@ class TrickController extends AbstractController
                     $trick->addIllustration($illustration);
                 }
             }
-
 
             /** @var User $user */
             $user = $this->getUser();

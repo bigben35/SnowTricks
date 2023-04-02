@@ -86,10 +86,10 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
                 'error_bubbling' => false,
                 'prototype' => true,
-                'entry_options' => [
-                    'attr' => ['class' => 'form-group'],
-                    'label' => false,
-                ],
+                // 'entry_options' => [
+                //     'attr' => ['class' => 'form-group'],
+                //     'label' => false,
+                // ],
                 'required' => false
             ])
             ->add('categories', null, [

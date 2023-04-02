@@ -32,15 +32,8 @@ class Trick
     private ?string $description = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    // #[Assert\NotBlank()]
 
     private ?string $slug = null;
-
-    // #[ORM\Column(length: 255)]  a supprimer
-    // private ?string $illustration = '';
-
-    // #[ORM\Column(length: 255)]
-    // private ?string $video = '';
 
     #[ORM\Column]
     #[Assert\NotNull()]
@@ -79,7 +72,16 @@ class Trick
         $this->categories = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
         $this->modified_at = new \DateTimeImmutable();
-        // $this->user = new User();
+    }
+
+    // function pour avoir avoir un champ vidéo vide au départ, à la création d'un Trick 
+    public function addEmptyVideo(): self
+    {
+        $video = new Video();
+        $video->setTrick($this);
+        $this->videos->add($video);
+
+        return $this;
     }
 
     // méthode pour update date d'un trick lors d'une modification 
@@ -94,10 +96,6 @@ class Trick
     {
         return $this->name;
 
-        // return $this->illustration;
-        // return $this->author;
-        // return $this->description;
-        // return $this->slug;
     }
 
 
@@ -142,29 +140,6 @@ class Trick
         return $this;
     }
 
-    // public function getIllustration(): ?string
-    // {
-    //     return $this->illustration;
-    // }
-
-    // public function setIllustration(string $illustration): self
-    // {
-    //     $this->illustration = $illustration;
-
-    //     return $this;
-    // }
-
-    // public function getVideo(): ?string
-    // {
-    //     return $this->video;
-    // }
-
-    // public function setVideo(string $video): self
-    // {
-    //     $this->video = $video;
-
-    //     return $this;
-    // }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -289,11 +264,6 @@ class Trick
         return $this->categories;
     }
 
-    // public function setCategories(Collection $categories): Collection
-    // {
-    //     $this->categories = $categories;
-    //     return $this;
-    // }
 
     public function addCategory(Category $category): self
     {
@@ -326,13 +296,4 @@ class Trick
         return $this;
     }
 
-    // public function addUser(User $username): self
-    // {
-    //     if (!$this->user->contains($username)) {
-    //         $this->user->add($username);
-    //         $username->addTrick($this);
-    //     }
-
-    //     return $this;
-    // }
 }
