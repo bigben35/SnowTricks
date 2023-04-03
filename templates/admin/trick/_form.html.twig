@@ -20,7 +20,7 @@
 			<div class="col-4 my-2">
 				<p>
 					{% set csrfToken = csrf_token('delete'~ illustration.id) %}
-					<a href="{{path('app_admin_illustration_delete', {id:illustration.id, _token:csrfToken})}}">Suppr. l'image</a>
+					<a href="{{path('app_admin_illustration_delete', {id:illustration.id, _token:csrfToken})}}" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
 					{# {{ include('admin/video/_delete_form.html.twig') }} #}
 				</p>
 				<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration {{loop.index}}">
@@ -63,6 +63,7 @@
 	<hr>
 	{{ form_widget(form.categories) }}
 </div>
+
 {# {{ form_widget(form) }} #}
 <button class="btn">{{ button_label|default('Valider') }}</button>
 {{ form_end(form, {render_rest: false}) }}

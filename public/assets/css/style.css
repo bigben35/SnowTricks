@@ -249,15 +249,26 @@ body {
 
 /* MEDIA QUERRIES  */
 
+@media screen and (max-width: 767px) {
+  .hide-text span {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 991px) {
 
   /* #header-image {
     height: 70vh;
     margin-top: 7rem;
   } */
+  /* NAV  */
+  .nav-text-disconnect {
+    display: none;
+  }
 
 
 }
+
 
 @media screen and (min-width: 991px) {
   .fixed-bottom {
@@ -271,6 +282,10 @@ body {
 
   .navbar {
     padding: 0;
+  }
+
+  .show-icon-disconnect {
+    display: none;
   }
 
   header.masthead {

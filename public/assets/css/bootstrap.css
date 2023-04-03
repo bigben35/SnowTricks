@@ -304,6 +304,9 @@ svg {
 table {
   caption-side: bottom;
   border-collapse: collapse;
+  overflow-x: auto;
+    display: block;
+    width: 100%;
 }
 
 caption {

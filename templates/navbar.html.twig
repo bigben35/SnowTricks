@@ -1,11 +1,14 @@
 <!-- Navigation-->
 		<nav class="navbar navbar-expand-lg navbar-light fixed-bottom bg-dark" style="max-width: 100vw;">
 			<div class="container px-4 px-lg-5">
-				<a class="navbar-brand" href="/">SnowTricks</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-					Menu
+				<a class="navbar-brand hide-text" href="/"><i class="fa fa-home"></i><span> SnowTricks</span></a>
+				<button class="navbar-toggler" type="button" style="font-size: 1.5rem;" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 					<i class="fas fa-bars"></i>
 				</button>
+				<!-- Ajout de la balise <a> pour l'icône de déconnexion -->
+					<a class="show-icon-disconnect text-white" href="{{ path('app_logout') }}" style="font-size: 1.5rem;">
+						<i class="fa fa-sign-out"></i>
+					</a>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ms-auto py-4 py-lg-0">
 						<li class="nav-item">
@@ -33,8 +36,9 @@
 										)</small>
 								</a></li>
 								{% endif %}
-								<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_logout') }}">Déconnexion</a></li>
+								<li class="nav-item nav-text-disconnect"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_logout') }}">Déconnexion</a></li>
 							</li>
+							
 						{% else %}
 							<li class="nav-item">
 								<a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_login') }}">Connexion</a>
