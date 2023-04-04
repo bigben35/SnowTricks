@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Illustration{% endblock %}
+
+{% block body %}
+    <h1>Modifier Illustration</h1>
+
+    {{ include('illustration/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('illustration_index') }}">Retour</a>
+
+{% endblock %}

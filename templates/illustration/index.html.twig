@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Illustrations
+{% endblock %}
+
+{% block body %}
+	<section class="container section-dashboard-admin">
+		<h1>Illustration index</h1>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="d-none">Id</th>
+					<th>Image</th>
+					<th>*</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for illustration in illustrations %}
+					<tr>
+						<td class="d-none">{{ illustration.id }}</td>
+						<td>
+							<img src="{{asset('assets/uploads/images/' ~ illustration.file)}}" width="100">
+						</td>
+						<td>
+							<a href="{{ path('trick_show', {'id': illustration.trick.id}) }}">Voir la figure associée</a>
+						</td>
+						<td>
+							<a href="{{ path('illustration_show', {'id': illustration.id}) }}">Voir</a>
+							<a href="{{ path('illustration_edit', {'id': illustration.id}) }}">Editer</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="3">Pas d'images</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('illustration_new') }}">Créer</a>
+		<div>
+		{# <a href="{{ path('app_admin_admin') }}">Retour au dashboard</a> #}
+	</div>
+	</section>
+{% endblock %}

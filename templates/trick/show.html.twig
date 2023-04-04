@@ -5,44 +5,6 @@
 	- SnowTricks
 {% endblock %}
 
-{# {% block header %}
-	<!-- Page Header-->
-	<header>
-	{% for illustration in trick.illustrations %}
-						<img src="{{asset('assets/uploads/images/' ~ illustration.file)}}" class="card-img-top border" style="height: 190px; object-fit: cover;"></img>
-		<div class="container position-relative px-4 px-lg-5">
-			<div class="row gx-4 gx-lg-5 justify-content-center">
-				<div class="col-md-10 col-lg-8 col-xl-7">
-					<div class="site-heading">
-						<h1>{{ trick.name }}</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-					{% endfor %}
-	</header>
-{% endblock %}
-
-{% block body %}
-
-	<div class="row gx-4 gx-lg-5 justify-content-center">
-		<div class="p-5">
-			<div class="fs-5 col-md-8">
-				{{trick.description}}
-			</div>
-
-			<h3 class="post-images">Illustrations</h3>
-			<div class="row">
-				{% for illustration in trick.illustrations %}
-					<div class="col-4">
-						<img src="{{asset('assets/uploads/images/' ~ illustration.file)}}">
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-	</div>
-{% endblock %} #}
-
 {% block body %}
 
 	<div class="container mb-5 section-desktop">
@@ -85,7 +47,7 @@
 
                     <!-- Boutons pour éditer et supprimer l'illustration -->
                     <div class="mt-2">
-                        <a href="#" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
+                        <a href="{{ path('illustration_show', {'id': illustration.id}) }}" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
                         <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette illustration ?')"><i class="fa-solid fa-trash-can"></i></a>
                     </div>
                 </div>

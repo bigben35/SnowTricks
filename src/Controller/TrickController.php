@@ -36,13 +36,81 @@ class TrickController extends AbstractController
         ]);
     }
 
-    // #[Route('', name: 'index')]
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
 
-    // // function to display trick page 
-    // public function index(): Response
-    // {
-    //     return $this->render('trick/index.html.twig');
-    // }
+    // function to create a new Trick 
+    public function new(Request $request, TrickRepository $trickRepository, SluggerInterface $slugger): Response
+    {
+        $trick = new Trick();
+        // dd($trick);
+        // $slug = $this->setSlug();
+        // $trick->setSlug($this->slugger->slug($trick->getName())->lower());
+        if ($this->getUser()) {
+            $trick->setUser($this->getUser());
+        }
+
+        //avoir un champ vidéo vide au départ
+        $trick->addEmptyVideo();
+
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // On récupère toutes les images (multiple à true ==> Tableau d'images)
+            $illustrationFiles = $form->get('files')->getData();
+
+            // Pour chaque image, on créé une illustration que l'on associe à l'entité Trick
+            foreach ($illustrationFiles as $illustrationFile) {
+                if ($illustrationFile) {
+                    // TODO : déplacer cette logique métier dans un Service
+
+                    $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
+
+                    // Move the file to the directory where brochures are stored
+                    try {
+                        $illustrationFile->move(
+                            $this->getParameter('images_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                        $this->addFlash('error', $e);
+                        return $this->redirectToRoute('trick_new', [], Response::HTTP_SEE_OTHER);
+                    }
+
+                    // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
+                    $illustration = new Illustration();
+
+
+                    // On associe l'illustration à la figure
+                    $illustration->setFile($newFilename);
+
+                    // Pour la persistence automatique de la nouvelle illustration, 
+                    // j'ai mis à jours l'entité Trick (src/Entity/Trick.php à la ligne 54 : cascade: ['persist'])
+                    // ce "cascade: ['persist']" permet de ne pas devoir faire de $entityManager->persist($illustration)
+                    $trick->addIllustration($illustration);
+                }
+            }
+
+            /** @var User $user */
+            $user = $this->getUser();
+            $trick->setSlug($slugger->slug($trick->getName())->lower());
+            $trick->setUser($user);
+            $trickRepository->save($trick, true);
+            $this->addFlash('success', "Votre Figure a bien été créée !");
+
+            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('trick/new.html.twig', [
+            'form' => $form,
+            'trick' => $trick,
+        ]);
+    }
 
     #[Route('/{slug}', name: 'show')]
     // function to display trick page 
