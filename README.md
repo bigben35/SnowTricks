@@ -14,9 +14,17 @@ Faire un composer require **symfony/console** pour pouvoir utiliser la commande 
 Créer la base de données : **symfony console doctrine:database:create**     
 Effectuer les migrations : **symfony console doctrine:migrations:migrate**    
 Charger les fixtures (données de démonstration) : **symfony console doctrine:fixtures:load**  
-Démarrer le serveur Symfony : **symfony server:start**
+Démarrer le serveur Symfony : **symfony server:start**  
 
 Et voilà ! Vous pouvez maintenant accéder à l'application en naviguant vers http://localhost:8000 dans votre navigateur.  
 Vous pouvez passer en https avec la commande : **symfony server:ca:install**
 
 N'oubliez pas de modifier le fichier .env avec vos informations de configuration avant de lancer l'installation.
+
+Vous pouvez vous connecter en tant qu'administrateur avec username:**admin** -  mdp:**admin** ou créer votre propre compte utilisateur. 
+
+# Email
+Pour l'inscritpion et l'envoi d'un email de confirmation, j'ai utiliser mailhog : **https://github.com/mailhog/MailHog** et voici la version que j'ai utilisé: **MailHog_windows_amd64.exe**  
+ 
+
+
