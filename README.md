@@ -11,8 +11,8 @@ Cloner le dépôt Git sur votre machine locale : **git clone https://github.com/
 Naviguer dans le dossier du projet : **cd mon-projet-symfony** 
 Installer les dépendances avec Composer : **composer install**  
 Faire un composer require **symfony/console** pour pouvoir utiliser la commande symfony console au lieu de php/bin console (au choix de la personne).  
-Créer la base de données : **symfony console doctrine:database:create** 
-Effectuer les migrations : **symfony console doctrine:migrations:migrate**  
+Créer la base de données : **symfony console doctrine:database:create**     
+Effectuer les migrations : **symfony console doctrine:migrations:migrate**    
 Charger les fixtures (données de démonstration) : **symfony console doctrine:fixtures:load**  
 Démarrer le serveur Symfony : **symfony server:start**
 
