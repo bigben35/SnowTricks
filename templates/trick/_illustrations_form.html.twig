@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification Illustration{% endblock %}
+
+{% block body %}
+<section class="container section-desktop mt-5">
+{{ form_start(form) }}
+{{ form_widget(form._token) }}
+{{ form_errors(form) }}
+
+<div class="mb-3">
+	<label>Illustration</label>
+	<hr>
+	<div class="form-error text-danger">
+		{{ form_errors(form.files) }}
+	</div>
+	<div class="row">
+			<div class="col-4 my-2">
+				<p>
+					{% set csrfToken = csrf_token('delete'~ illustration.id) %}
+					<a href="{{path('illustration_delete', {id:illustration.id, _token:csrfToken})}}" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
+				</p>
+				<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration">
+			</div>
+	</div>
+	{{ form_widget(form) }}
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
+{{ form_end(form, {render_rest: false}) }}
+</section>
+{# <div class="mb-3">
+	<label>Illustrations</label>
+	<hr>
+	<div class="form-error text-danger">
+		{{ form_errors(form.file) }}
+	</div>
+	<div class="row">
+		{% for illustration in trick.illustrations %}
+			<div class="col-4 my-2">
+				<p>
+					{% set csrfToken = csrf_token('delete'~ illustration.id) %}
+					<a href="{{path('illustration_delete', {id:illustration.id, _token:csrfToken})}}" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
+				</p>
+				<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration {{loop.index}}">
+			</div>
+		{% endfor %}
+	</div>
+	{{ form_widget(form.files) }}
+</div> #}
+{% endblock %}
+
+

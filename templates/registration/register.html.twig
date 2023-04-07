@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription
+{% block title %}SnowTricks - Inscription
 {% endblock %}
 
 {% block body %}
 	<section class="container my-3 section-desktop">
-		<div class="row">
-			<div class="col form-register">
+		<div class="row text-center" style="max-width: 700px; margin: 0 auto;">
 				<h1>S'inscrire</h1>
-
+			<div class="col form-register p-5" style="border: solid 3px grey;">
 				{{ form_start(registrationForm) }}
 				{{ form_row(registrationForm.username) }}
 				{{ form_row(registrationForm.email) }}
@@ -18,7 +17,9 @@
         		{{ form_row(registrationForm.avatar) }}
                 {{ form_row(registrationForm.Rgpd) }}
 
-				<button type="submit" class="btn btn-primary btn-lg">M'inscrire</button>
+				<button type="submit" class="btn btn-primary btn-lg d-block my-3" style="margin:0 auto;">M'inscrire</button>
+
+				<a class="btn btn-sm btn-outline-dark m-2" href="{{ path('app_login') }}">déjà un compte ?</a>
 				{{ form_end(registrationForm) }}
 			</div>
 		</div>

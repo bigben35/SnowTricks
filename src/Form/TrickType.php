@@ -44,9 +44,6 @@ class TrickType extends AbstractType
                 ],
                 'label' => "Illustration (formats images uniquements)",
                 'mapped' => false,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
                 'required' => false,
                 'multiple' => true,
 

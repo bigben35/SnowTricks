@@ -1,7 +1,3 @@
-{# {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Ajouter') }}</button>
-{{ form_end(form) }} #}
 
 {{ form_start(form) }}
 {{ form_widget(form._token) }}
@@ -25,7 +21,7 @@
 			<div class="col-4 my-2">
 				<p>
 					{% set csrfToken = csrf_token('delete'~ illustration.id) %}
-					<a href="{{path('app_admin_illustration_delete', {id:illustration.id, _token:csrfToken})}}" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
+					<a href="{{path('illustration_delete', {id:illustration.id, _token:csrfToken})}}" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
 				</p>
 				<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration {{loop.index}}">
 			</div>
@@ -35,7 +31,7 @@
 </div>
 
 <div
-	class="mb-3" id="videos" class="row" data-prototype="{{ include('admin/trick/_video.html.twig', {form: form.videos.vars.prototype})|e('html_attr') }}" data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
+	class="mb-3" id="videos" class="row" data-prototype="{{ include('trick/_video.html.twig', {form: form.videos.vars.prototype})|e('html_attr') }}" data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
 	{# {{ form_row(form.videos) }} #}
 	<label>Vidéos</label>
 	<hr>
@@ -53,7 +49,7 @@
 
 			{% if video.vars.value is not null %}
 				{% if video.vars.value.id is not null %}
-					<a href="{{ path('app_admin_video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm mt-2" onclick="confirm('Êtes-vous sûr de vouloir supprimer cette image ?');">Supprimer</a>
+					<a href="{{ path('video_delete', {'id': video.vars.value.id, '_token': csrf_token('delete' ~ video.vars.value.id)}) }}" class="btn btn-danger btn-sm mt-2" onclick="confirm('Êtes-vous sûr de vouloir supprimer cette image ?');">Supprimer</a>
 				{% endif %}
 			{% endif %}
 		</div>
@@ -68,8 +64,7 @@
 	{{ form_widget(form.categories) }}
 </div>
 
-{# {{ form_widget(form) }} #}
 <button class="btn">{{ button_label|default('Valider') }}</button>
 {{ form_end(form, {render_rest: false}) }}
 
-{# <script src="{{ asset('assets/js/app.js') }}"></script> #}
+

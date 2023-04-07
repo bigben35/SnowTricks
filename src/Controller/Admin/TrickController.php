@@ -39,9 +39,7 @@ class TrickController extends AbstractController
     public function new(Request $request, TrickRepository $trickRepository, SluggerInterface $slugger): Response
     {
         $trick = new Trick();
-        // dd($trick);
-        // $slug = $this->setSlug();
-        // $trick->setSlug($this->slugger->slug($trick->getName())->lower());
+
         if ($this->getUser()) {
             $trick->setUser($this->getUser());
         }
@@ -60,21 +58,18 @@ class TrickController extends AbstractController
             // Pour chaque image, on créé une illustration que l'on associe à l'entité Trick
             foreach ($illustrationFiles as $illustrationFile) {
                 if ($illustrationFile) {
-                    // TODO : déplacer cette logique métier dans un Service
 
                     $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
                     // this is needed to safely include the file name as part of the URL
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
 
-                    // Move the file to the directory where brochures are stored
                     try {
                         $illustrationFile->move(
                             $this->getParameter('images_directory'),
                             $newFilename
                         );
                     } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
                         $this->addFlash('error', $e);
                         return $this->redirectToRoute('app_admin_trick_new', [], Response::HTTP_SEE_OTHER);
                     }
@@ -86,9 +81,6 @@ class TrickController extends AbstractController
                     // On associe l'illustration à la figure
                     $illustration->setFile($newFilename);
 
-                    // Pour la persistence automatique de la nouvelle illustration, 
-                    // j'ai mis à jours l'entité Trick (src/Entity/Trick.php à la ligne 54 : cascade: ['persist'])
-                    // ce "cascade: ['persist']" permet de ne pas devoir faire de $entityManager->persist($illustration)
                     $trick->addIllustration($illustration);
                 }
             }
@@ -125,14 +117,6 @@ class TrickController extends AbstractController
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
-        // $errors = $form->getErrors(true);
-        // if (!empty($errors)) {
-        //     // afficher les erreurs globales
-        //     dd((string)$errors);
-        // }
-
-        // dd($form->isValid(), (string)$form->getErrors(), $form->getErrors());
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             // On récupère toutes les images (multiple à true ==> Tableau d'images)
@@ -144,7 +128,7 @@ class TrickController extends AbstractController
                     // TODO : déplacer cette logique métier dans un Service
 
                     $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    // this is needed to safely include the file name as part of the URL
+                    
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
 
@@ -155,7 +139,6 @@ class TrickController extends AbstractController
                             $newFilename
                         );
                     } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
                         $this->addFlash('error', $e);
                         return $this->redirectToRoute('app_admin_trick_edit', [], Response::HTTP_SEE_OTHER);
                     }
@@ -166,10 +149,7 @@ class TrickController extends AbstractController
                     // On associe l'illustration à la figure
                     $illustration->setFile($newFilename);
                     $illustration->setTrick($trick);
-
-                    // Pour la persistence automatique de la nouvelle illustration, 
-                    // j'ai mis à jour l'entité Trick (src/Entity/Trick.php à la ligne 54 : cascade: ['persist'])
-                    // ce "cascade: ['persist']" permet de ne pas devoir faire de $entityManager->persist($illustration)
+                    
                     $trick->addIllustration($illustration);
                 }
             }

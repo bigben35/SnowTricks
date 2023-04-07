@@ -46,10 +46,12 @@
                     		alt="description image snow"/>
 
                     <!-- Boutons pour éditer et supprimer l'illustration -->
-                    <div class="mt-2">
-                        <a href="{{ path('illustration_show', {'id': illustration.id}) }}" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette illustration ?')"><i class="fa-solid fa-trash-can"></i></a>
-                    </div>
+                    {% if is_granted('ROLE_ADMIN') or (app.user and trick.user.id == app.user.id) %}
+                        <div class="mt-2">
+                            <a href="{{ path('illustration_edit', {'id': illustration.id}) }}" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
+                            <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette illustration ?')"><i class="fa-solid fa-trash-can"></i></a>
+                        </div>
+                    {% endif %}
                 </div>
 
 			{% endfor %}
@@ -67,11 +69,13 @@
                             allowfullscreen></iframe>
 
                     <!-- Boutons pour éditer et supprimer une vidéo -->
-                <div class="media-buttons" style="margin-top: 0.5rem;">
-                    <a href="#" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding: 0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
-                    <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding: 0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
-                </div>
-			</div>
+                    {% if is_granted('ROLE_ADMIN') or (app.user and trick.user.id == app.user.id) %}
+                        <div class="media-buttons" style="margin-top: 0.5rem;">
+                            <a href="#" class="btn btn-primary btn-sm" style="font-size: 1.5rem; padding: 0.4rem 0.8rem;"><i class="fa-solid fa-pencil"></i></a>
+                            <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding: 0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
+                        </div>
+                    {% endif %}
+			    </div>
 
 
 			{% endfor %}

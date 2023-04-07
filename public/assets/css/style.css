@@ -246,6 +246,17 @@ body {
 }
 
 
+/* page registration  */
+.form-register form label{
+  margin-bottom: 0.5rem;
+}
+.form-register form input{
+  margin-bottom: 1rem;
+}
+.form-register form button{
+  margin-top: 1rem;
+}
+
 
 /* MEDIA QUERRIES  */
 
