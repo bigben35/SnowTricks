@@ -1,4 +1,5 @@
-<form method="post" action="{{ path('illustration_delete', {'id': illustration.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette illustration ?');">
+<form method="post" action="{{ path('illustration_delete', {'id': illustration.id}) }}" class="d-inline-block" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette illustration ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ illustration.id) }}">
-    <button class="btn btn-danger">Supprimer</button>
+    <button class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;"><i class="fa-solid fa-trash-can"></i></button>
 </form>
+{# {% set csrfToken = csrf_token('delete'~ illustration.id) %} #}

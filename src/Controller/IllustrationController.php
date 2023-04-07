@@ -6,6 +6,8 @@ use App\Entity\Trick;
 use App\Entity\Illustration;
 use App\Form\IllustrationType;
 use App\Repository\IllustrationRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +18,15 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 #[Route('/illustration')]
 class IllustrationController extends AbstractController
 {
+
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+
     #[Route('/', name: 'illustration_index', methods: ['GET'])]
     public function index(IllustrationRepository $illustrationRepository): Response
     {
@@ -112,7 +123,7 @@ class IllustrationController extends AbstractController
         ]);
     }
     #[Route('/{id}/delete', name: 'illustration_delete', methods: ['GET', 'POST'])]
-    public function delete(Request $request, Illustration $illustration, IllustrationRepository $illustrationRepository): Response
+    public function delete(EntityManagerInterface $entityManager, Request $request, Illustration $illustration, IllustrationRepository $illustrationRepository, Trick $trick): Response
     {
         // Récupération du Token Csrf généré dans la vue HTML (en GET ou POST)
         $tokenCSRF = $request->get('_token') ?? $request->request->get('_token');
@@ -128,7 +139,10 @@ class IllustrationController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        // Sinon, on redirige vers la page listant les illustration
-        return $this->redirectToRoute('illustration_index', [], Response::HTTP_SEE_OTHER);
+        // // Sinon, on redirige vers la page listant les illustrations
+        // return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+        // Redirection vers la page de détails du Trick d'où provient l'illustration supprimée
+    $trick = $illustration->getTrick();
+    return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
     }
 }
