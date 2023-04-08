@@ -76,45 +76,45 @@ class IllustrationController extends AbstractController
             // $illustration = $form->getData();
 
             // On récupère image
-                $illustrationFile = $form->get('file')->getData();
-                // dd($illustrationFile);
-            
-                if ($illustrationFile) {
-                    $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME); 
-                    $safeFilename = $slugger->slug($originalFilename);
-                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
+            $illustrationFile = $form->get('file')->getData();
+            // dd($illustrationFile);
 
-                    // Move the file to the directory where brochures are stored
-                    try {
-                        $illustrationFile->move(
-                            $this->getParameter('images_directory'),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        $this->addFlash('error', $e);
-                        return $this->redirectToRoute('illustration_edit', ['id' => $illustration->getId()], Response::HTTP_SEE_OTHER);
-                    }
+            if ($illustrationFile) {
+                $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
 
-                    //on récupère le trick associé
-                    $trick = $illustration->getTrick();
-
-                    //on supprime l'illustration
-                    $illustrationRepository->remove($illustration);
-
-                    // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
-                    $illustration = new Illustration();
-
-                    // On associe l'illustration à la figure
-                    $illustration->setFile($newFilename);
-                    
-                    $trick->addIllustration($illustration);
+                // Move the file to the directory where brochures are stored
+                try {
+                    $illustrationFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', $e);
+                    return $this->redirectToRoute('illustration_edit', ['id' => $illustration->getId()], Response::HTTP_SEE_OTHER);
                 }
-                $illustrationRepository->save($illustration, true);
-    
-                $this->addFlash('success', 'L\'illustration a bien été modifiée');
-                return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+
+                //on récupère le trick associé
+                $trick = $illustration->getTrick();
+
+                //on supprime l'illustration
+                $illustrationRepository->remove($illustration);
+
+                // Pour chaque fichier à uploader, on créé une nouvelle instance de l'illustration
+                $illustration = new Illustration();
+
+                // On associe l'illustration à la figure
+                $illustration->setFile($newFilename);
+
+                $trick->addIllustration($illustration);
             }
-        
+            $illustrationRepository->save($illustration, true);
+
+            $this->addFlash('success', 'L\'illustration a bien été modifiée');
+            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+
 
         return $this->renderForm('illustration/edit.html.twig', [
             'illustration' => $illustration,
@@ -123,7 +123,7 @@ class IllustrationController extends AbstractController
         ]);
     }
     #[Route('/{id}/delete', name: 'illustration_delete', methods: ['GET', 'POST'])]
-    public function delete(EntityManagerInterface $entityManager, Request $request, Illustration $illustration, IllustrationRepository $illustrationRepository, Trick $trick): Response
+    public function delete(Request $request, Illustration $illustration, IllustrationRepository $illustrationRepository): Response
     {
         // Récupération du Token Csrf généré dans la vue HTML (en GET ou POST)
         $tokenCSRF = $request->get('_token') ?? $request->request->get('_token');
@@ -142,7 +142,7 @@ class IllustrationController extends AbstractController
         // // Sinon, on redirige vers la page listant les illustrations
         // return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         // Redirection vers la page de détails du Trick d'où provient l'illustration supprimée
-    $trick = $illustration->getTrick();
-    return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+        $trick = $illustration->getTrick();
+        return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
     }
 }
