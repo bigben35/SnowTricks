@@ -9,10 +9,6 @@
 
 	<div
 		class="container mb-5 section-desktop">
-
-		<!-- MEDIAS -->
-
-		<section id="box-medias" class="d-none d-lg-flex flex-wrap gap-2 justify-content-around align-items-center m-1">
 			{% for illustration in trick.illustrations %}
 				{% if loop.first %}
 					<header id="header-image" class="container bg-dark mb-5 illustration-{{illustration.id}}" style="background-image: url({{ asset('assets/uploads/images/' ~ illustration.file) }}); background-position: center; background-size: cover; border: 2px solid black;">
@@ -23,7 +19,7 @@
 							</div>
 							<div id="btn-edition" class="col-sm-12 col-lg-3 my-2 align-self-start text-end order-1 order-lg-3">
 								{% if is_granted('ROLE_ADMIN') or (app.user and trick.user.id == app.user.id) %}
-									<a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:10px 16px;" href="{{ path('trick_edit', {'slug': trick.slug}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette figure?')">
+									<a class="btn btn-dark text-white m-1" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" href="{{ path('trick_edit', {'slug': trick.slug}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette figure?')">
 										<i class="fa-solid fa-pencil"></i>
 									</a>
 									{{ include('illustration/_delete_form.html.twig') }}
@@ -31,6 +27,10 @@
 							</div>
 						</div>
 					</header>
+
+		<!-- MEDIAS -->
+
+		<section id="box-medias" class="d-none d-lg-flex flex-wrap gap-2 justify-content-around align-items-center m-1">
 				{% endif %}
 				<!-- Illustrations-->
 				<div class="card m-1 p-2 rounded-lg illustration-{{illustration.id}}" style="width: 250px;">
