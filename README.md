@@ -13,7 +13,7 @@ Installer les dépendances avec Composer : **composer install**
 Faire un composer require **symfony/console** pour pouvoir utiliser la commande symfony console au lieu de php/bin console (au choix de la personne).  
 Créer la base de données : **symfony console doctrine:database:create**     
 Effectuer les migrations : **symfony console doctrine:migrations:migrate**    
-Charger les fixtures (données de démonstration) : **symfony console doctrine:fixtures:load**  
+Charger les fixtures (données de démonstration) : **symfony console doctrine:fixtures:load**, puis éditer une figure pour rajouter une ou plusieurs illustrations et une ou plusieurs vidéos.   
 Démarrer le serveur Symfony : **symfony server:start**  
 
 Et voilà ! Vous pouvez maintenant accéder à l'application en naviguant vers http://localhost:8000 dans votre navigateur.  
@@ -24,7 +24,7 @@ N'oubliez pas de modifier le fichier .env avec vos informations de configuration
 Vous pouvez vous connecter en tant qu'administrateur avec username:**admin** -  mdp:**admin** ou créer votre propre compte utilisateur. 
 
 # Email
-Pour l'inscritpion et l'envoi d'un email de confirmation, j'ai utiliser mailhog : **https://github.com/mailhog/MailHog** et voici la version que j'ai utilisé: **MailHog_windows_amd64.exe**  
+Pour l'inscription et l'envoi d'un email de confirmation, j'ai utiliser mailhog : **https://github.com/mailhog/MailHog** et voici la version que j'ai utilisé: **MailHog_windows_amd64.exe**  
  
 
 
