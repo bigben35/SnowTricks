@@ -311,9 +311,10 @@ body {
     margin-top: 8rem;
   }
 
-  /* .d-none {
-  display: flex !important;
-} */
+  .alert.alert-warning.alert-dismissible{
+    margin-top: 5rem;
+    margin-bottom: -2rem;
+  }
 
   .alert.alert-success.alert-dismissible.mt-4 {
     margin-top: 5rem !important;
