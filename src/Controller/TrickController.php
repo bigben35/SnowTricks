@@ -11,10 +11,8 @@ use App\Form\CommentType;
 use App\Entity\CommentTrick;
 use App\Entity\Illustration;
 use App\Repository\TrickRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CommentTrickRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -111,7 +109,7 @@ class TrickController extends AbstractController
 
     #[Route('/{slug}', name: 'show')]
     // function to display trick page 
-    public function show(Trick $trick, Request $request, CommentTrickRepository $commentTrickRepository, EntityManagerInterface $entityManager): Response
+    public function show(Trick $trick, Request $request, CommentTrickRepository $commentTrickRepository): Response
     {
 
         if (!$trick) {
@@ -168,7 +166,7 @@ class TrickController extends AbstractController
 
     #[Route('/{slug}/edit', name: 'edit', methods: ['GET', 'POST'])]
 
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger, Filesystem $filesystem): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && $trick->getUser() != $this->getUser()) {
             throw new AccessDeniedException("Vous n'avez pas l'autorisation d'éditer cette figure !");

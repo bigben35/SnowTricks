@@ -1,8 +1,8 @@
 
 $(document).ready(function() {
-    var $tricks = $('.trick-container');
-    var count = 8;
-    var total = $tricks.length;
+    let $tricks = $('.trick-container');
+    let count = 8;
+    let total = $tricks.length;
   console.log($tricks);
     // On cache tous les éléments au-delà de l'index 7
     $tricks.slice(count).hide();

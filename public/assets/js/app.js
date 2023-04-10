@@ -1,4 +1,3 @@
-console.log("Bonjourrr");
 
 const addVideo = (e) => {
     const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);

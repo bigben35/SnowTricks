@@ -254,16 +254,9 @@ body {
 
 /* MEDIA QUERRIES  */
 
-@media screen and (max-width: 767px) {
-  
-  }
   
   @media screen and (max-width: 991px) {
     
-    /* #header-image {
-      height: 70vh;
-      margin-top: 7rem;
-    } */
     /* NAV  */
     .nav-text-disconnect {
       display: none;
