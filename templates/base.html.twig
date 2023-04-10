@@ -9,7 +9,7 @@
 		</title>
 		<link
 		rel="icon" type="image/x-icon" href="{{ asset('assets/snow-icon.ico') }}"/>
-		<!-- Font Awesome icons (free version)-->
+		<!-- Font Awesome icons-->
 		<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 		<!-- Google fonts-->
 		<link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
@@ -24,7 +24,6 @@
 		{% block header %}{% endblock %}
 		
 		<!-- Main Content-->
-		{# <div class="container px-4 px-lg-5">  #}
 			{% if app.user and app.user.isVerified == false %}
 				<div class="alert alert-warning alert-dismissible" role="alert">
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -40,7 +39,6 @@
 
 		{% block body %}
 		{% endblock %}
-			{# </div> #}
 			<!-- Footer-->
 			<footer class="footer-custom">
 				<div class="container px-4 px-lg-5">

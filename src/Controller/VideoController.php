@@ -59,7 +59,6 @@ class VideoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $videoRepository->save($video, true);
 
-            // return $this->redirectToRoute('video_index', [], Response::HTTP_SEE_OTHER);
              // Redirection vers la page précédente
              return $this->redirect($request->headers->get('referer'));
         }

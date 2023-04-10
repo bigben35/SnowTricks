@@ -12,7 +12,6 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
-// use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -38,9 +37,6 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
         for ($index = 1; $index <= 10; $index++) {
             $trick = new Trick();
             $trick->setName($faker->text(5) . ' ' . $faker->lexify());
-            // trick->setAuthor($faker->text(5));
-            // $user = $this->getReference(1, 6);
-            // trick->setAuthor($faker->name());
             $trick->setDescription($faker->text());
             $trick->setSlug($this->slugger->slug($trick->getName())->lower());
 

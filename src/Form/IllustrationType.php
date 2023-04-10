@@ -15,8 +15,6 @@ class IllustrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('files')
-            // // ->add('trick')
             ->add('file', FileType::class, [
                 'attr' => [
                     'class' => 'form-control',

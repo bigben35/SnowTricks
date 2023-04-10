@@ -42,9 +42,6 @@ class TrickController extends AbstractController
     public function new(Request $request, TrickRepository $trickRepository, SluggerInterface $slugger): Response
     {
         $trick = new Trick();
-        // dd($trick);
-        // $slug = $this->setSlug();
-        // $trick->setSlug($this->slugger->slug($trick->getName())->lower());
         if ($this->getUser()) {
             $trick->setUser($this->getUser());
         }
@@ -127,7 +124,7 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // dd($commentTrick);
+            
             $connectedUser = $this->getUser();
             $commentTrick->setConnectedUser($connectedUser);
             $commentTrick->setTrick($trick);
@@ -179,7 +176,7 @@ class TrickController extends AbstractController
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-        // dd($trick->getVideos());
+       
         if ($form->isSubmitted() && $form->isValid()) {
 
             // On récupère toutes les images (multiple à true ==> Tableau d'images)

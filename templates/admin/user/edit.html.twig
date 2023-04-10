@@ -6,10 +6,9 @@
 <section class="container my-3 section-desktop">
     <h1>Modifier Utilisateur</h1>
 
-    {{ include('admin/user/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/user/_form.html.twig', {'button_label': 'Modifier'}) }}
 
     <a href="{{ path('app_admin_user_index') }}">Retour à la liste</a>
 
-    {{ include('admin/user/_delete_form.html.twig') }}
-    </section>
+</section>
 {% endblock %}

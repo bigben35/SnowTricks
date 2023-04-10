@@ -74,7 +74,7 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
-        // dd($user);
+        
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -90,7 +90,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    // if ($user && !$user->setRoles(["ROLE_ADMIN"])){
+ 
     #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
     
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
@@ -101,5 +101,5 @@ class UserController extends AbstractController
             
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
-    // }
+
 }

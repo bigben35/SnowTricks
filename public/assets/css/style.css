@@ -1,7 +1,6 @@
 /* Barre de navigation  */
 #mainNav {
   background-color: #464d53;
-  /* margin-bottom: 2rem; */
 }
 
 .section-dashboard-admin {
@@ -21,7 +20,6 @@ body {
 .footer-custom {
   text-align: center;
   position: absolute;
-  /* bottom: 0; */
   width: 100%;
   padding-top: 10px;
   margin-bottom: -11rem;
@@ -43,13 +41,9 @@ body {
 
 /* home page display trick with load-more btn  */
 
-/* .parent-container :nth-child(n+6) {
-  display: none;
-} */
 
 /* btn loader  */
 .load-more {
-  /* width: 180px; */
   margin: 2rem auto 0;
   transition: all 0.2s ease-out;
   border: none;
@@ -68,7 +62,7 @@ body {
 
 /* loader  */
 .loading {
-  /* display: none; */
+
   height: 32px;
   width: 32px;
   margin: 0 auto;
@@ -327,11 +321,6 @@ body {
   .section-desktop {
     margin-top: 8rem !important;
   }
-
-  /* .alert {
-  margin-top: 6rem !important;
-  margin-bottom: -7rem !important;
-} */
 
 
   /* page trick comment  */

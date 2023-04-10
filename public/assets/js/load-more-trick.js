@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 
   function countVisibleTricks() {
-    // let trickContainer = document.getElementsByClassName("parent-container");
+    
     let tricks = document.getElementsByClassName("trick-container");
     let count = 0;
     for (let i = 0; i < tricks.length; i++) {
@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 const btnArrow = document.querySelector('.btn-arrow');
 window.onscroll = function() {
-  // let scrollToTopBtn = document.getElementsByClassName("btn-arrow");
+  
   if (countVisibleTricks() >= 10) {
     btnArrow.classList.add('visible');
   } else {

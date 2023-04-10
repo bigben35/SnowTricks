@@ -31,11 +31,10 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //username
-            // $user->setUsername();
+        
             //avatar
             $avatarFile = $form->get('avatar')->getData();
-            // dd($avatarFile);
+        
             if ($avatarFile instanceof UploadedFile) {
                 if ($avatarFile->isValid()) {
                     $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -56,12 +55,7 @@ class RegistrationController extends AbstractController
                     $user->setAvatar($avatarFileName);
                 }
             } 
-            // else {
-            //     // Si aucun fichier d'avatar n'a été envoyé, utilisez une image par défaut
-            //     $user->setAvatar('uploads/default-avatar.png');
-            // }
-            
-            
+        
 
             
             // encode the plain password
