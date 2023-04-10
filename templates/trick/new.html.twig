@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Nouvelle Figure
+{% endblock %}
+
+{% block body %}
+	<section class="container section-dashboard-admin">
+		<h1>Créer une Figure</h1>
+
+		{{ include('trick/_form.html.twig') }}
+		<a href="{{ path('app_profil') }}">Retour dashboard</a>
+
+	</section>
+{% endblock %}

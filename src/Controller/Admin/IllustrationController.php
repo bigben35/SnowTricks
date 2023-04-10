@@ -83,7 +83,7 @@ class IllustrationController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        // Sinon, on redirige vers la page listant les illustration
+        // Sinon, on redirige vers la page listant les illustrations
         return $this->redirectToRoute('app_admin_illustration_index', [], Response::HTTP_SEE_OTHER);
     }
 }

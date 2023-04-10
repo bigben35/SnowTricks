@@ -16,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Validator\Constraints\Count;
 
 class TrickType extends AbstractType
 {
@@ -38,25 +37,13 @@ class TrickType extends AbstractType
                 ],
                 'label' => "Description"
             ])
-            // ->add('slug', TextType::class, [
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => "Slug"
-            //     ],
-            //     'label' => "Slug",
-            //     'required' => false
-            // ])
             ->add('files', FileType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => "Illustrations"
                 ],
                 'label' => "Illustration (formats images uniquements)",
-                // 'data_class' => null,
                 'mapped' => false,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
                 'required' => false,
                 'multiple' => true,
 
@@ -86,22 +73,11 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
                 'error_bubbling' => false,
                 'prototype' => true,
-                // 'entry_options' => [
-                //     'attr' => ['class' => 'form-group'],
-                //     'label' => false,
-                // ],
                 'required' => false
             ])
             ->add('categories', null, [
                 'attr' => ['class' => 'form-select'],
             ])
-            // ->add('user', TextType::class, [
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => "Créateur"
-            //     ],
-            //     'label' => "Créateur"
-            // ])
         ;
     }
 

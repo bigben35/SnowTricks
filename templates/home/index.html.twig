@@ -31,9 +31,10 @@
 					<div class="card" style="width: 18rem;">
 
 						<a href="{{path('trick_show', {slug:trick.slug})}}">
-							{% for illustration in trick.illustrations %}
+							{% set illustration = trick.illustrations | first %}
+							{% if illustration %}
 								<img src="{{asset('assets/uploads/images/' ~ illustration.file)}}" class="card-img-top border" style="height: 190px; object-fit: cover;">
-							{% endfor %}
+							{% endif %}
 							<div class="card-body">
 								<h2 class="post-title">{{trick.name}}</h2>
 							</div>

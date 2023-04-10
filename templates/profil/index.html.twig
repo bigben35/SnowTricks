@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfilController!{% endblock %}
+{% block title %}SnowTricks - Votre Profil{% endblock %}
 
 {% block body %}
 <section class="container my-3 section-desktop">
@@ -8,8 +8,8 @@
     <p>Votre email : <strong>{{ app.user.email }}</strong></p>
     <p>Vos Tricks :</p>
     <p>Vos Commentaires :</p>
-    {# <button class="btn btn-primary">
-		<a href="{{ path('trick_edit', {'slug': trick.slug}) }}">Créer un Trick</a>
-	</button> #}
+    <button class="btn btn-primary">
+		<a href="{{ path('trick_new') }}" class="text-white">Créer un Trick</a>
+	</button>
 </section>
 {% endblock %}

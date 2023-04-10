@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Illustration{% endblock %}
+
+{% block body %}
+<section class="container section-desktop mt-5">
+    <h1>Modifier Illustration</h1>
+
+    {{ include('illustration/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('trick_show', {'slug': trick.slug}) }}" class="my-5">Retour</a>
+</section>
+{% endblock %}

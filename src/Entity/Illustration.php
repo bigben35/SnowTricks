@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\IllustrationRepository;
 
 #[ORM\Entity(repositoryClass: IllustrationRepository::class)]
+
 class Illustration
 {
     #[ORM\Id]
@@ -20,6 +21,14 @@ class Illustration
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'illustrations')]
     #[ORM\JoinColumn(nullable: false, onDelete:"CASCADE")]
     private ?Trick $trick = null;
+
+
+    // convertir tableau en chaine de caractères 
+    public function __toString()
+    {
+        return $this->file;
+
+    }
 
     public function getId(): ?int
     {
