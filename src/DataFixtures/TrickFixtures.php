@@ -49,7 +49,6 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
 
         for ($index = 0; $index < 10; $index++) {
             $trick = new Trick();
-<<<<<<< HEAD
 
             $trickName = $trickList[$index];
             $trick->setName($trickName);
@@ -57,9 +56,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             // trick->setAuthor($faker->text(5));
             // $user = $this->getReference(1, 6);
             // trick->setAuthor($faker->name());
-=======
-            $trick->setName($faker->text(5) . ' ' . $faker->lexify());
->>>>>>> 262f53fea878446a0bceb67d4429c985fab4ffbc
+
             $trick->setDescription($faker->text());
             $trick->setSlug($this->slugger->slug($trickName)->lower());
 
