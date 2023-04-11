@@ -1,5 +1,7 @@
 # SnowTricks
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/0f656d90e0354bca9fc9f1163b0eb103)](https://app.codacy.com/gh/bigben35/SnowTricks/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 # Mon Projet Symfony 
 SnowTricks - Projet 6 Formation DA PHP/SYMFONY OpenClassrooms
 
