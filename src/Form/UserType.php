@@ -24,8 +24,6 @@ class UserType extends AbstractType
                 ],
                 'label' => "Nom d'Utilisateur"
             ])
-            // ->add('roles')
-            // ->add('password')
             ->add('email', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control',
@@ -59,7 +57,6 @@ class UserType extends AbstractType
                 ],
                 ])
                 ->add('is_verified')
-                // ->add('resetToken')
                 ;
                 $avatarType = $builder->get('avatar')->getType()->getInnerType();
                 var_dump($avatarType);

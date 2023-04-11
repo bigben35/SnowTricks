@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
 use App\Repository\TrickRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(UserRepository $userRepository, TrickRepository $trickRepository): Response
+    // function to display tricks on page home 
+    public function index(TrickRepository $trickRepository): Response
     {
         $tricks = $trickRepository->findBy([], array('created_at' => 'DESC'));
 

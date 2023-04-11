@@ -30,12 +30,10 @@
             <tr>
             {% for video in trick.videos %}
                 <th>Video</th>
-                {# <td class="d-flex"> #}
-                    {# <td>{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}</td> #}
                     <td class="video-container">
                         <iframe width="300" height="200" src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </td>
-                {# </td> #}
+                
                 {% endfor %}
             </tr>
             {% endif %}

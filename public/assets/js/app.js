@@ -1,4 +1,3 @@
-console.log("Bonjourrr");
 
 const addVideo = (e) => {
     const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
@@ -46,29 +45,4 @@ document.querySelectorAll('.btn-new').forEach(btn => {
         btn.addEventListener('click', (e) => e.currentTarget.closest('.form-control').remove())});
 
 
-        
-
-// const addVideo = (e) => {
-//     const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
-  
-//     const item = document.createElement('div');
-  
-//     item.innerHTML = collectionHolder
-//       .dataset
-//       .prototype
-//       .replace(
-//         /__name__/g,
-//         collectionHolder.dataset.index
-//       );
-  
-//     collectionHolder.appendChild(item);
-  
-//     collectionHolder.dataset.index++;
-//   };
-
-//   document
-//   .querySelectorAll('.btn-new')
-//   .forEach(btn => {
-//       btn.addEventListener("click", addVideo)
-//   });
 

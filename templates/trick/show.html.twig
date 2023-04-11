@@ -69,9 +69,6 @@
 							{% if countVideo > 1 %}
 							{{ include('video/_delete_form.html.twig') }}
 							{% endif %}
-							{# <a href="#" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding: 0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')">
-								<i class="fa-solid fa-trash-can"></i>
-							</a> #}
 						</div>
 					{% endif %}
 				</div>
@@ -99,11 +96,8 @@
 			<h4 class="mb-3">Description :</h4>
 			<div class="row p-2 mb-4" style="height: 200px; max-height: 200px; overflow-y: auto; border: solid 1px black;">{{ trick.description }}. D'où vient-il?
 																																																																																																							Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les usages de ce mot dans la littérature classique, découvrit la source incontestable du Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet...", proviennent de la section 1.10.32.
-																																																																																																							
-																																																																																																							
-																																																																																																							L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914).</div>
+L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914).</div>
 
-			{# <div class="d-flex align-items-baseline"> #}
 			{# CATEGORIE  #}
 			<div class="d-flex flex-wrap bd-highlight mb-3">
 				<h4 class="mb-3" style="width: 100%;">Categorie(s) :</h4>
@@ -124,15 +118,12 @@
 				{% if is_granted('ROLE_ADMIN') or (app.user and trick.user.id == app.user.id) %}
 					<a class="btn btn-danger text-white m-1" style="padding:10px 16px;" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cette figure?')">
 						Supprimer</i>
-				</a>
-				<a class="btn btn-primary text-white m-1" style="padding:10px 16px;" href="{{ path('trick_edit', {'slug': trick.slug}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette figure?')">
-					Sauvegarder
-				</a>
-				{# {{ include('trick/_delete.html.twig') }} #}
-
-			{% endif %}
+					</a>
+					<a class="btn btn-primary text-white m-1" style="padding:10px 16px;" href="{{ path('trick_edit', {'slug': trick.slug}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette figure?')">
+						Sauvegarder
+					</a>
+				{% endif %}
 		</div>
-		{# </div> #}
 	</div>
 	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
 		{% if app.user.isVerified %}
@@ -161,7 +152,6 @@
 
 	{# pagination  #}
 	{% if commentTricks.pages is defined and commentTricks.pages is not null %}
-		{# <div> #}
 		{% set path = 'trick_show' %}
 		{% set slug = trick.slug %}
 		{% set pages = commentTricks.pages %}

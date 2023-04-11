@@ -12,9 +12,6 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
         // Contact
         $faker = Factory::create('fr_FR');
 
@@ -26,9 +23,7 @@ class AppFixtures extends Fixture
                 ->setObject('Demande n°' . ($c + 1))
                 ->setMessage($faker->text());
 
-                $manager->persist($contact);
-                // $this->addReference('user-'.$this->counter, $user);
-                // $this->counter++; 
+                $manager->persist($contact); 
             }
 
         $manager->flush();

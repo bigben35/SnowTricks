@@ -9,7 +9,6 @@ use App\Form\TrickType;
 use App\Entity\Category;
 use App\Entity\Illustration;
 use App\Repository\TrickRepository;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -112,7 +111,7 @@ class TrickController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_admin_trick_edit', methods: ['GET', 'POST'])]
 
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger, Filesystem $filesystem): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);

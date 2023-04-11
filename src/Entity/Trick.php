@@ -209,7 +209,6 @@ class Trick
     {
         if (!$this->illustrations->contains($illustration)) {
             $this->illustrations->add($illustration);
-            // $this->illustrations[] = $illustration;
             $illustration->setTrick($this);
         }
 

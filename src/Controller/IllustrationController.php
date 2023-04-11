@@ -73,11 +73,10 @@ class IllustrationController extends AbstractController
         // dd($form);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $illustration = $form->getData();
-
+            
             // On récupère image
             $illustrationFile = $form->get('file')->getData();
-            // dd($illustrationFile);
+            
 
             if ($illustrationFile) {
                 $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -139,8 +138,6 @@ class IllustrationController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        // // Sinon, on redirige vers la page listant les illustrations
-        // return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         // Redirection vers la page de détails du Trick d'où provient l'illustration supprimée
         $trick = $illustration->getTrick();
         return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
