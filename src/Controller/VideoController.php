@@ -51,18 +51,23 @@ class VideoController extends AbstractController
     #[Route('/{id}/edit', name: 'video_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Video $video, VideoRepository $videoRepository): Response
     {
+        $trick = $video->getTrick();
+
         $form = $this->createForm(VideoType::class, $video);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $videoRepository->save($video, true);
 
-            return $this->redirectToRoute('video_index', [], Response::HTTP_SEE_OTHER);
+            // return $this->redirectToRoute('video_index', [], Response::HTTP_SEE_OTHER);
+             // Redirection vers la page précédente
+             return $this->redirect($request->headers->get('referer'));
         }
 
         return $this->renderForm('video/edit.html.twig', [
             'video' => $video,
             'form' => $form,
+            'trick' => $trick,
         ]);
     }
 
@@ -81,6 +86,8 @@ class VideoController extends AbstractController
             // Redirection vers la page précédente
             return $this->redirect($request->headers->get('referer'));
         }
-        return $this->redirectToRoute('video_index', [], Response::HTTP_SEE_OTHER);
+        // Redirection vers la page de détails du Trick d'où provient la vidéo supprimée
+        $trick = $video->getTrick();
+        return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
     }
 }

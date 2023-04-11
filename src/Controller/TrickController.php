@@ -31,8 +31,8 @@ class TrickController extends AbstractController
     #[Route('', name: 'index')]
     public function index(TrickRepository $trickRepository): Response
     {
-        return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll()
+        return $this->render('home/index.html.twig', [
+            'tricks' => $trickRepository->findBy([], array('created_at' => 'DESC'))
         ]);
     }
 
@@ -146,12 +146,21 @@ class TrickController extends AbstractController
         // on va chercher les commentaires 
         $commentTricks = $commentTrickRepository->findCommentsPaginated($page, $trick->getSlug(), 2);
 
+        //nombre illustrations par Trick
+        $illustrations = $trick->getIllustrations();
+        $count = count($illustrations);
+
+        //nombre videos par Trick
+        $videos = $trick->getVideos();
+        $countVideo = count($videos);
 
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
             'commentTricks' => $commentTricks,
+            'count' => $count,
+            'countVideo' => $countVideo,
         ]);
     }
 

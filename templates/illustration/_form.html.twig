@@ -1,11 +1,7 @@
 {{ form_start(form) }}
-<div class="col-4 my-2">
-				<p>
-					{% set csrfToken = csrf_token('delete'~ illustration.id) %}
-					<a href="{{path('illustration_delete', {id:illustration.id, _token:csrfToken})}}" class="btn btn-danger btn-sm" style="font-size: 1.5rem; padding:0.4rem 0.8rem;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vidéo ?')"><i class="fa-solid fa-trash-can"></i></a>
-				</p>
-				<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration">
-			</div>
+	<div class="col-4 my-2">
+		<img src="{{ asset('assets/uploads/images/' ~ illustration.file) }}" class="img-fluid" alt="Illustration">
+	</div>
     {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+    <button class="btn btn-primary my-2">{{ button_label|default('Sauvegarder') }}</button>
 {{ form_end(form) }}

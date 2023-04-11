@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+<div class="col-4 my-2">
+		<iframe width="250" height="160" src="{{ video.mediaLink|replace({'watch?v=': 'embed/'}) }}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+    {{ form_widget(form) }}
+    <button class="btn btn-primary  my-2">{{ button_label|default('Sauvegarder') }}</button>
+{{ form_end(form) }}
