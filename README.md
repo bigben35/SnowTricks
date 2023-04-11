@@ -6,6 +6,10 @@ SnowTricks - Projet 6 Formation DA PHP/SYMFONY OpenClassrooms
 # Description
 SnowTricks est un site collaboratif pour faire connaître le Snowboard auprès du grand public et aider à l'apprentissage des figures (tricks).
 
+# Prérequis
+PHP 8.0.12
+Symfony 6
+
 # Installation
 Cloner le dépôt Git sur votre machine locale : **git clone https://github.com/bigben35/SnowTricks.git**   
 Naviguer dans le dossier du projet : **cd mon-projet-symfony**   
