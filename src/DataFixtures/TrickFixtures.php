@@ -78,7 +78,6 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             // Ajout d'illustrations
             $illustration1 = (new Illustration())->setFile('trick-default/trick-example-1.jpg');
             $illustration2 = (new Illustration())->setFile('trick-default/trick-example-2.jpg');
-            // $illustration->setFile('trick-default/trick-example-1.jpg');
             $trick->addIllustration($illustration1);
             $trick->addIllustration($illustration2);
 

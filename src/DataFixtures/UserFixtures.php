@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use Faker;
 use Faker\Factory;
 use App\Entity\User;
 use App\Repository\UserRepository;
