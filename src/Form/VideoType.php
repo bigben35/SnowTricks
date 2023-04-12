@@ -14,6 +14,9 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('mediaLink', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
                 'label' => 'Vidéo'
             ]);
     }

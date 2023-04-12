@@ -4,10 +4,11 @@ const addVideo = (e) => {
 
     const item = document.createElement('div');
     item.classList.add('form-group'); // ajoute la classe form-control à l'élément div parent
+    item.classList.add('mb-2'); // ajoute la classe form-control à l'élément div parent
 
-    const videoCount = collectionHolder.querySelectorAll('.form-group').length + 1;
+    // const videoCount = collectionHolder.querySelectorAll('.form-group').length + 1;
     const label = document.createElement('label');
-    label.innerHTML = 'Vidéo ' + videoCount; // ajoute le texte 'Video' à l'élément label
+    label.innerHTML = 'Vidéo ' + (collectionHolder.dataset.index + 1); // ajoute le texte 'Video' à l'élément label
     label.setAttribute('for', collectionHolder.dataset.name + '_' + collectionHolder.dataset.index + '_mediaLink');
 
 
