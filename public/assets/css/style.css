@@ -277,7 +277,7 @@ body {
   }
 
   .btn-arrow-down {
-    top: 15rem;
+    top: 20rem;
   }
 
   .navbar {
@@ -331,5 +331,18 @@ body {
   .btn-arrow-down {
     right: -1rem;
     top: 25rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .btn-arrow-down {
+    top: 26rem;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .btn-arrow-down {
+    right: -27rem;
+    top: 65rem;
   }
 }

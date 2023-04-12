@@ -11167,7 +11167,7 @@ header.masthead .site-heading {
 header.masthead .page-heading h1, header.masthead .page-heading .h1,
 header.masthead .site-heading h1,
 header.masthead .site-heading .h1 {
-  font-size: 3.5rem;
+  font-size: 3rem;
 }
 header.masthead .page-heading .subheading,
 header.masthead .site-heading .subheading {
@@ -11212,7 +11212,7 @@ header.masthead .site-heading .h1 {
     font-size: 5rem;
   }
   header.masthead .post-heading h1, header.masthead .post-heading .h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
   }
   header.masthead .post-heading .subheading {
     font-size: 1.875rem;
