@@ -1,29 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SnowTricks - Utilisateurs{% endblock %}
+{% block title %}SnowTricks - Utilisateurs
+{% endblock %}
 
 {% block body %}
-<section class="container section-dashboard-admin">
-    <h1>{{ user.username }}</h1>
+	<section class="container section-dashboard">
+		<h1>{{ user.username }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Avatar</th>
-                <td>{{ user.avatar }}</td>
-            </tr>
-            <tr>
-                <th>Est_verifié</th>
-                <td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
-            </tr>
-        </tbody>
-    </table>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Email</th>
+					<td>{{ user.email }}</td>
+				</tr>
+				<tr>
+					<th>Avatar</th>
+					<td>{{ user.avatar }}</td>
+				</tr>
+				<tr>
+					<th>Est_verifié</th>
+					<td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
+				</tr>
+			</tbody>
+		</table>
 
-    <a href="{{ path('app_admin_user_index') }}">Retour à la liste</a>
+		<a href="{{ path('app_admin_user_index') }}">Retour à la liste</a>
 
-    </section>
+	</section>
 {% endblock %}

@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<section class="container section-dashboard-admin">
+	<section class="container section-dashboard">
 		<h1>Video index</h1>
 
 		<table class="table">
@@ -33,7 +33,7 @@
 
 		<a href="{{ path('app_admin_video_new') }}" class="btn btn-primary my-2">Créer</a>
 		<div>
-		<a href="{{ path('app_admin_admin') }}">Retour au dashboard</a>
-	</div>
+			<a href="{{ path('app_admin_admin') }}">Retour au dashboard</a>
+		</div>
 	</section>
 {% endblock %}

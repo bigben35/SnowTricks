@@ -1,42 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SnowTricks - Liste des Utilisateurs{% endblock %}
+{% block title %}SnowTricks - Liste des Utilisateurs
+{% endblock %}
 
 {% block body %}
-<section class="container section-dashboard-admin">
-    <h1>Liste des Utilisateurs</h1>
+	<section class="container section-dashboard">
+		<h1>Liste des Utilisateurs</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Surnom</th>
-                <th class="d-none">Email</th>
-                <th class="d-none">Avatar</th>
-                <th class="d-none">est_verifié</th>
-                <th>action</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.username }}</td>
-                <td class="d-none">{{ user.email }}</td>
-                <td class="d-none">{{ user.avatar }}</td>
-                <td class="d-none">{{ user.isVerified ? 'Oui' : 'Non' }}</td>
-                <td>
-                    <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">Voir</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">Pas d'utilisateur</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Surnom</th>
+					<th class="d-none">Email</th>
+					<th class="d-none">Avatar</th>
+					<th class="d-none">est_verifié</th>
+					<th>action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in users %}
+					<tr>
+						<td>{{ user.username }}</td>
+						<td class="d-none">{{ user.email }}</td>
+						<td class="d-none">{{ user.avatar }}</td>
+						<td class="d-none">{{ user.isVerified ? 'Oui' : 'Non' }}</td>
+						<td>
+							<a href="{{ path('app_admin_user_show', {'id': user.id}) }}">Voir</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="9">Pas d'utilisateur</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div>
 			<a href="{{ path('app_admin_user_new') }}" class="btn btn-primary my-2">Créer</a>
 		</div>
-    <a href="{{ path('app_admin_admin') }}">Retour au dashboard</a>
-</section>
+		<a href="{{ path('app_admin_admin') }}">Retour au dashboard</a>
+	</section>
 {% endblock %}

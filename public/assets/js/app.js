@@ -8,7 +8,7 @@ const addVideo = (e) => {
 
     // const videoCount = collectionHolder.querySelectorAll('.form-group').length + 1;
     const label = document.createElement('label');
-    label.innerHTML = 'Vidéo ' + (collectionHolder.dataset.index + 1); // ajoute le texte 'Video' à l'élément label
+    label.innerHTML = 'Vidéo ' + (collectionHolder.dataset.index + 1); // incrémente le texte 'Video' à l'élément label
     label.setAttribute('for', collectionHolder.dataset.name + '_' + collectionHolder.dataset.index + '_mediaLink');
 
 

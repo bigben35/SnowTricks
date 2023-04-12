@@ -3,9 +3,11 @@
 {% block title %}New Illustration{% endblock %}
 
 {% block body %}
-    <h1>Create new Illustration</h1>
+<section class="container section-dashboard">
+    <h1>Créer Illustration</h1>
 
     {{ include('admin/illustration/_form.html.twig') }}
 
-    <a href="{{ path('app_admin_illustration_index') }}">back to list</a>
+    <a href="{{ path('app_admin_illustration_index') }}">Retour à la liste</a>
+</section>
 {% endblock %}

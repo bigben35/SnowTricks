@@ -3,7 +3,7 @@
   background-color: #464d53;
 }
 
-.section-dashboard-admin {
+.section-dashboard {
   margin-top: 2rem;
   min-height: 80vh;
 }
@@ -23,6 +23,7 @@ body {
   width: 100%;
   padding-top: 10px;
   margin-bottom: -11rem;
+  /* bottom: 0; */
 }
 
 .form-register ul {
@@ -289,7 +290,7 @@ body {
   }
 
   #header-image,
-  .section-dashboard-admin {
+  .section-dashboard {
     margin-top: 8rem;
   }
 
