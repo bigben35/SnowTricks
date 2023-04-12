@@ -213,13 +213,12 @@ body {
   justify-content: center;
   align-items: center;
   position: absolute;
-  right: 2rem;
-  top: 25rem;
+  bottom: 6%;
+  right: 6%;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 5px 4px 2px rgba(0, 0, 0, 0.43);
   color: #333;
-  /* opacity: 0; */
 }
 
 /* trick page  */
@@ -276,10 +275,6 @@ body {
     bottom: auto;
   }
 
-  .btn-arrow-down {
-    top: 20rem;
-  }
-
   .navbar {
     padding: 0;
   }
@@ -324,25 +319,5 @@ body {
 
   footer {
     padding-bottom: 0;
-  }
-}
-
-@media screen and (min-width: 578px) and (max-width: 767px) {
-  .btn-arrow-down {
-    right: -1rem;
-    top: 25rem;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .btn-arrow-down {
-    top: 26rem;
-  }
-}
-
-@media screen and (min-width: 2560px) {
-  .btn-arrow-down {
-    right: -27rem;
-    top: 65rem;
   }
 }

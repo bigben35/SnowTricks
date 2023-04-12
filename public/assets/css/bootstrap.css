@@ -119,7 +119,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-  font-size: calc(1.325rem + 0.9vw);
+  font-size: calc(1rem + 0.9vw);
 }
 @media (min-width: 1200px) {
   h2, .h2 {
@@ -11137,7 +11137,7 @@ header.masthead {
   position: relative;
   margin-bottom: 3rem;
 
-  padding-top: calc(13rem + 57px);
+  padding-top: calc(15rem + 57px);
   height: 90vh;
   padding-bottom: 8rem;
   background: no-repeat center center;
