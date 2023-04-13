@@ -27,7 +27,7 @@ Vous pouvez passer en https avec la commande : **symfony server:ca:install**
 
 N'oubliez pas de modifier le fichier .env avec vos informations de configuration avant de lancer l'installation.
 
-Vous pouvez vous connecter en tant qu'administrateur avec username:**admin** -  mdp:**admin** ou créer votre propre compte utilisateur. 
+Vous pouvez vous connecter en tant qu'administrateur avec username:**admin** -  mdp:**admin**, en tant qu'utilisateur ("ROLE_USER") avec username:**bo** et mdp:**azerty** ou créer votre propre compte utilisateur. 
 
 # Email
 Pour l'inscription et l'envoi d'un email de confirmation, j'ai utiliser mailhog : **https://github.com/mailhog/MailHog** et voici la version que j'ai utilisé: **MailHog_windows_amd64.exe**  
