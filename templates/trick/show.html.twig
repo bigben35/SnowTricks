@@ -116,12 +116,14 @@ L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit
 
 			<div class="col-sm-12 my-5 text-end">
 				{% if is_granted('ROLE_ADMIN') or (app.user and trick.user.id == app.user.id) %}
-					<a class="btn btn-danger text-white m-1" style="padding:10px 16px;" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cette figure?')">
-						Supprimer</i>
-					</a>
-					<a class="btn btn-primary text-white m-1" style="padding:10px 16px;" href="{{ path('trick_edit', {'slug': trick.slug}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette figure?')">
-						Sauvegarder
-					</a>
+					{% if app.user.isVerified %}
+						<a class="btn btn-danger text-white m-1" style="padding:10px 16px;" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cette figure?')">
+							Supprimer</i>
+						</a>
+						<a class="btn btn-primary text-white m-1" style="padding:10px 16px;" href="{{ path('trick_edit', {'slug': trick.slug}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette figure?')">
+							Sauvegarder
+						</a>
+					{% endif %}
 				{% endif %}
 		</div>
 	</div>

@@ -8,8 +8,10 @@
     <p>Votre email : <strong>{{ app.user.email }}</strong></p>
     <p>Vos Tricks :</p>
     <p>Vos Commentaires :</p>
+    {% if app.user.isVerified %}
     <button class="btn btn-primary">
 		<a href="{{ path('trick_new') }}" class="text-white">Créer un Trick</a>
 	</button>
+  {% endif %}
 </section>
 {% endblock %}
