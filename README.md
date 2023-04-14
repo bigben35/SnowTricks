@@ -16,7 +16,8 @@ Symfony 6
 Cloner le dépôt Git sur votre machine locale : **git clone https://github.com/bigben35/SnowTricks.git**   
 Naviguer dans le dossier du projet : **cd mon-projet-symfony**   
 Installer les dépendances avec Composer : **composer install**    
-Faire un composer require **symfony/console** pour pouvoir utiliser la commande symfony console au lieu de php/bin console (au choix de la personne).    
+Faire un composer require **symfony/console** pour pouvoir utiliser la commande symfony console au lieu de php/bin console (au choix de la personne). 
+Créer une base de données dans PhpMyAdmin (par exemple) avec le nom souhaité. Il sera utilisé dans le fichier .env pour permettre la connexion entre l'application et la base de données
 Créer la base de données : **symfony console doctrine:database:create**      
 Effectuer les migrations : **symfony console doctrine:migrations:migrate**     
 Charger les fixtures (données de démonstration) : **symfony console doctrine:fixtures:load**, puis éditer une figure pour rajouter une ou plusieurs illustrations et une ou plusieurs vidéos.   

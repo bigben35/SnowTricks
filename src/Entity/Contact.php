@@ -37,6 +37,8 @@ class Contact
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->lastname = '';
+        $this->firstname = '';
     }
    
 

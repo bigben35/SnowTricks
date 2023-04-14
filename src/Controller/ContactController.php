@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ContactRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, EntityManagerInterface $manager): Response
+    public function index(Request $request, ContactRepository $contactRepository): Response
     {
         $contact = new Contact();
 
@@ -27,9 +27,7 @@ class ContactController extends AbstractController
             // dd($form->getData());
             $contact = $form->getData();
 
-            $manager->persist($contact);
-
-            $manager->flush();
+            $contactRepository->save($contact, true);
 
             $this->addFlash('success', 'Votre demande a été envoyée avec succès !');
             return $this->redirectToRoute('app_contact');

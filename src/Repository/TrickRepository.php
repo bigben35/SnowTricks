@@ -5,9 +5,9 @@ namespace App\Repository;
 use App\Entity\Trick;
 use DateTimeImmutable;
 use App\Entity\Illustration;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry; //récupérer instance de EntityManager
 use Symfony\Component\Filesystem\Filesystem;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository; //récupérer méthodes
 
 /**
  * @extends ServiceEntityRepository<Trick>
