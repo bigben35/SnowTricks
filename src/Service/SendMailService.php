@@ -1,7 +1,6 @@
 <?php 
 
 namespace App\Service;
-
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 
