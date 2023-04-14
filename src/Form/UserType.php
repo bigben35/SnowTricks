@@ -59,7 +59,6 @@ class UserType extends AbstractType
                 ->add('is_verified')
                 ;
                 $avatarType = $builder->get('avatar')->getType()->getInnerType();
-                var_dump($avatarType);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
