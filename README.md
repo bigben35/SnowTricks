@@ -2,36 +2,36 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/0f656d90e0354bca9fc9f1163b0eb103)](https://app.codacy.com/gh/bigben35/SnowTricks/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-# Mon Projet Symfony 
-SnowTricks - Projet 6 Formation DA PHP/SYMFONY OpenClassrooms
+# My Symfony Project 
+SnowTricks - Project 6 PHP/SYMFONY OpenClassroomsTraining
 
 # Description
-SnowTricks est un site collaboratif pour faire connaître le Snowboard auprès du grand public et aider à l'apprentissage des figures (tricks).
+SnowTricks is a collaborative website to promote Snowboarding to the general public and assist in learning tricks.
 
-# Prérequis
+# Prerequisites
 PHP 8.0.12  
 Symfony 6
 
 # Installation
-Cloner le dépôt Git sur votre machine locale : **git clone https://github.com/bigben35/SnowTricks.git**   
-Naviguer dans le dossier du projet : **cd mon-projet-symfony**   
-Installer les dépendances avec Composer : **composer install**    
-Faire un composer require **symfony/console** pour pouvoir utiliser la commande symfony console au lieu de php/bin console (au choix de la personne). 
-Créer une base de données dans PhpMyAdmin (par exemple) avec le nom souhaité. Il sera utilisé dans le fichier .env pour permettre la connexion entre l'application et la base de données
-Créer la base de données : **symfony console doctrine:database:create**      
-Effectuer les migrations : **symfony console doctrine:migrations:migrate**     
-Charger les fixtures (données de démonstration) : **symfony console doctrine:fixtures:load**, puis éditer une figure pour rajouter une ou plusieurs illustrations et une ou plusieurs vidéos.   
-Démarrer le serveur Symfony : **symfony server:start**    
+Clone the Git repository to your local machine : **git clone https://github.com/bigben35/SnowTricks.git**   
+Navigate to the project folder : **cd mon-projet-symfony**   
+Install dependencies with Composer : **composer install**    
+Run **composer require symfony/console** to use the symfony console command instead of php/bin console (personal preference). 
+Create a database in PhpMyAdmin (for example) with the desired name. It will be used in the .env file to establish the connection between the application and the database.    
+Create the database : **symfony console doctrine:database:create**      
+Run migrations : **symfony console doctrine:migrations:migrate**     
+Load fixtures (demo data) : **symfony console doctrine:fixtures:load**, then edit a trick to add one or more illustrations and one or more videos.   
+Start the Symfony server : **symfony server:start**    
 
-Et voilà ! Vous pouvez maintenant accéder à l'application en naviguant vers http://localhost:8000 dans votre navigateur.  
-Vous pouvez passer en https avec la commande : **symfony server:ca:install**
+And there you go! You can now access the application by navigating to http://localhost:8000 in your browser.  
+You can switch to https with the command : **symfony server:ca:install**
 
-N'oubliez pas de modifier le fichier .env avec vos informations de configuration avant de lancer l'installation.
+Don't forget to modify the .env file with your configuration information before launching the installation.
 
-Vous pouvez vous connecter en tant qu'administrateur avec username:**admin** -  mdp:**admin**, en tant qu'utilisateur ("ROLE_USER") avec username:**bo** et mdp:**azerty** ou créer votre propre compte utilisateur. 
+You can log in as an administrator with username:**admin** -  password:**admin**, as an user ("ROLE_USER") with username:**bo** and password:**azerty** or create your own user account. 
 
 # Email
-Pour l'inscription et l'envoi d'un email de confirmation, j'ai utiliser mailhog : **https://github.com/mailhog/MailHog** et voici la version que j'ai utilisé: **MailHog_windows_amd64.exe**  
+For registration and sending a confirmation email, I used mailhog : **https://github.com/mailhog/MailHog** and here is the version I used: **MailHog_windows_amd64.exe**  
  
 
 
