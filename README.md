@@ -17,7 +17,9 @@ Clone the Git repository to your local machine : **git clone https://github.com/
 Navigate to the project folder : **cd mon-projet-symfony**   
 Install dependencies with Composer : **composer install**    
 Run **composer require symfony/console** to use the symfony console command instead of php/bin console (personal preference). 
-Create a database in PhpMyAdmin (for example) with the desired name. It will be used in the .env file to establish the connection between the application and the database.    
+
+Create a database in PhpMyAdmin (for example) with the desired name. It will be used in the .env file to establish the connection between the application and the database.   
+
 Create the database : **symfony console doctrine:database:create**      
 Run migrations : **symfony console doctrine:migrations:migrate**     
 Load fixtures (demo data) : **symfony console doctrine:fixtures:load**, then edit a trick to add one or more illustrations and one or more videos.   
